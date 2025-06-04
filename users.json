@@ -1,0 +1,18 @@
+{
+    "5965363034": {
+        "chat_id": 5965363034,
+        "username": "GoidaSegun",
+        "first_name": "Мак",
+        "subscribed_to_daily": true,
+        "daily_practice_mode": "dual",
+        "current_daily_day": 2,
+        "last_morning_sent_date": "2025-06-04",
+        "last_evening_sent_date": "2025-06-04",
+        "stage": "daily_practice_day1_evening_ack",
+        "email": null,
+        "active_test": null,
+        "tests_taken": {},
+        "created_at": "2025-06-04T02:40:13.984048+00:00",
+        "last_interaction_date": "2025-06-04T02:42:03.182830+00:00"
+    }
+}
