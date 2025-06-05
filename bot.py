@@ -11,7 +11,9 @@ from telegram import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     ReplyKeyboardRemove,
-    CallbackQuery
+    CallbackQuery,
+    Message,
+    Chat
 )
 from telegram.constants import ParseMode
 from telegram.ext import (
@@ -21,6 +23,8 @@ from telegram.ext import (
     CallbackQueryHandler,
     ContextTypes,
     filters,
+    ApplicationBuilder,
+    JobQueue
 )
 
 import config
@@ -80,6 +84,17 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
     udm.get_user_data(user.id) # Ensure user data is loaded/created
     keyboard = []
     user_data = udm.get_user_data(user.id) # Get fresh user data
+
+    # Send the first video note
+    try:
+        await context.bot.send_video_note(
+            chat_id=user.id,
+            video_note="DQACAgIAAxkBAAEBcnxoP05JC_1pBGgw2Ie34uMed5gcsQAC3YkAAsIT8Unip--0-JqmqjYE"
+        )
+        logger.info(f"Sent start video note to user {user.id}")
+    except Exception as e_video:
+        logger.error(f"Failed to send start video note: {e_video}")
+
     if not user_data.get("subscribed_to_daily"):
         keyboard.append([InlineKeyboardButton(config.SUBSCRIBE_BUTTON_TEXT, callback_data="subscribe_daily")])
     else:
@@ -158,15 +173,41 @@ async def send_daily_practice_job(context: ContextTypes.DEFAULT_TYPE) -> None:
 
 def _schedule_daily_jobs_for_user(chat_id: int, job_queue_instance, user_data: dict):
     job_name_prefix = str(chat_id)
-    _remove_daily_jobs_for_user(job_name_prefix, job_queue_instance) # Clear existing jobs first
+    
+    # ПРИНУДИТЕЛЬНО удаляем ВСЕ старые задачи для этого пользователя
+    for job in job_queue_instance.jobs():
+        if job.name and job.name.startswith(job_name_prefix):
+            job.schedule_removal()
+            logger.info(f"Удалена старая задача: {job.name}")
+    
+    # Логируем время которое будем использовать
+    logger.info(f"=== ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ {chat_id} ===")
+    logger.info(f"Утром: {config.MORNING_PRACTICE_TIME_UTC}")
+    logger.info(f"Вечером: {config.EVENING_PRACTICE_TIME_UTC}")
+    
+    # Создаем НОВЫЕ задачи с актуальным временем
     mode = user_data.get("daily_practice_mode", "dual")
     if mode in ["dual", "morning_only"]:
-        job_queue_instance.run_daily(send_daily_practice_job, config.MORNING_PRACTICE_TIME_UTC, chat_id=chat_id, name=f"{job_name_prefix}_morning", data={"pt": "morning"})
-        logger.info(f"Scheduled morning job for {chat_id} at {config.MORNING_PRACTICE_TIME_UTC}")
-    if mode == "dual": # Only schedule evening if mode is dual
-        job_queue_instance.run_daily(send_daily_practice_job, config.EVENING_PRACTICE_TIME_UTC, chat_id=chat_id, name=f"{job_name_prefix}_evening", data={"pt": "evening"})
-        logger.info(f"Scheduled evening job for {chat_id} at {config.EVENING_PRACTICE_TIME_UTC}")
-
+        job_queue_instance.run_daily(
+            send_daily_practice_job, 
+            config.MORNING_PRACTICE_TIME_UTC,  # ПРЯМО из config
+            chat_id=chat_id, 
+            name=f"{job_name_prefix}_morning", 
+            data={"pt": "morning"},
+            job_kwargs={'misfire_grace_time': 60}
+        )
+        logger.info(f"✅ Создана утренняя задача на {config.MORNING_PRACTICE_TIME_UTC}")
+        
+    if mode == "dual":
+        job_queue_instance.run_daily(
+            send_daily_practice_job, 
+            config.EVENING_PRACTICE_TIME_UTC,  # ПРЯМО из config
+            chat_id=chat_id, 
+            name=f"{job_name_prefix}_evening", 
+            data={"pt": "evening"},
+            job_kwargs={'misfire_grace_time': 60}
+        )
+        logger.info(f"✅ Создана вечерняя задача на {config.EVENING_PRACTICE_TIME_UTC}")
 
 async def offer_test_if_not_taken(context: ContextTypes.DEFAULT_TYPE, chat_id: int, user_data: dict, test_id: str, is_day14: bool = False):
     test_info = test_engine.get_test_by_id(test_id)
@@ -340,6 +381,20 @@ async def _handle_test_answer(query: CallbackQuery, context: ContextTypes.DEFAUL
         })
 
         await context.bot.send_message(chat_id, escaped_summary_text, parse_mode=ParseMode.MARKDOWN_V2)
+
+        # Send the second video note if it's Day 3 and the KEY_TEST_ID
+        if test_id == config.KEY_TEST_ID and \
+           not active_test_data.get("is_forced_day14", False) and \
+           user_data.get("current_daily_day") == 3:
+            try:
+                await context.bot.send_video_note(
+                    chat_id=chat_id,
+                    video_note="DQACAgIAAxkBAAEBcn1oP05JTiwan2zPQWUoDfcrl4wfKgAC8IkAAsIT8UlCWZjM36ExGjYE"
+                )
+                logger.info(f"Sent Day 3 post-test video note for test {test_id} to user {chat_id}")
+            except Exception as e_video:
+                logger.error(f"Failed to send Day 3 post-test video note: {e_video}")
+
         await context.bot.send_message(chat_id, escape_markdown_v2(config.EMAIL_REQUEST_TEXT), reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("📖 В меню", callback_data=MENU_CALLBACK_MAIN)]]), parse_mode=ParseMode.MARKDOWN_V2)
 
 async def _handle_consultation_request(query: CallbackQuery, context: ContextTypes.DEFAULT_TYPE, chat_id: int, user_data: dict, test_id: str):
@@ -579,40 +634,62 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
 
 
 def main() -> None:
-    application = Application.builder().token(config.BOT_TOKEN).build()
-
-    application.add_handler(CommandHandler("start", start_command))
-    application.add_handler(CommandHandler("menu", menu_command))
-    application.add_handler(CommandHandler("stopdaily", stopdaily_command))
-    application.add_handler(CommandHandler("myid", myid_command))
-    application.add_handler(CommandHandler("setday", setday_command))
-    application.add_handler(CommandHandler("forcesend", forcesend_command))
-
-    application.add_handler(CallbackQueryHandler(button_handler))
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_potential_email))
-
-    application.add_error_handler(error_handler)
-
-    logger.info("Loading existing users and scheduling jobs...")
-    all_users = udm.load_users()
-    job_queue = application.job_queue
-    for chat_id_str, user_data_dict in all_users.items():
+    logger.info("=== Начало запуска бота ===")
+    try:
+        import importlib
+        import config
+        logger.info("=== Перезагрузка конфига ===")
+        importlib.reload(config)
+        
+        logger.info("=== Создание приложения ===")
+        application = Application.builder().token(config.BOT_TOKEN).build()
+        job_queue = application.job_queue
+        
+        # ПРИНУДИТЕЛЬНО очищаем ВСЕ задачи планировщика
+        logger.info("=== ОЧИСТКА ВСЕХ ЗАДАЧ ===")
+        for job in job_queue.jobs():
+            job.schedule_removal()
+            logger.info(f"Удалена старая задача: {job.name}")
+        
+        # Логируем текущее время из config
+        logger.info("=== ВРЕМЯ ИЗ CONFIG.PY ===")
+        logger.info(f"Утреннее время: {config.MORNING_PRACTICE_TIME_UTC}")
+        logger.info(f"Вечернее время: {config.EVENING_PRACTICE_TIME_UTC}")
+        
+        # Загружаем пользователей и планируем задачи
+        logger.info("Loading existing users and scheduling jobs...")
+        all_users = udm.load_users()
+        for chat_id_str, user_data_dict in all_users.items():
+            try:
+                chat_id_int = int(chat_id_str)
+                if user_data_dict.get("subscribed_to_daily") and user_data_dict.get("daily_practice_mode") in ["dual", "morning_only"]:
+                    _schedule_daily_jobs_for_user(chat_id_int, job_queue, user_data_dict)
+                elif not user_data_dict.get("subscribed_to_daily"):
+                    _remove_daily_jobs_for_user(str(chat_id_int), job_queue)
+            except Exception as e:
+                logger.error(f"Error scheduling jobs for user {chat_id_str}: {e}")
+        
+        # Регистрируем обработчики команд
+        application.add_handler(CommandHandler("start", start_command))
+        application.add_handler(CommandHandler("menu", menu_command))
+        application.add_handler(CommandHandler("stopdaily", stopdaily_command))
+        application.add_handler(CommandHandler("myid", myid_command))
+        application.add_handler(CommandHandler("setday", setday_command))
+        application.add_handler(CommandHandler("forcesend", forcesend_command))
+        application.add_handler(CallbackQueryHandler(button_handler))
+        application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_potential_email))
+        
+        # Регистрируем обработчик ошибок
+        application.add_error_handler(error_handler)
+        
+        logger.info("=== Бот запущен успешно ===")
+        logger.info(f"=== Токен бота: {config.BOT_TOKEN[:5]}...{config.BOT_TOKEN[-5:]} ===")
+        
         try:
-            chat_id_int = int(chat_id_str) # Renamed variable
-            if user_data_dict.get("subscribed_to_daily") and user_data_dict.get("daily_practice_mode") in ["dual", "morning_only"]:
-                _schedule_daily_jobs_for_user(chat_id_int, job_queue, user_data_dict)
-            # Removed the else for _remove_daily_jobs_for_user as _schedule_daily_jobs_for_user now handles removal internally.
-            # This ensures that if a user was subscribed but mode is now 'none', jobs are still cleared.
-            # Or, if they are not subscribed, _schedule_daily_jobs_for_user won't schedule new ones,
-            # and if old ones existed, they should have been removed when subscription status changed.
-            # For robustness, one might still want to explicitly remove if not subscribed:
-            elif not user_data_dict.get("subscribed_to_daily"):
-                 _remove_daily_jobs_for_user(str(chat_id_int), job_queue)
-
-        except ValueError: logger.error(f"Invalid chat_id in users.json: {chat_id_str}")
-        except Exception as e: logger.error(f"Error rescheduling for user {chat_id_str}: {e}")
-    logger.info("Bot started successfully!")
-    application.run_polling()
-
-if __name__ == "__main__":
-    main()
+            application.run_polling()
+        except Exception as e:
+            logger.error(f"=== Ошибка при запуске polling: {str(e)} ===")
+            raise
+    except Exception as e:
+        logger.error(f"=== Критическая ошибка: {str(e)} ===")
+        raise

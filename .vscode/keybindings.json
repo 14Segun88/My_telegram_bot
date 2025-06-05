@@ -1,0 +1,7 @@
+[
+    {
+        "key": "f5",
+        "command": "workbench.action.files.revert",
+        "when": "editorTextFocus"
+    }
+]

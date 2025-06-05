@@ -1,6 +1,14 @@
 # config.py
 import datetime
 import pytz 
+import logging
+
+# Настройка логирования
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
+logger = logging.getLogger(__name__)
 
 # === Telegram Bot Token ===
 BOT_TOKEN = "7759872103:AAFYDOohOBmIc3XithiuVwpbMA9OB-XD_Yw"  # ВАШ ТОКЕН
@@ -14,9 +22,9 @@ MAIN_CHANNEL_LINK = "https://t.me/sexandmind"
 ADMIN_CONTACT_USERNAME = "GoidaSegun" 
 
 # === Daily Content Timing (UTC) ===
-# Пример: 08:00 МСК = 05:00 UTC
-MORNING_PRACTICE_TIME_UTC = datetime.time(hour=2, minute=41, tzinfo=pytz.UTC)  # 08:00 МСК
-EVENING_PRACTICE_TIME_UTC = datetime.time(hour=2, minute=42, tzinfo=pytz.UTC)  # 17:00 МСК
+# Время практик в UTC (для МСК отнимите 3 часа)
+MORNING_PRACTICE_TIME_UTC = datetime.time(hour=12, minute=47, tzinfo=pytz.UTC)  # 15:47 МСК
+EVENING_PRACTICE_TIME_UTC = datetime.time(hour=12, minute=48, tzinfo=pytz.UTC)  # 15:48 МСК
 
 # === Test Offering Days ===
 TEST_OFFER_DAYS = [3, 5, 7, 9, 11, 13]

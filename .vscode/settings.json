@@ -1,0 +1,19 @@
+{
+    // File watching settings
+    "files.useExperimentalFileWatcher": true,
+    "files.usePolling": true,
+    "files.watcherDelay": 1000,
+    "files.autoSave": "off",
+    "files.hotExit": "onExitAndWindowClose",
+    "files.encoding": "utf8",
+    
+    // Auto refresh settings
+    "files.autoRefresh": true,
+    "files.watcherPolling": true,
+    "files.watcherPollingInterval": 1000,
+    
+    // Python settings
+    "python.defaultInterpreterPath": "/usr/bin/python3",
+    "python.languageServer": "Jedi",
+    "python.analysis.typeCheckingMode": "off"
+}
