@@ -23,8 +23,8 @@ ADMIN_CONTACT_USERNAME = "GoidaSegun"
 
 # === Daily Content Timing (UTC) ===
 # Время практик в UTC (для МСК отнимите 3 часа)
-MORNING_PRACTICE_TIME_UTC = datetime.time(hour=12, minute=47, tzinfo=pytz.UTC)  # 15:47 МСК
-EVENING_PRACTICE_TIME_UTC = datetime.time(hour=12, minute=48, tzinfo=pytz.UTC)  # 15:48 МСК
+MORNING_PRACTICE_TIME_UTC = datetime.time(hour=3, minute=3, tzinfo=pytz.UTC)  # 06:03 МСК
+EVENING_PRACTICE_TIME_UTC = datetime.time(hour=3, minute=4, tzinfo=pytz.UTC)  # 06:04 МСК
 
 # === Test Offering Days ===
 TEST_OFFER_DAYS = [3, 5, 7, 9, 11, 13]

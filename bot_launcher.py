@@ -13,15 +13,17 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-try:
+async def run_bot():
     logger.info("=== Запуск бота ===")
-    
-    # Импортируем и запускаем бота
-    from bot import main
-    main()
-    
-    logger.info("=== Бот запущен успешно ===")
-except Exception as e:
-    logger.error(f"=== Критическая ошибка при запуске бота: {str(e)} ===")
-    logger.error(f"=== Подробный трейсбэк: ===\n{traceback.format_exc()}")
-    raise
+    try:
+        from bot import main
+        await main()
+        logger.info("=== Бот запущен успешно ===")
+    except Exception as e:
+        logger.error(f"=== Критическая ошибка при запуске бота: {str(e)} ===")
+        logger.error(f"=== Подробный трейсбэк: ===\n{traceback.format_exc()}")
+        raise
+
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(run_bot())

@@ -2,6 +2,8 @@
 import logging
 import datetime
 import pytz
+import re
+import asyncio
 import html
 import traceback
 import json
@@ -16,6 +18,7 @@ from telegram import (
     Chat
 )
 from telegram.constants import ParseMode
+from telegram.error import TelegramError
 from telegram.ext import (
     Application,
     CommandHandler,
@@ -147,7 +150,7 @@ async def send_daily_practice_job(context: ContextTypes.DEFAULT_TYPE) -> None:
     if not practice_data:
         if practice_type == "morning" and current_day == 14 and not (day_content and day_content.get("morning")):
             logger.info(f"No morning practice content for day 14, user {chat_id}, offering test.")
-            await offer_test_if_not_taken(context, chat_id, user_data, config.KEY_TEST_ID, is_day14=True)
+            await offer_test_if_not_taken(context, chat_id, user_data, config.KEY_TEST_ID, is_day14=True, test_for_day=current_day)
             udm.update_last_sent_date(chat_id, "morning")
         else:
             logger.warning(f"No practice_data for day {current_day}, type {practice_type}, user {chat_id}.")
@@ -155,12 +158,13 @@ async def send_daily_practice_job(context: ContextTypes.DEFAULT_TYPE) -> None:
 
     kb = [[InlineKeyboardButton(practice_data["button_text"], callback_data=f"daily_ack_{current_day}_{practice_type}")],[InlineKeyboardButton("📖 В меню", callback_data=MENU_CALLBACK_MAIN)]]
     try:
-        await context.bot.send_message(chat_id, practice_data["text"], reply_markup=InlineKeyboardMarkup(kb), parse_mode=ParseMode.HTML)
+        # Устанавливаем более длинный таймаут для отправки сообщения
+        await context.bot.send_message(chat_id, practice_data["text"], reply_markup=InlineKeyboardMarkup(kb), parse_mode=ParseMode.HTML, write_timeout=30)
         udm.update_last_sent_date(chat_id, practice_type)
 
         if practice_type == "evening":
             if current_day in config.TEST_OFFER_DAYS or current_day == 14:
-                await offer_test_if_not_taken(context, chat_id, user_data, config.KEY_TEST_ID, is_day14=(current_day==14))
+                await offer_test_if_not_taken(context, chat_id, user_data, config.KEY_TEST_ID, is_day14=(current_day==14), test_for_day=current_day)
 
         if (practice_type == "evening" and user_data.get("daily_practice_mode") == "dual") or \
            (practice_type == "morning" and user_data.get("daily_practice_mode") == "morning_only"):
@@ -209,7 +213,7 @@ def _schedule_daily_jobs_for_user(chat_id: int, job_queue_instance, user_data: d
         )
         logger.info(f"✅ Создана вечерняя задача на {config.EVENING_PRACTICE_TIME_UTC}")
 
-async def offer_test_if_not_taken(context: ContextTypes.DEFAULT_TYPE, chat_id: int, user_data: dict, test_id: str, is_day14: bool = False):
+async def offer_test_if_not_taken(context: ContextTypes.DEFAULT_TYPE, chat_id: int, user_data: dict, test_id: str, is_day14: bool = False, test_for_day: int = None):
     test_info = test_engine.get_test_by_id(test_id)
     if not test_info: logger.error(f"Test {test_id} not found in test_engine."); return
 
@@ -225,7 +229,8 @@ async def offer_test_if_not_taken(context: ContextTypes.DEFAULT_TYPE, chat_id: i
 
     prompt_text_template = config.DAY14_FORCED_TEST_PROMPT_TEXT if is_day14 else config.TEST_INTRO_TEXT_TEMPLATE
     button_text = config.DAY14_FORCED_TEST_BUTTON_TEXT if is_day14 else config.TEST_BUTTON_YES_TEXT
-    callback_action = f"start_test_{test_id}_forced" if is_day14 else f"offer_test_yes_{test_id}"
+    callback_action_payload = f"{test_id}_day{test_for_day}" if test_for_day is not None else test_id
+    callback_action = f"start_test_{callback_action_payload}_forced" if is_day14 else f"offer_test_yes_{callback_action_payload}"
 
     text = escape_markdown_v2(prompt_text_template.format(test_name=test_info['name']))
     keyboard_rows = [[InlineKeyboardButton(button_text, callback_data=callback_action)]]
@@ -237,7 +242,7 @@ async def offer_test_if_not_taken(context: ContextTypes.DEFAULT_TYPE, chat_id: i
     udm.set_user_stage(chat_id, f"day14_forced_test_offered_{test_id}" if is_day14 else f"daily_test_offered_{test_id}")
 
 
-async def _start_test_logic(query_object_or_message, context: ContextTypes.DEFAULT_TYPE, chat_id: int, test_id: str, user_data: dict, is_forced: bool = False):
+async def _start_test_logic(query_object_or_message, context: ContextTypes.DEFAULT_TYPE, chat_id: int, test_id: str, user_data: dict, is_forced: bool = False, test_for_day_arg: int = None):
     test_data = test_engine.get_test_by_id(test_id)
     if not test_data:
         error_text = "Ошибка: Тест не найден."
@@ -256,6 +261,7 @@ async def _start_test_logic(query_object_or_message, context: ContextTypes.DEFAU
 
     active_test_payload = {"id": test_id, "current_question_idx": 0, "answers": []}
     if is_forced: active_test_payload["is_forced_day14"] = True
+    if test_for_day_arg is not None: active_test_payload["test_for_day"] = test_for_day_arg
     udm.update_user_data(chat_id, {"active_test": active_test_payload, "stage": f"in_test_{test_id}"})
     
     # Edit the message that triggered the test start, if it was a callback query
@@ -297,10 +303,19 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             await query.edit_message_text(text=original_text_html, reply_markup=new_reply_markup, parse_mode=ParseMode.HTML if hasattr(query.message, 'text_html') else None)
         except Exception as e: logger.warning(f"Could not edit markup for daily_ack: {e}"); await query.edit_message_reply_markup(reply_markup=None) # Try to remove markup at least
     elif data.startswith("start_test_"):
-        test_id = data.replace("start_test_", "").replace("_forced", ""); is_forced = "_forced" in data
-        await _start_test_logic(query, context, chat_id, test_id, user_data, is_forced=is_forced)
+        raw_payload = data.replace("start_test_", "")
+        is_forced = raw_payload.endswith("_forced")
+        main_payload = raw_payload[:-len("_forced")] if is_forced else raw_payload
+        parts = main_payload.split("_day")
+        test_id = parts[0]
+        test_day_for_offer = int(parts[1]) if len(parts) > 1 and parts[1].isdigit() else None
+        await _start_test_logic(query, context, chat_id, test_id, user_data, is_forced=is_forced, test_for_day_arg=test_day_for_offer)
     elif data.startswith("offer_test_yes_"):
-        test_id = data.replace("offer_test_yes_", ""); await _start_test_logic(query, context, chat_id, test_id, user_data)
+        main_payload = data.replace("offer_test_yes_", "")
+        parts = main_payload.split("_day")
+        test_id = parts[0]
+        test_day_for_offer = int(parts[1]) if len(parts) > 1 and parts[1].isdigit() else None
+        await _start_test_logic(query, context, chat_id, test_id, user_data, test_for_day_arg=test_day_for_offer)
     elif data.startswith("offer_test_no_"):
         udm.set_user_stage(chat_id, f"daily_test_declined_{data.replace('offer_test_no_', '')}")
         await query.edit_message_text(text=escape_markdown_v2(config.TEST_BUTTON_NO_TEXT) + "\n\nПрактики продолжатся\\. 😊", reply_markup=get_main_menu_keyboard(user_data), parse_mode=ParseMode.MARKDOWN_V2)
@@ -377,25 +392,43 @@ async def _handle_test_answer(query: CallbackQuery, context: ContextTypes.DEFAUL
             "active_test": None, "stage": f"awaiting_email_input_for_{test_id}",
             "pending_email_test_id": test_id, "pending_email_test_score": score,
             "pending_email_test_answers_indices": user_answer_indices,
-            "pending_email_test_is_forced_day14": is_forced_day14_test
+            "pending_email_test_is_forced_day14": is_forced_day14_test,
+            "current_daily_day": user_data.get("current_daily_day", 1)
         })
 
         await context.bot.send_message(chat_id, escaped_summary_text, parse_mode=ParseMode.MARKDOWN_V2)
 
-        # Send the second video note if it's Day 3 and the KEY_TEST_ID
-        if test_id == config.KEY_TEST_ID and \
-           not active_test_data.get("is_forced_day14", False) and \
-           user_data.get("current_daily_day") == 3:
+        test_result_summary = result_data.get("summary", "Результаты готовы!")
+        # active_test is cleared within record_test_taken
+        udm.record_test_taken(chat_id, test_id, test_result_summary, active_test_data["answers"])
+
+        # Логика отправки второго видеокружка
+        day_test_was_for = active_test_data.get("test_for_day", user_data.get("current_daily_day", 0)) # Use test_for_day from active_test if available
+        logger.info(f"[VideoNoteCheck] User {chat_id}, Test ID: {test_id}, Day Test Was For: {day_test_was_for}, Current User Day: {user_data.get('current_daily_day', 0)}, Target Test ID: {config.KEY_TEST_ID}")
+        if test_id == config.KEY_TEST_ID and day_test_was_for == 3:
+            logger.info(f"[VideoNoteCheck] Conditions MET for user {chat_id} to send 2nd video note.")
             try:
                 await context.bot.send_video_note(
                     chat_id=chat_id,
-                    video_note="DQACAgIAAxkBAAEBcn1oP05JTiwan2zPQWUoDfcrl4wfKgAC8IkAAsIT8UlCWZjM36ExGjYE"
+                    video_note="DQACAgIAAxkBAAEBcn1oP05JTiwan2zPQWUoDfcrl4wfKgAC8IkAAsIT8UlCWZjM36ExGjYE"  # ID второго видео
                 )
-                logger.info(f"Sent Day 3 post-test video note for test {test_id} to user {chat_id}")
-            except Exception as e_video:
-                logger.error(f"Failed to send Day 3 post-test video note: {e_video}")
+                logger.info(f"Successfully sent 2nd video note (heroine_type, day 3) to user {chat_id}")
+            except TelegramError as e_video2:
+                logger.error(f"TelegramError sending 2nd video note for user {chat_id}. Type: {type(e_video2).__name__}, Error: {e_video2}")
+            except Exception as e_video2_generic:
+                logger.error(f"Generic Exception sending 2nd video note for user {chat_id}: {e_video2_generic}")
+        else:
+            logger.info(f"[VideoNoteCheck] Conditions NOT MET for user {chat_id} to send 2nd video note. Test ID match: {test_id == config.KEY_TEST_ID}. Day 3 match (day_test_was_for == 3): {day_test_was_for == 3}.")
 
-        await context.bot.send_message(chat_id, escape_markdown_v2(config.EMAIL_REQUEST_TEXT), reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("📖 В меню", callback_data=MENU_CALLBACK_MAIN)]]), parse_mode=ParseMode.MARKDOWN_V2)
+        await query.edit_message_text(
+            text=escape_markdown_v2(test_result_summary),
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton(config.EMAIL_REQUEST_TEXT.split('\n')[0], callback_data=f"req_email_{test_id}")],
+                [InlineKeyboardButton("📖 В меню", callback_data=MENU_CALLBACK_MAIN)]
+            ]),
+            parse_mode=ParseMode.MARKDOWN_V2
+        )
+        udm.set_user_stage(chat_id, f"test_results_shown_{test_id}")
 
 async def _handle_consultation_request(query: CallbackQuery, context: ContextTypes.DEFAULT_TYPE, chat_id: int, user_data: dict, test_id: str):
     test_taken_info = user_data.get("tests_taken", {}).get(test_id)
@@ -534,7 +567,7 @@ async def handle_potential_email(update: Update, context: ContextTypes.DEFAULT_T
         email_feedback_part2 = ""
     else:
         email_feedback_part1 = f"😥 Ой, кажется, произошла техническая ошибка при отправке письма на _{escaped_email_md}_\\."
-        email_feedback_part2 = "\n\nНо не волнуйся, краткие результаты ты уже видел(а)\\! ✨"
+        email_feedback_part2 = "\n\nНо не волнуйся, краткие результаты ты уже видел\(а\)\\! ✨"
 
     consult_offer_text = f"""{email_feedback_part1}{email_feedback_part2}
 
@@ -633,63 +666,87 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
             logger.error(f"Exception while sending error message to user: {e_reply}")
 
 
-def main() -> None:
+async def main() -> None:
     logger.info("=== Начало запуска бота ===")
+    
+    # Логируем текущее время из конфига
+    logger.info("=== ВРЕМЯ ИЗ CONFIG.PY ===")
+    logger.info(f"Утреннее время: {config.MORNING_PRACTICE_TIME_UTC}")
+    logger.info(f"Вечернее время: {config.EVENING_PRACTICE_TIME_UTC}")
+
+    # Создание приложения с увеличенными таймаутами
+    logger.info("=== Создание приложения ===")
+    application = ApplicationBuilder().token(config.BOT_TOKEN)\
+        .connect_timeout(30)\
+        .read_timeout(30)\
+        .write_timeout(30)\
+        .pool_timeout(60)\
+        .connection_pool_size(50)\
+        .build()
+    job_queue = application.job_queue
+    
+    # ПРИНУДИТЕЛЬНО очищаем ВСЕ задачи планировщика
+    logger.info("=== ОЧИСТКА ВСЕХ ЗАДАЧ ===")
+    for job in job_queue.jobs():
+        job.schedule_removal()
+        logger.info(f"Удалена старая задача: {job.name}")
+
+    # Загружаем существующих пользователей и планируем задачи
+    logger.info("Loading existing users and scheduling jobs...")
+    for user_id, user_data in udm.load_users().items():
+        if user_data.get("subscribed_to_daily"):
+            logger.info(f"=== ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ {user_id} ===")
+            logger.info(f"Утром: {config.MORNING_PRACTICE_TIME_UTC}")
+            logger.info(f"Вечером: {config.EVENING_PRACTICE_TIME_UTC}")
+            _schedule_daily_jobs_for_user(int(user_id), job_queue, user_data)
+
+    # Обработчики команд
+    logger.info("=== Добавление обработчиков команд ===")
+    application.add_handler(CommandHandler("start", start_command))
+    application.add_handler(CommandHandler("menu", menu_command))
+    application.add_handler(CommandHandler("stopdaily", stopdaily_command))
+    application.add_handler(CommandHandler("myid", myid_command))
+    application.add_handler(CommandHandler("setday", setday_command))
+    application.add_handler(CommandHandler("forcesend", forcesend_command))
+
+    # Обработчик кнопок
+    logger.info("=== Добавление обработчика кнопок ===")
+    application.add_handler(CallbackQueryHandler(button_handler))
+
+    # Обработчик текстовых сообщений
+    logger.info("=== Добавление обработчика текстовых сообщений ===")
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_potential_email))
+
+    # Обработчик ошибок
+    logger.info("=== Добавление обработчика ошибок ===")
+    application.add_error_handler(error_handler)
+
+    # Запуск бота
+    logger.info("=== Инициализация и запуск компонентов бота ===")
+    application_for_shutdown = application # Ensure it's in scope for finally
     try:
-        import importlib
-        import config
-        logger.info("=== Перезагрузка конфига ===")
-        importlib.reload(config)
-        
-        logger.info("=== Создание приложения ===")
-        application = Application.builder().token(config.BOT_TOKEN).build()
-        job_queue = application.job_queue
-        
-        # ПРИНУДИТЕЛЬНО очищаем ВСЕ задачи планировщика
-        logger.info("=== ОЧИСТКА ВСЕХ ЗАДАЧ ===")
-        for job in job_queue.jobs():
-            job.schedule_removal()
-            logger.info(f"Удалена старая задача: {job.name}")
-        
-        # Логируем текущее время из config
-        logger.info("=== ВРЕМЯ ИЗ CONFIG.PY ===")
-        logger.info(f"Утреннее время: {config.MORNING_PRACTICE_TIME_UTC}")
-        logger.info(f"Вечернее время: {config.EVENING_PRACTICE_TIME_UTC}")
-        
-        # Загружаем пользователей и планируем задачи
-        logger.info("Loading existing users and scheduling jobs...")
-        all_users = udm.load_users()
-        for chat_id_str, user_data_dict in all_users.items():
-            try:
-                chat_id_int = int(chat_id_str)
-                if user_data_dict.get("subscribed_to_daily") and user_data_dict.get("daily_practice_mode") in ["dual", "morning_only"]:
-                    _schedule_daily_jobs_for_user(chat_id_int, job_queue, user_data_dict)
-                elif not user_data_dict.get("subscribed_to_daily"):
-                    _remove_daily_jobs_for_user(str(chat_id_int), job_queue)
-            except Exception as e:
-                logger.error(f"Error scheduling jobs for user {chat_id_str}: {e}")
-        
-        # Регистрируем обработчики команд
-        application.add_handler(CommandHandler("start", start_command))
-        application.add_handler(CommandHandler("menu", menu_command))
-        application.add_handler(CommandHandler("stopdaily", stopdaily_command))
-        application.add_handler(CommandHandler("myid", myid_command))
-        application.add_handler(CommandHandler("setday", setday_command))
-        application.add_handler(CommandHandler("forcesend", forcesend_command))
-        application.add_handler(CallbackQueryHandler(button_handler))
-        application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_potential_email))
-        
-        # Регистрируем обработчик ошибок
-        application.add_error_handler(error_handler)
-        
-        logger.info("=== Бот запущен успешно ===")
-        logger.info(f"=== Токен бота: {config.BOT_TOKEN[:5]}...{config.BOT_TOKEN[-5:]} ===")
-        
-        try:
-            application.run_polling()
-        except Exception as e:
-            logger.error(f"=== Ошибка при запуске polling: {str(e)} ===")
-            raise
+        await application_for_shutdown.initialize()
+        await application_for_shutdown.start()
+        await application_for_shutdown.updater.start_polling(drop_pending_updates=True)
+        logger.info(f"=== Бот запущен и слушает обновления. Токен: {config.BOT_TOKEN[:6]}...{config.BOT_TOKEN[-4:]} ===")
+        # Держать главный поток живым, пока бот работает
+        stop_event = asyncio.Event()
+        await stop_event.wait() # Бесконечное ожидание, пока не будет вызван stop_event.set()
+    except (KeyboardInterrupt, SystemExit):
+        logger.info("=== Получен сигнал KeyboardInterrupt/SystemExit, начинаю остановку бота... ===")
     except Exception as e:
-        logger.error(f"=== Критическая ошибка: {str(e)} ===")
-        raise
+        logger.error(f"=== Произошла ошибка в главном цикле работы бота: {str(e)} ===")
+        logger.error(f"Подробности ошибки: {traceback.format_exc()}")
+    finally:
+        logger.info("=== Начало процедуры остановки бота... ===")
+        if application_for_shutdown.updater and application_for_shutdown.updater.running:
+            logger.info("Остановка Updater...")
+            await application_for_shutdown.updater.stop()
+            logger.info("Updater остановлен.")
+        if application_for_shutdown.running:
+            logger.info("Остановка Application...")
+            await application_for_shutdown.stop()
+            logger.info("Application остановлен.")
+        logger.info("Вызов application.shutdown()...")
+        await application_for_shutdown.shutdown()
+        logger.info("=== Бот полностью остановлен. ===")

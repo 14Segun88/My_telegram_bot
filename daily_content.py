@@ -108,6 +108,11 @@ for day_num in range(1, TOTAL_DAYS + 1):
     else: content_for_day_structured["evening"] = None
     DAILY_CONTENT[day_num] = content_for_day_structured
 
+def get_daily_content(day_number: int, part: str) -> str:
+    """Get content for a specific day and part (morning/evening)"""
+    content = DAILY_CONTENT[day_number][part]
+    return escape_markdown_v2(content["text"])
+
 def get_extended_morning_content(day_number_in_extended_cycle: int):
     raw_text = PRACTICES_EXTENDED_CYCLE_DATA.get(day_number_in_extended_cycle, {}).get("morning_text")
     if raw_text:
