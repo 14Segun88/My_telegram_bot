@@ -184,34 +184,50 @@ def _schedule_daily_jobs_for_user(chat_id: int, job_queue_instance, user_data: d
             job.schedule_removal()
             logger.info(f"Удалена старая задача: {job.name}")
     
+    current_day = user_data.get("current_daily_day", 0)
+    
+    morning_time_to_use = config.MORNING_PRACTICE_TIME_UTC
+    evening_time_to_use = config.EVENING_PRACTICE_TIME_UTC
+
+    if current_day == 3: # День предложения теста "Ключ к Героине"
+        try:
+            h_m_morning = list(map(int, config.DAY3_KEY_TEST_OFFER_MORNING_UTC.split(':')))
+            morning_time_to_use = datetime.time(hour=h_m_morning[0], minute=h_m_morning[1], tzinfo=pytz.UTC)
+            h_m_evening = list(map(int, config.DAY3_KEY_TEST_OFFER_EVENING_UTC.split(':')))
+            evening_time_to_use = datetime.time(hour=h_m_evening[0], minute=h_m_evening[1], tzinfo=pytz.UTC)
+            logger.info(f"День {current_day} является днем предложения теста. Используем время из DAY3_KEY_TEST_OFFER_...UTC.")
+        except Exception as e:
+            logger.error(f"Ошибка при парсинге времени для Дня 3 из config: {e}. Используем стандартное время.")
+    # Добавить сюда elif для других дней из TEST_OFFER_DAYS, если нужно
+
     # Логируем время которое будем использовать
-    logger.info(f"=== ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ {chat_id} ===")
-    logger.info(f"Утром: {config.MORNING_PRACTICE_TIME_UTC}")
-    logger.info(f"Вечером: {config.EVENING_PRACTICE_TIME_UTC}")
+    logger.info(f"=== ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ {chat_id} (День {current_day}) ===")
+    logger.info(f"Утром: {morning_time_to_use}")
+    logger.info(f"Вечером: {evening_time_to_use}")
     
     # Создаем НОВЫЕ задачи с актуальным временем
     mode = user_data.get("daily_practice_mode", "dual")
     if mode in ["dual", "morning_only"]:
         job_queue_instance.run_daily(
             send_daily_practice_job, 
-            config.MORNING_PRACTICE_TIME_UTC,  # ПРЯМО из config
+            morning_time_to_use,
             chat_id=chat_id, 
             name=f"{job_name_prefix}_morning", 
             data={"pt": "morning"},
             job_kwargs={'misfire_grace_time': 60}
         )
-        logger.info(f"✅ Создана утренняя задача на {config.MORNING_PRACTICE_TIME_UTC}")
+        logger.info(f"✅ Создана утренняя задача на {morning_time_to_use}")
         
     if mode == "dual":
         job_queue_instance.run_daily(
             send_daily_practice_job, 
-            config.EVENING_PRACTICE_TIME_UTC,  # ПРЯМО из config
+            evening_time_to_use,
             chat_id=chat_id, 
             name=f"{job_name_prefix}_evening", 
             data={"pt": "evening"},
             job_kwargs={'misfire_grace_time': 60}
         )
-        logger.info(f"✅ Создана вечерняя задача на {config.EVENING_PRACTICE_TIME_UTC}")
+        logger.info(f"✅ Создана вечерняя задача на {evening_time_to_use}")
 
 async def offer_test_if_not_taken(context: ContextTypes.DEFAULT_TYPE, chat_id: int, user_data: dict, test_id: str, is_day14: bool = False, test_for_day: int = None):
     test_info = test_engine.get_test_by_id(test_id)
@@ -384,23 +400,25 @@ async def _handle_test_answer(query: CallbackQuery, context: ContextTypes.DEFAUL
         user_answer_indices = [next(j for j, opt in enumerate(test_definition["questions"][i]["options"]) if opt["value"] == saved_val) for i, saved_val in enumerate(active_test_data["answers"])]
         result_data = test_engine.get_test_result(test_id, score, user_answer_indices)
         summary_text_from_engine = result_data["summary"]
-        escaped_summary_text = escape_markdown_v2(summary_text_from_engine)
 
+        # Записываем, что тест пройден (один раз)
         udm.record_test_taken(chat_id, test_id, summary=summary_text_from_engine, answers=active_test_data["answers"])
+        
         is_forced_day14_test = active_test_data.get("is_forced_day14", False)
+        
+        # Обновляем данные пользователя: сбрасываем активный тест, устанавливаем стадию для ввода email,
+        # и сохраняем данные, необходимые для отправки email.
         udm.update_user_data(chat_id, {
-            "active_test": None, "stage": f"awaiting_email_input_for_{test_id}",
-            "pending_email_test_id": test_id, "pending_email_test_score": score,
+            "active_test": None, 
+            "stage": f"awaiting_email_input_for_{test_id}",
+            "pending_email_test_id": test_id, 
+            "pending_email_test_score": score,
             "pending_email_test_answers_indices": user_answer_indices,
-            "pending_email_test_is_forced_day14": is_forced_day14_test,
-            "current_daily_day": user_data.get("current_daily_day", 1)
+            "pending_email_test_is_forced_day14": is_forced_day14_test
         })
 
-        await context.bot.send_message(chat_id, escaped_summary_text, parse_mode=ParseMode.MARKDOWN_V2)
-
-        test_result_summary = result_data.get("summary", "Результаты готовы!")
-        # active_test is cleared within record_test_taken
-        udm.record_test_taken(chat_id, test_id, test_result_summary, active_test_data["answers"])
+        # Отправляем пользователю запрос на ввод email
+        await context.bot.send_message(chat_id, escape_markdown_v2(config.EMAIL_REQUEST_TEXT), parse_mode=ParseMode.MARKDOWN_V2)
 
         # Логика отправки второго видеокружка
         day_test_was_for = active_test_data.get("test_for_day", user_data.get("current_daily_day", 0)) # Use test_for_day from active_test if available
@@ -420,15 +438,6 @@ async def _handle_test_answer(query: CallbackQuery, context: ContextTypes.DEFAUL
         else:
             logger.info(f"[VideoNoteCheck] Conditions NOT MET for user {chat_id} to send 2nd video note. Test ID match: {test_id == config.KEY_TEST_ID}. Day 3 match (day_test_was_for == 3): {day_test_was_for == 3}.")
 
-        await query.edit_message_text(
-            text=escape_markdown_v2(test_result_summary),
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton(config.EMAIL_REQUEST_TEXT.split('\n')[0], callback_data=f"req_email_{test_id}")],
-                [InlineKeyboardButton("📖 В меню", callback_data=MENU_CALLBACK_MAIN)]
-            ]),
-            parse_mode=ParseMode.MARKDOWN_V2
-        )
-        udm.set_user_stage(chat_id, f"test_results_shown_{test_id}")
 
 async def _handle_consultation_request(query: CallbackQuery, context: ContextTypes.DEFAULT_TYPE, chat_id: int, user_data: dict, test_id: str):
     test_taken_info = user_data.get("tests_taken", {}).get(test_id)
@@ -523,43 +532,57 @@ async def handle_potential_email(update: Update, context: ContextTypes.DEFAULT_T
     email_sent_successfully = email_sender.send_email(recipient_email=email_text, subject=subject, html_body=full_html_result)
     email_status_key = "success" if email_sent_successfully else "failure"
 
-    tests_taken_data = user_data.get("tests_taken", {}) # Ensure tests_taken_data is a dict
-
-    if test_id in tests_taken_data:
-        tests_taken_data[test_id].update({"email_recipient": email_text, "email_sent_status": email_status_key})
-    else:
-        summary_for_record = test_result_details.get("summary", "N/A")
-        # Ensure answers for record are from the pending state if not already in tests_taken_data
-        answers_for_record = user_data.get("pending_email_test_answers_indices", []) # This should be actual answers, not indices. Let's assume `user_answers_indices` refers to the raw answers list from active_test
-        # The `record_test_taken` already saved answers. If this branch is hit, it means `record_test_taken` wasn't called or test_id was cleared.
-        # For consistency, let's re-fetch the answers that were used for the score.
-        # This part needs careful review of `udm.record_test_taken` and `active_test_data["answers"]`
-        # Assuming `user_data.get("pending_email_test_answers_indices")` was meant to be the raw answers.
-        # However, `udm.record_test_taken` saves `active_test_data["answers"]` which are values.
-        # Let's use what was passed to `get_test_result`: `user_answers_indices` (which are indices)
-        # This part is a bit confusing in the original logic. `record_test_taken` saves `answers` (values).
-        # `pending_email_test_answers_indices` are indices.
-        # Let's assume the intent was to store the raw values if a new record is created here.
-        # This typically shouldn't happen if `record_test_taken` was successful.
-        # For now, I'll use the indices as per `pending_email_test_answers_indices`.
-        # This might need adjustment based on how `tests_taken.answers` is used elsewhere.
-        
-        # Re-evaluating: `udm.record_test_taken` is called BEFORE this email handling.
-        # So, `tests_taken_data[test_id]` should already exist.
-        # This `else` block might be redundant or for a very specific edge case.
-        # If it's hit, it implies an issue. For safety, I'll log and use available data.
-        logger.warning(f"Test {test_id} not found in tests_taken when handling email for user {chat_id}. Creating new entry.")
-        tests_taken_data[test_id] = {
-            "summary": summary_for_record, 
-            "answers": user_data.get("pending_email_test_answers_values", []), # Assuming raw values might be stored here if available
+    # Update tests_taken with email status
+    tests_taken_data = user_data.get("tests_taken", {})
+    if test_id not in tests_taken_data:
+        # Этот случай должен быть редким, если record_test_taken отработал корректно.
+        logger.warning(f"Test {test_id} not found in tests_taken for user {chat_id} when trying to log email status. Creating a minimal entry for email logging.")
+        tests_taken_data[test_id] = { 
+            "summary": f"Entry for {test_id} created during email status update.", # Минимальная сводка
+            "answers": [], # Не можем надежно получить ответы здесь
             "date_taken": datetime.datetime.now(pytz.UTC).strftime('%Y-%m-%d %H:%M:%S'),
-            "email_recipient": email_text, 
-            "email_sent_status": email_status_key,
-            "consult_interest_shown": False # Default for new entry
+            "consult_interest_shown": False # По умолчанию
         }
+    
+    # Убедимся, что конкретная запись теста существует перед обновлением
+    if test_id not in tests_taken_data: 
+         tests_taken_data[test_id] = {} # На всякий случай, если tests_taken_data[test_id] все еще отсутствует
 
+    tests_taken_data[test_id].update({
+        "email_recipient": email_text, 
+        "email_sent_status": email_status_key
+    })
 
-    udm.update_user_data(chat_id, {"tests_taken": tests_taken_data, "pending_email_test_id": None, "pending_email_test_score": None, "pending_email_test_answers_indices": None, "pending_email_test_is_forced_day14": False, "pending_email_test_answers_values": None}) # Clear pending values too
+    # Отправляем подтверждение пользователю
+    if email_sent_successfully:
+        message_to_user = config.EMAIL_SENT_SUCCESS_TEXT.format(user_email=email_text)
+    else:
+        message_to_user = config.EMAIL_SENT_FAILURE_TEXT.format(user_email=email_text, admin_username=config.ADMIN_CONTACT_USERNAME)
+    
+    await update.message.reply_text(escape_markdown_v2(message_to_user), parse_mode=ParseMode.MARKDOWN_V2)
+
+    # Admin Notification Logic
+    escaped_email_md = escape_markdown_v2(email_text) 
+    if email_sent_successfully:
+        admin_message = f"✅ Успешно отправлены результаты теста «{subj_test_name}» пользователю {chat_id} ({user_obj.username or 'NoUsername'}) на email: {escaped_email_md}."
+    else:
+        admin_message = f"❌ Ошибка при отправке результатов теста «{subj_test_name}» пользователю {chat_id} ({user_obj.username or 'NoUsername'}) на email: {escaped_email_md}."
+    
+    if config.ADMIN_NOTIFICATION_CHAT_ID:
+        try:
+            await context.bot.send_message(chat_id=config.ADMIN_NOTIFICATION_CHAT_ID, text=admin_message, parse_mode=ParseMode.MARKDOWN_V2)
+        except Exception as e_admin_notify:
+            logger.error(f"Failed to send admin notification about email status: {e_admin_notify}")
+
+    # Очищаем временное состояние и сбрасываем стадию
+    udm.update_user_data(chat_id, {
+        "tests_taken": tests_taken_data, # Сохраняем обновленные tests_taken
+        "pending_email_test_id": None,
+        "pending_email_test_score": None,
+        "pending_email_test_answers_indices": None,
+        "pending_email_test_is_forced_day14": False,
+        "stage": None  # Сбрасываем стадию
+    })
 
     escaped_email_md = escape_markdown_v2(email_text)
     if email_sent_successfully:

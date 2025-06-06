@@ -23,10 +23,14 @@ ADMIN_CONTACT_USERNAME = "GoidaSegun"
 
 # === Daily Content Timing (UTC) ===
 # Время практик в UTC (для МСК отнимите 3 часа)
-MORNING_PRACTICE_TIME_UTC = datetime.time(hour=3, minute=3, tzinfo=pytz.UTC)  # 06:03 МСК
-EVENING_PRACTICE_TIME_UTC = datetime.time(hour=3, minute=4, tzinfo=pytz.UTC)  # 06:04 МСК
+MORNING_PRACTICE_TIME_UTC = datetime.time(hour=15, minute=55, tzinfo=pytz.UTC)  # 18:55 MSK
+EVENING_PRACTICE_TIME_UTC = datetime.time(hour=15, minute=56, tzinfo=pytz.UTC)  # 18:56 MSK
 
 # === Test Offering Days ===
+DAY1_KEY_TEST_OFFER_MORNING_UTC = "14:54" # Placeholder, not used for Day 1 practices, but good to have a value
+DAY1_KEY_TEST_OFFER_EVENING_UTC = "14:55" # Placeholder
+DAY3_KEY_TEST_OFFER_MORNING_UTC = "15:59"  # 18:59 MSK
+DAY3_KEY_TEST_OFFER_EVENING_UTC = "16:00"  # 19:00 MSK
 TEST_OFFER_DAYS = [3, 5, 7, 9, 11, 13]
 KEY_TEST_ID = "heroine_type"
 
@@ -34,10 +38,10 @@ KEY_TEST_ID = "heroine_type"
 CONSULTATION_PRICE_RUB = 5000
 
 # === Email (SMTP) Configuration ===
-EMAIL_SENDER_NAME = "Женская Психология Бот"
-EMAIL_HOST_USER = "sexxxandmind@gmail.com"
-EMAIL_HOST_PASSWORD = "GalinaTamara2025!"
-EMAIL_HOST = "smtp.gmail.com"
+EMAIL_SENDER_NAME = "Команда Sexandmind"
+EMAIL_HOST_USER = "sexandmind@bk.ru"
+EMAIL_HOST_PASSWORD = "62kWyXCWa63990nfzJAC"  # Пароль приложения для sexandmind@bk.ru
+EMAIL_HOST = "smtp.mail.ru"  # SMTP для Mail.ru Group (включая bk.ru)
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
@@ -77,6 +81,9 @@ SELECT_TEST_TEXT = "Выбери тест, который раскроет тв�
 
 EMAIL_REQUEST_TEXT = "🎉 Супер! Тест пройден! 💌\nЧтобы получить ПОЛНУЮ расшифровку с сочными деталями прямо на почту, просто напиши свой email ниже 👇"
 EMAIL_INVALID_TEXT = "Ой, кажется, это не совсем похоже на email... 🙈 Попробуешь еще разок, пожалуйста? 😊"
+
+EMAIL_SENT_SUCCESS_TEXT = "💌 Отлично! Подробные результаты теста уже летят на твою почту {user_email}. Проверяй входящие (и папку 'Спам', на всякий случай 😉)!"
+EMAIL_SENT_FAILURE_TEXT = "Ой, что-то пошло не так при отправке письма на {user_email}... 😥 Пожалуйста, попробуй еще раз чуть позже или свяжись с администратором @{admin_username}, если проблема повторится."
 
 CONSULTATION_OFFER_BUTTON_YES_TEXT = f"Да, хочу консультацию ({CONSULTATION_PRICE_RUB}₽) 💖"
 CONSULTATION_OFFER_BUTTON_NO_TEXT = "Спасибо, не сейчас 🙏"

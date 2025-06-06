@@ -3,6 +3,8 @@ import logging
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.header import Header
+from email.utils import formatdate, make_msgid, formataddr
 import config
 
 logger = logging.getLogger(__name__)
@@ -25,9 +27,11 @@ def send_email(recipient_email: str, subject: str, html_body: str, sender_name: 
         return False
 
     msg = MIMEMultipart('alternative')
-    msg['Subject'] = subject
-    msg['From'] = f"{effective_sender_name} <{config.EMAIL_HOST_USER}>"
+    msg['Subject'] = Header(subject, 'utf-8')
+    msg['From'] = formataddr((str(Header(effective_sender_name, 'utf-8')), config.EMAIL_HOST_USER))
     msg['To'] = recipient_email
+    msg['Date'] = formatdate(localtime=True)
+    msg['Message-ID'] = make_msgid()
 
     # Убедимся, что html_body это строка
     if not isinstance(html_body, str):
