@@ -7,12 +7,14 @@ import asyncio
 import html
 import traceback
 import json
+import importlib
 
 from telegram import (
     Update,
     InlineKeyboardButton,
     InlineKeyboardMarkup,
-    ReplyKeyboardRemove,
+    BotCommand,
+    BotCommandScopeChat,
     CallbackQuery,
     Message,
     Chat
@@ -69,7 +71,12 @@ def get_main_menu_keyboard(user_data: dict = None) -> InlineKeyboardMarkup:
         keyboard.append([InlineKeyboardButton("⏸️ Остановить практики", callback_data="menu_stop_daily")])
     else:
         keyboard.append([InlineKeyboardButton(config.SUBSCRIBE_BUTTON_TEXT, callback_data="menu_subscribe_daily")])
+    
     keyboard.append([InlineKeyboardButton(config.MAIN_CHANNEL_BUTTON_TEXT, url=config.MAIN_CHANNEL_LINK)])
+
+    # "Купить консультацию" теперь третья кнопка
+    keyboard.append([InlineKeyboardButton("Купить консультацию", callback_data="post_email_consult_yes_menu")])
+    
     return InlineKeyboardMarkup(keyboard)
 
 async def menu_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -156,11 +163,29 @@ async def send_daily_practice_job(context: ContextTypes.DEFAULT_TYPE) -> None:
             logger.warning(f"No practice_data for day {current_day}, type {practice_type}, user {chat_id}.")
         return
 
-    kb = [[InlineKeyboardButton(practice_data["button_text"], callback_data=f"daily_ack_{current_day}_{practice_type}")],[InlineKeyboardButton("📖 В меню", callback_data=MENU_CALLBACK_MAIN)]]
+    # Main practice message
+    # Send practice message
+    kb = [
+        [InlineKeyboardButton(practice_data["button_text"], callback_data=f"daily_ack_{current_day}_{practice_type}")],
+        [
+            InlineKeyboardButton("Купить консультацию", callback_data="post_email_consult_yes_practice"),
+            InlineKeyboardButton("📖 В меню", callback_data=MENU_CALLBACK_MAIN)
+        ]
+    ]
     try:
-        # Устанавливаем более длинный таймаут для отправки сообщения
-        await context.bot.send_message(chat_id, practice_data["text"], reply_markup=InlineKeyboardMarkup(kb), parse_mode=ParseMode.HTML, write_timeout=30)
+        # Send practice with a longer timeout
+        await context.bot.send_message(
+            chat_id=chat_id,
+            text=practice_data["text"],
+            reply_markup=InlineKeyboardMarkup(kb),
+            parse_mode=ParseMode.HTML,
+            write_timeout=30
+        )
         udm.update_last_sent_date(chat_id, practice_type)
+
+        # Предложение о консультации теперь встроено в клавиатуру
+        
+
 
         if practice_type == "evening":
             if current_day in config.TEST_OFFER_DAYS or current_day == 14:
@@ -178,7 +203,7 @@ async def send_daily_practice_job(context: ContextTypes.DEFAULT_TYPE) -> None:
 def _schedule_daily_jobs_for_user(chat_id: int, job_queue_instance, user_data: dict):
     job_name_prefix = str(chat_id)
     
-    # ПРИНУДИТЕЛЬНО удаляем ВСЕ старые задачи для этого пользователя
+    # 1. Принудительно удаляем все старые задачи для этого пользователя
     for job in job_queue_instance.jobs():
         if job.name and job.name.startswith(job_name_prefix):
             job.schedule_removal()
@@ -186,26 +211,43 @@ def _schedule_daily_jobs_for_user(chat_id: int, job_queue_instance, user_data: d
     
     current_day = user_data.get("current_daily_day", 0)
     
+    # 2. Устанавливаем время по умолчанию
     morning_time_to_use = config.MORNING_PRACTICE_TIME_UTC
     evening_time_to_use = config.EVENING_PRACTICE_TIME_UTC
 
-    if current_day == 3: # День предложения теста "Ключ к Героине"
+    # 3. Проверяем, есть ли особое время для текущего дня (например, День 3)
+    if current_day == 3: 
         try:
-            h_m_morning = list(map(int, config.DAY3_KEY_TEST_OFFER_MORNING_UTC.split(':')))
-            morning_time_to_use = datetime.time(hour=h_m_morning[0], minute=h_m_morning[1], tzinfo=pytz.UTC)
-            h_m_evening = list(map(int, config.DAY3_KEY_TEST_OFFER_EVENING_UTC.split(':')))
-            evening_time_to_use = datetime.time(hour=h_m_evening[0], minute=h_m_evening[1], tzinfo=pytz.UTC)
-            logger.info(f"День {current_day} является днем предложения теста. Используем время из DAY3_KEY_TEST_OFFER_...UTC.")
-        except Exception as e:
-            logger.error(f"Ошибка при парсинге времени для Дня 3 из config: {e}. Используем стандартное время.")
-    # Добавить сюда elif для других дней из TEST_OFFER_DAYS, если нужно
+            morning_time_val = config.DAY3_KEY_TEST_OFFER_MORNING_UTC
+            evening_time_val = config.DAY3_KEY_TEST_OFFER_EVENING_UTC
 
-    # Логируем время которое будем использовать
+            # Обрабатываем и str ('HH:MM'), и datetime.time из конфига
+            if isinstance(morning_time_val, str):
+                h, m = map(int, morning_time_val.split(':'))
+                morning_time_to_use = datetime.time(hour=h, minute=m, tzinfo=pytz.UTC)
+            else:
+                morning_time_to_use = morning_time_val
+
+            if isinstance(evening_time_val, str):
+                h, m = map(int, evening_time_val.split(':'))
+                evening_time_to_use = datetime.time(hour=h, minute=m, tzinfo=pytz.UTC)
+            else:
+                evening_time_to_use = evening_time_val
+            
+            logger.info(f"День 3 (тест.предложение): Используем специальное время: {morning_time_to_use.strftime('%H:%M:%S%z')}, {evening_time_to_use.strftime('%H:%M:%S%z')}")
+        
+        except Exception as e:
+            logger.error(f"Ошибка при использовании времени для Дня 3 из config: {e}. Используем стандартное время.")
+            morning_time_to_use = config.MORNING_PRACTICE_TIME_UTC
+            evening_time_to_use = config.EVENING_PRACTICE_TIME_UTC
+            logger.info(f"День 3 (тест.предложение): Откат к стандартному времени: {morning_time_to_use.strftime('%H:%M:%S%z')}, {evening_time_to_use.strftime('%H:%M:%S%z')}")
+
+    # 4. Логируем итоговое время, которое будет использоваться
     logger.info(f"=== ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ {chat_id} (День {current_day}) ===")
-    logger.info(f"Утром: {morning_time_to_use}")
-    logger.info(f"Вечером: {evening_time_to_use}")
+    logger.info(f"Утром: {morning_time_to_use.strftime('%H:%M:%S%z')}")
+    logger.info(f"Вечером: {evening_time_to_use.strftime('%H:%M:%S%z')}")
     
-    # Создаем НОВЫЕ задачи с актуальным временем
+    # 5. Создаем новые задачи с актуальным временем
     mode = user_data.get("daily_practice_mode", "dual")
     if mode in ["dual", "morning_only"]:
         job_queue_instance.run_daily(
@@ -216,7 +258,7 @@ def _schedule_daily_jobs_for_user(chat_id: int, job_queue_instance, user_data: d
             data={"pt": "morning"},
             job_kwargs={'misfire_grace_time': 60}
         )
-        logger.info(f"✅ Создана утренняя задача на {morning_time_to_use}")
+        logger.info(f"✅ Создана утренняя задача на {morning_time_to_use.strftime('%H:%M:%S%z')}")
         
     if mode == "dual":
         job_queue_instance.run_daily(
@@ -227,7 +269,7 @@ def _schedule_daily_jobs_for_user(chat_id: int, job_queue_instance, user_data: d
             data={"pt": "evening"},
             job_kwargs={'misfire_grace_time': 60}
         )
-        logger.info(f"✅ Создана вечерняя задача на {evening_time_to_use}")
+        logger.info(f"✅ Создана вечерняя задача на {evening_time_to_use.strftime('%H:%M:%S%z')}")
 
 async def offer_test_if_not_taken(context: ContextTypes.DEFAULT_TYPE, chat_id: int, user_data: dict, test_id: str, is_day14: bool = False, test_for_day: int = None):
     test_info = test_engine.get_test_by_id(test_id)
@@ -346,8 +388,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             except IndexError: logger.error(f"IndexError parsing testans: {data}. Parts: {parts}"); await query.edit_message_text("Ошибка ответа(I).")
         else: logger.error(f"Invalid format for testans: {data_payload}. Parts: {len(parts)}"); await query.edit_message_text("Ошибка ответа(F).")
     elif data.startswith("post_email_consult_yes_"):
-        test_id_from_cb = data.replace("post_email_consult_yes_", "")
-        await _handle_consultation_request(query, context, chat_id, user_data, test_id_from_cb)
+        await send_payment_info(update, context)
     elif data.startswith("post_email_consult_no_"):
         udm.set_user_stage(chat_id, f"consult_declined_after_email_{data.replace('post_email_consult_no_', '')}")
         await query.edit_message_text(text=escape_markdown_v2(config.CONSULTATION_DECLINED_TEXT), reply_markup=get_main_menu_keyboard(user_data),parse_mode=ParseMode.MARKDOWN_V2)
@@ -357,6 +398,9 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         user_data = udm.get_user_data(chat_id); _schedule_daily_jobs_for_user(chat_id, context.job_queue, user_data)
         think_text = escape_markdown_v2(config.CONSULTATION_THINK_LATER_TEXT.format(admin_username=config.ADMIN_CONTACT_USERNAME))
         await query.edit_message_text(text=think_text, reply_markup=get_main_menu_keyboard(user_data), parse_mode=ParseMode.MARKDOWN_V2)
+    elif data == "offer_consultation":
+        await _handle_consultation_request(query, context, chat_id, user_data, test_id=user_data.get("pending_email_test_id"))
+        return
 
 
 async def _send_test_question(context: ContextTypes.DEFAULT_TYPE, chat_id: int, test_data: dict, question_idx: int, test_id_for_callback: str):
@@ -417,8 +461,16 @@ async def _handle_test_answer(query: CallbackQuery, context: ContextTypes.DEFAUL
             "pending_email_test_is_forced_day14": is_forced_day14_test
         })
 
-        # Отправляем пользователю запрос на ввод email
-        await context.bot.send_message(chat_id, escape_markdown_v2(config.EMAIL_REQUEST_TEXT), parse_mode=ParseMode.MARKDOWN_V2)
+        # Отправляем пользователю запрос на ввод email с кнопкой консультации
+        
+        await context.bot.send_message(
+            chat_id, 
+            escape_markdown_v2(config.EMAIL_REQUEST_TEXT), 
+            parse_mode=ParseMode.MARKDOWN_V2
+        )
+
+        # Отправляем предложение о консультации после теста
+        await send_consultation_offer(context, chat_id)
 
         # Логика отправки второго видеокружка
         day_test_was_for = active_test_data.get("test_for_day", user_data.get("current_daily_day", 0)) # Use test_for_day from active_test if available
@@ -590,7 +642,7 @@ async def handle_potential_email(update: Update, context: ContextTypes.DEFAULT_T
         email_feedback_part2 = ""
     else:
         email_feedback_part1 = f"😥 Ой, кажется, произошла техническая ошибка при отправке письма на _{escaped_email_md}_\\."
-        email_feedback_part2 = "\n\nНо не волнуйся, краткие результаты ты уже видел\(а\)\\! ✨"
+        email_feedback_part2 = "\n\nНо не волнуйся, краткие результаты ты уже видел(а)\\! ✨"
 
     consult_offer_text = f"""{email_feedback_part1}{email_feedback_part2}
 
@@ -689,7 +741,105 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
             logger.error(f"Exception while sending error message to user: {e_reply}")
 
 
+async def send_consultation_offer(context: ContextTypes.DEFAULT_TYPE, chat_id: int):
+    """Отправляет предложение о консультации с кнопкой."""
+    text = "Хотите получить персональную консультацию, чтобы глубже понять себя и свои отношения?"
+    keyboard = [
+        [InlineKeyboardButton("Да, хочу консультацию", callback_data="post_email_consult_yes_practice")]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await context.bot.send_message(chat_id, text, reply_markup=reply_markup)
+    logger.info(f"Отправлено предложение о консультации пользователю {chat_id}")
+
+
+async def send_payment_info(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Отправляет пользователю информацию для оплаты консультации."""
+    query = update.callback_query
+    chat_id = update.effective_chat.id
+    
+    if query:
+        await query.answer()
+        # Если сообщение с кнопкой, его нужно отредактировать, чтобы убрать кнопку
+        try:
+            await query.edit_message_text(text=query.message.text + "\n\n*Готовим для вас информацию...*", parse_mode=ParseMode.MARKDOWN)
+        except Exception as e:
+            logger.info(f"Не удалось отредактировать сообщение перед отправкой оплаты: {e}")
+
+    price = config.CONSULTATION_PRICE
+    payment_link = config.PAYMENT_LINK
+    qr_code_path = config.PAYMENT_QR_CODE_PATH
+
+    text = f"""✨ **Вы на пороге глубоких открытий о себе!**
+
+Персональная консультация — это ваш шанс не просто получить результаты теста, а превратить их в реальные изменения в жизни. Вместе с экспертом вы:
+
+- **Расшифруете** самые тонкие нюансы вашей сексуальной конституции и архетипа.
+- **Поймете**, как эти знания влияют на ваши отношения, желания и выбор партнера.
+- **Получите персональные рекомендации** и ответы на самые сокровенные вопросы.
+
+Это не просто консультация, это инвестиция в вашу счастливую и гармоничную личную жизнь.
+
+Стоимость: **{price}₽**
+
+Выберите удобный способ оплаты:"""
+
+    keyboard = [
+        [InlineKeyboardButton("💳 Оплатить по ссылке (Карта РФ и СНГ)", url=payment_link)],
+        [InlineKeyboardButton("✅ Я оплатил(а)", callback_data="payment_confirmed")]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    try:
+        # Пытаемся отправить фото с QR-кодом
+        with open(qr_code_path, 'rb') as photo:
+            await context.bot.send_photo(
+                chat_id=chat_id,
+                photo=photo,
+                caption=text,
+                reply_markup=reply_markup,
+                parse_mode=ParseMode.MARKDOWN
+            )
+        logger.info(f"Отправлена информация для оплаты с QR-кодом пользователю {chat_id}")
+    except FileNotFoundError:
+        # Если файл не найден, отправляем текстовое сообщение
+        logger.warning(f"Файл QR-кода не найден по пути: {qr_code_path}. Отправляется текстовая версия.")
+        await context.bot.send_message(
+            chat_id=chat_id,
+            text=text,
+            reply_markup=reply_markup,
+            parse_mode=ParseMode.MARKDOWN
+        )
+    except Exception as e:
+        logger.error(f"Непредвиденная ошибка при отправке информации для оплаты пользователю {chat_id}: {e}")
+
+
+async def payment_confirmed_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Обрабатывает нажатие кнопки 'Я оплатил(а)'."""
+    query = update.callback_query
+    user = update.effective_user
+    chat_id = update.effective_chat.id
+
+    await query.answer()
+
+    # Текст для пользователя
+    user_message = "🙏 Спасибо! Мы получили ваше уведомление об оплате. В ближайшее время администратор проверит информацию и свяжется с вами для согласования времени консультации."
+    await context.bot.send_message(chat_id, user_message)
+
+    # Уведомление для администраторов
+    admin_message = f"🔔 Новое уведомление об оплате!\n\nПользователь: @{user.username} (ID: {user.id})\nНажал(а) кнопку '✅ Я оплатил(а)'.\n\nПожалуйста, проверьте поступление средств и свяжитесь с клиентом."
+    
+    for admin_id in config.ADMIN_IDS:
+        try:
+            await context.bot.send_message(admin_id, admin_message)
+        except Exception as e:
+            logger.error(f"Не удалось отправить уведомление об оплате админу {admin_id}: {e}")
+    
+    logger.info(f"Пользователь {user.id} сообщил об оплате консультации.")
+
+
 async def main() -> None:
+    # Принудительно перезагружаем модуль config, чтобы подхватить последние изменения
+    importlib.reload(config)
     logger.info("=== Начало запуска бота ===")
     
     # Логируем текущее время из конфига
@@ -735,6 +885,7 @@ async def main() -> None:
     # Обработчик кнопок
     logger.info("=== Добавление обработчика кнопок ===")
     application.add_handler(CallbackQueryHandler(button_handler))
+    application.add_handler(CallbackQueryHandler(payment_confirmed_handler, pattern='^payment_confirmed$'))
 
     # Обработчик текстовых сообщений
     logger.info("=== Добавление обработчика текстовых сообщений ===")
@@ -773,3 +924,7 @@ async def main() -> None:
         logger.info("Вызов application.shutdown()...")
         await application_for_shutdown.shutdown()
         logger.info("=== Бот полностью остановлен. ===")
+
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(main())

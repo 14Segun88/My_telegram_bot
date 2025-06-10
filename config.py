@@ -22,20 +22,27 @@ MAIN_CHANNEL_LINK = "https://t.me/sexandmind"
 ADMIN_CONTACT_USERNAME = "GoidaSegun" 
 
 # === Daily Content Timing (UTC) ===
-# Время практик в UTC (для МСК отнимите 3 часа)
-MORNING_PRACTICE_TIME_UTC = datetime.time(hour=15, minute=55, tzinfo=pytz.UTC)  # 18:55 MSK
-EVENING_PRACTICE_TIME_UTC = datetime.time(hour=15, minute=56, tzinfo=pytz.UTC)  # 18:56 MSK
+# Время отправки утренней практики (UTC)
+MORNING_PRACTICE_TIME_UTC = datetime.time(hour=15, minute=11, tzinfo=pytz.UTC) # 18:11 МСК
+# Время отправки вечерней практики (UTC)
+EVENING_PRACTICE_TIME_UTC = datetime.time(hour=15, minute=12, tzinfo=pytz.UTC) # 18:12 МСК
+
+# === Day 3 test offer times (in UTC as string) ===
+DAY3_KEY_TEST_OFFER_MORNING_UTC = datetime.time(hour=14, minute=56, tzinfo=pytz.UTC) # 17:56 МСК
+DAY3_KEY_TEST_OFFER_EVENING_UTC = datetime.time(hour=14, minute=57, tzinfo=pytz.UTC) # 17:57 МСК
 
 # === Test Offering Days ===
-DAY1_KEY_TEST_OFFER_MORNING_UTC = "14:54" # Placeholder, not used for Day 1 practices, but good to have a value
-DAY1_KEY_TEST_OFFER_EVENING_UTC = "14:55" # Placeholder
-DAY3_KEY_TEST_OFFER_MORNING_UTC = "15:59"  # 18:59 MSK
-DAY3_KEY_TEST_OFFER_EVENING_UTC = "16:00"  # 19:00 MSK
 TEST_OFFER_DAYS = [3, 5, 7, 9, 11, 13]
 KEY_TEST_ID = "heroine_type"
 
-# === Consultation ===
-CONSULTATION_PRICE_RUB = 5000
+# === Consultation Payment ===
+CONSULTATION_PRICE = 5000  # Цена в рублях
+PAYMENT_LINK = "https://www.tinkoff.ru/rm/r_YlujHwdHxX.WmqISDwRzN/a5XDV14317"
+PAYMENT_QR_CODE_PATH = "payment_qr.png"
+
+# === Other Settings ===
+ONBOARDING_VIDEO_NOTE_FILE_ID = "DQACAgIAAxkBAAIJ_GZgB2Pz82u9v0gWBb0s4u8yBAwvAAJgPQAC9GZBSAMj3YJp6qGYNQQ"
+ONBOARDING_VIDEO_DURATION_SECONDS = 55
 
 # === Email (SMTP) Configuration ===
 EMAIL_SENDER_NAME = "Команда Sexandmind"
@@ -85,7 +92,7 @@ EMAIL_INVALID_TEXT = "Ой, кажется, это не совсем похож�
 EMAIL_SENT_SUCCESS_TEXT = "💌 Отлично! Подробные результаты теста уже летят на твою почту {user_email}. Проверяй входящие (и папку 'Спам', на всякий случай 😉)!"
 EMAIL_SENT_FAILURE_TEXT = "Ой, что-то пошло не так при отправке письма на {user_email}... 😥 Пожалуйста, попробуй еще раз чуть позже или свяжись с администратором @{admin_username}, если проблема повторится."
 
-CONSULTATION_OFFER_BUTTON_YES_TEXT = f"Да, хочу консультацию ({CONSULTATION_PRICE_RUB}₽) 💖"
+CONSULTATION_OFFER_BUTTON_YES_TEXT = f"Да, хочу консультацию ({CONSULTATION_PRICE}₽) 💖"
 CONSULTATION_OFFER_BUTTON_NO_TEXT = "Спасибо, не сейчас 🙏"
 CONSULTATION_OFFER_BUTTON_THINK_LATER_TEXT = "Мне нужно подумать... 🤔"
 
