@@ -37,7 +37,6 @@ import daily_content
 import test_engine
 import user_data_manager as udm
 import email_sender
-from admin_commands import force_send_practice_command
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -136,52 +135,24 @@ def _remove_daily_jobs_for_user(job_name_prefix: str, job_queue_instance):
         for job in job_queue_instance.get_jobs_by_name(f"{job_name_prefix}_{type_suffix}"):
             job.schedule_removal(); logger.info(f"Removed job: {job.name}")
 
-async def send_daily_practice_job(context: ContextTypes.DEFAULT_TYPE):
-    """Отправка ежедневной практики по расписанию"""
-    job = context.job
-    if not job or not job.name:
-        logger.error(f"Invalid job: {getattr(job, 'name', 'No job name')}")
-        return
-        
-    logger.info(f"===== Запуск задачи: {job.name} =====")
-    logger.info(f"Job data: {job.data}")
-    
-    try:
-        # Исправление: используем job.data для получения типа практики
-        user_id = int(job.name.split('_')[0])  # Извлекаем ID пользователя из имени задачи
-        practice_type = job.data.get('pt', 'morning')  # Используем данные из job.data
-        
-        # Получаем данные пользователя
-        user_data = udm.get_user_data(user_id)
-        if not user_data:
-            logger.warning(f"User {user_id} not found in database")
-            return
-            
-        # Проверяем, не отправляли ли уже сегодня практику этого типа
-        from datetime import datetime  # Добавляем импорт datetime
-        today = datetime.now().date().isoformat()
-        last_sent_date = user_data.get(f'last_{practice_type}_sent_date')
-        if last_sent_date == today:
-            logger.info(f"Already sent {practice_type} practice to user {user_id} today")
-            return
-            
-        current_day = user_data.get("current_daily_day", 1)
-        if user_data.get("daily_practice_mode") == "morning_only" and practice_type == "evening":
-            logger.info(f"Skipping evening practice for user {user_id} in morning_only mode")
-            return
-            
-        # Определяем chat_id для дальнейшего использования
-        chat_id = user_id
-        
-    except Exception as e:
-        logger.error(f"Error in send_daily_practice_job: {e}", exc_info=True)
-        return  # Добавляем return, чтобы прервать выполнение при ошибке
+async def send_daily_practice_job(context: ContextTypes.DEFAULT_TYPE) -> None:
+    job = context.job; chat_id = job.chat_id if job else None
+    if not chat_id: return
+    practice_type = job.data.get("pt", "morning")
 
-    # Получаем контент для текущего дня и типа практики
+    user_data = udm.get_user_data(chat_id)
+    if not user_data or not user_data.get("subscribed_to_daily"):
+        _remove_daily_jobs_for_user(str(chat_id), context.job_queue); return
+
+    today = datetime.date.today().isoformat()
+    if (practice_type == "morning" and user_data.get("last_morning_sent_date") == today) or \
+       (practice_type == "evening" and user_data.get("last_evening_sent_date") == today): return
+
+    current_day = user_data.get("current_daily_day", 1)
+    if user_data.get("daily_practice_mode") == "morning_only" and practice_type == "evening": return
+
     day_content = daily_content.DAILY_CONTENT.get(current_day)
     practice_data = day_content.get(practice_type) if day_content else None
-    
-    logger.info(f"Sending {practice_type} practice for day {current_day} to user {chat_id}")
 
     if not practice_data:
         if practice_type == "morning" and current_day == 14 and not (day_content and day_content.get("morning")):
@@ -232,20 +203,11 @@ async def send_daily_practice_job(context: ContextTypes.DEFAULT_TYPE):
 def _schedule_daily_jobs_for_user(chat_id: int, job_queue_instance, user_data: dict):
     job_name_prefix = str(chat_id)
     
-    # 0. Запускаем отладочную информацию - сколько задач уже есть в планировщике
-    all_jobs = job_queue_instance.jobs()
-    logger.info(f"[SCHEDULER DEBUG] Всего задач при входе: {len(all_jobs)}")
-    for j in all_jobs:
-        logger.info(f"[SCHEDULER DEBUG] Существующая задача: {j.name}, следующий запуск: {j.next_t}")
-    
     # 1. Принудительно удаляем все старые задачи для этого пользователя
-    removed_jobs = 0
     for job in job_queue_instance.jobs():
         if job.name and job.name.startswith(job_name_prefix):
             job.schedule_removal()
-            removed_jobs += 1
             logger.info(f"Удалена старая задача: {job.name}")
-    logger.info(f"[SCHEDULER DEBUG] Удалено задач для пользователя {chat_id}: {removed_jobs}")
     
     current_day = user_data.get("current_daily_day", 0)
     
@@ -286,9 +248,8 @@ def _schedule_daily_jobs_for_user(chat_id: int, job_queue_instance, user_data: d
     logger.info(f"Вечером: {evening_time_to_use.strftime('%H:%M:%S%z')}")
     
     # 5. Создаем новые задачи с актуальным временем
-    mode = user_data.get("daily_practice_mode", "both")
-    logger.info(f"[DEBUG] Режим практики пользователя {chat_id}: {mode}")
-    if mode in ["both", "morning_only"]:
+    mode = user_data.get("daily_practice_mode", "dual")
+    if mode in ["dual", "morning_only"]:
         job_queue_instance.run_daily(
             send_daily_practice_job, 
             morning_time_to_use,
@@ -299,7 +260,7 @@ def _schedule_daily_jobs_for_user(chat_id: int, job_queue_instance, user_data: d
         )
         logger.info(f"✅ Создана утренняя задача на {morning_time_to_use.strftime('%H:%M:%S%z')}")
         
-    if mode in ["dual", "both"]:
+    if mode == "dual":
         job_queue_instance.run_daily(
             send_daily_practice_job, 
             evening_time_to_use,
@@ -309,17 +270,6 @@ def _schedule_daily_jobs_for_user(chat_id: int, job_queue_instance, user_data: d
             job_kwargs={'misfire_grace_time': 60}
         )
         logger.info(f"✅ Создана вечерняя задача на {evening_time_to_use.strftime('%H:%M:%S%z')}")
-    
-    # Проверка успешного создания задач - должны быть видны в планировщике
-    final_jobs = job_queue_instance.jobs()
-    logger.info(f"[SCHEDULER DEBUG] Итоговое количество задач: {len(final_jobs)}")
-    user_jobs = [j for j in final_jobs if j.name and j.name.startswith(job_name_prefix)]
-    logger.info(f"[SCHEDULER DEBUG] Создано задач для пользователя {chat_id}: {len(user_jobs)}")
-    
-    for j in user_jobs:
-        logger.info(f"[SCHEDULER DEBUG] Итоговая задача: {j.name}")
-    
-    return len(user_jobs) > 0 # Возвращаем True если задачи созданы
 
 async def offer_test_if_not_taken(context: ContextTypes.DEFAULT_TYPE, chat_id: int, user_data: dict, test_id: str, is_day14: bool = False, test_for_day: int = None):
     test_info = test_engine.get_test_by_id(test_id)
@@ -435,7 +385,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 q_idx = int(q_idx_str); ans_idx = int(ans_idx_str)
                 await _handle_test_answer(query, context, chat_id, user_data, test_id_from_cb, q_idx, ans_idx)
             except ValueError: logger.error(f"ValueError parsing testans: {data}. Parts: {parts}"); await query.edit_message_text("Ошибка ответа(V).")
-            except IndexError: logger.error(f"IndexError parsing testans: {data}. Parts: {len(parts)}"); await query.edit_message_text("Ошибка ответа(I).")
+            except IndexError: logger.error(f"IndexError parsing testans: {data}. Parts: {parts}"); await query.edit_message_text("Ошибка ответа(I).")
         else: logger.error(f"Invalid format for testans: {data_payload}. Parts: {len(parts)}"); await query.edit_message_text("Ошибка ответа(F).")
     elif data.startswith("post_email_consult_yes_"):
         await send_payment_info(update, context)
@@ -475,9 +425,9 @@ async def _handle_test_answer(query: CallbackQuery, context: ContextTypes.DEFAUL
         logger.error(f"Invalid q_idx or ans_idx in _handle_test_answer. Test: {test_id}, Q_idx: {q_idx}, Ans_idx: {ans_idx}")
         await query.edit_message_text("Ошибка в данных ответа. Попробуйте снова.", reply_markup=get_main_menu_keyboard(user_data))
         return
-    
-    # Сохраняем индекс выбранного ответа
-    active_test_data["answers"].append(ans_idx)
+        
+    selected_option_value = test_definition["questions"][q_idx]["options"][ans_idx]["value"]
+    active_test_data["answers"].append(selected_option_value)
     active_test_data["current_question_idx"] += 1
     udm.update_user_data(chat_id, {"active_test": active_test_data})
 
@@ -490,99 +440,55 @@ async def _handle_test_answer(query: CallbackQuery, context: ContextTypes.DEFAUL
     if active_test_data["current_question_idx"] < len(test_definition["questions"]):
         await _send_test_question(context, chat_id, test_definition, active_test_data["current_question_idx"], test_id)
     else:
-        # Тест завершен, вычисляем результат
-        if test_id == "gender_selector":
-            # Это тест выбора пола, получаем ID следующего теста из ответа
-            next_test_id = test_definition["questions"][0]["options"][active_test_data["answers"][0]]["score"]
-            logger.info(f"Gender selector completed for user {chat_id}, starting test: {next_test_id}")
-            
-            # Сбрасываем активный тест и запускаем новый
-            udm.update_user_data(chat_id, {"active_test": None})
-            
-            # Запускаем выбранный тест
-            test_for_day = active_test_data.get("test_for_day", user_data.get("current_daily_day", 0))
-            await _start_test_logic(query, context, chat_id, next_test_id, user_data, False, test_for_day)
-            return
-        else:
-            # Обычный тест, получаем результат
-            score = sum(active_test_data["answers"])
-            test_result = test_engine.get_test_result(test_id, score, active_test_data["answers"])
-            
-            if not test_result:
-                logger.error(f"Failed to get test result for test_id: {test_id}, score: {score}")
-                await context.bot.send_message(
-                    chat_id,
-                    "Произошла ошибка при обработке результатов теста. Пожалуйста, попробуйте позже.",
-                    reply_markup=get_main_menu_keyboard(user_data)
-                )
-                return
-                
-            # Формируем текст результата
-            result_summary = test_result["summary"]
-            logger.info(f"Got test result: {result_summary[:100]}...")
-            
-            # Экранируем спецсимволы для MarkdownV2
-            escaped_result_text = escape_markdown_v2(result_summary)
-            
-            # Отправляем результат пользователю
-            try:
-                await context.bot.send_message(
-                    chat_id,
-                    escaped_result_text,
-                    parse_mode=ParseMode.MARKDOWN_V2,
-                    reply_markup=get_main_menu_keyboard(user_data)
-                )
-            except Exception as e:
-                logger.error(f"Error sending test result: {e}")
-                # Пробуем отправить без форматирования, если возникла ошибка
-                await context.bot.send_message(
-                    chat_id,
-                    result_summary,  # Оригинальный текст без экранирования
-                    reply_markup=get_main_menu_keyboard(user_data)
-                )
-            
-            # Записываем, что тест пройден (один раз)
-            udm.record_test_taken(chat_id, test_id, summary=result_summary, answers=active_test_data["answers"])
-            
-            is_forced_day14_test = active_test_data.get("is_forced_day14", False)
-            
-            # Обновляем данные пользователя: сбрасываем активный тест, устанавливаем стадию для ввода email,
-            # и сохраняем данные, необходимые для отправки email.
-            udm.update_user_data(chat_id, {
-                "active_test": None, 
-                "stage": f"awaiting_email_input_for_{test_id}",
-                "pending_email_test_id": test_id, 
-                "pending_email_test_score": score,
-                "pending_email_test_answers_indices": active_test_data["answers"],
-                "pending_email_test_is_forced_day14": is_forced_day14_test
-            })
+        score = test_definition["calculate_score"](active_test_data["answers"])
+        user_answer_indices = [next(j for j, opt in enumerate(test_definition["questions"][i]["options"]) if opt["value"] == saved_val) for i, saved_val in enumerate(active_test_data["answers"])]
+        result_data = test_engine.get_test_result(test_id, score, user_answer_indices)
+        summary_text_from_engine = result_data["summary"]
 
-            # Отправляем пользователю запрос на ввод email с кнопкой консультации
-            await context.bot.send_message(
-                chat_id, 
-                escape_markdown_v2(config.EMAIL_REQUEST_TEXT), 
-                parse_mode=ParseMode.MARKDOWN_V2
-            )
-
-            # Отправляем предложение о консультации после теста
-            await send_consultation_offer(context, chat_id)
-
-        # Логика отправки второго видеокружка (обновлено для новых тестов)
-        day_test_was_for = active_test_data.get("test_for_day", user_data.get("current_daily_day", 0))
-        logger.info(f"[VideoNoteCheck] User {chat_id}, Test ID: {test_id}, Day Test Was For: {day_test_was_for}, Current User Day: {user_data.get('current_daily_day', 0)}, Target Test ID: {config.KEY_TEST_ID}")
+        # Записываем, что тест пройден (один раз)
+        udm.record_test_taken(chat_id, test_id, summary=summary_text_from_engine, answers=active_test_data["answers"])
         
-        # Проверяем, является ли завершенный тест одним из тестов конституции и был ли он предложен в день 3
-        constitution_test_ids = ["male_constitution_test", "female_constitution_test", "heroine_type"]  # Включаем старый тест для совместимости
-        if test_id in constitution_test_ids and day_test_was_for == 3:
+        is_forced_day14_test = active_test_data.get("is_forced_day14", False)
+        
+        # Обновляем данные пользователя: сбрасываем активный тест, устанавливаем стадию для ввода email,
+        # и сохраняем данные, необходимые для отправки email.
+        udm.update_user_data(chat_id, {
+            "active_test": None, 
+            "stage": f"awaiting_email_input_for_{test_id}",
+            "pending_email_test_id": test_id, 
+            "pending_email_test_score": score,
+            "pending_email_test_answers_indices": user_answer_indices,
+            "pending_email_test_is_forced_day14": is_forced_day14_test
+        })
+
+        # Отправляем пользователю запрос на ввод email с кнопкой консультации
+        
+        await context.bot.send_message(
+            chat_id, 
+            escape_markdown_v2(config.EMAIL_REQUEST_TEXT), 
+            parse_mode=ParseMode.MARKDOWN_V2
+        )
+
+        # Отправляем предложение о консультации после теста
+        await send_consultation_offer(context, chat_id)
+
+        # Логика отправки второго видеокружка
+        day_test_was_for = active_test_data.get("test_for_day", user_data.get("current_daily_day", 0)) # Use test_for_day from active_test if available
+        logger.info(f"[VideoNoteCheck] User {chat_id}, Test ID: {test_id}, Day Test Was For: {day_test_was_for}, Current User Day: {user_data.get('current_daily_day', 0)}, Target Test ID: {config.KEY_TEST_ID}")
+        if test_id == config.KEY_TEST_ID and day_test_was_for == 3:
             logger.info(f"[VideoNoteCheck] Conditions MET for user {chat_id} to send 2nd video note.")
             try:
                 await context.bot.send_video_note(
                     chat_id=chat_id,
                     video_note="DQACAgIAAxkBAAEBcn1oP05JTiwan2zPQWUoDfcrl4wfKgAC8IkAAsIT8UlCWZjM36ExGjYE"  # ID второго видео
                 )
-                logger.info(f"Successfully sent 2nd video note (constitution test, day 3) to user {chat_id}")
+                logger.info(f"Successfully sent 2nd video note (heroine_type, day 3) to user {chat_id}")
             except TelegramError as e_video2:
-                logger.error(f"TelegramError sending 2nd video note for user {chat_id}: {e_video2}")
+                logger.error(f"TelegramError sending 2nd video note for user {chat_id}. Type: {type(e_video2).__name__}, Error: {e_video2}")
+            except Exception as e_video2_generic:
+                logger.error(f"Generic Exception sending 2nd video note for user {chat_id}: {e_video2_generic}")
+        else:
+            logger.info(f"[VideoNoteCheck] Conditions NOT MET for user {chat_id} to send 2nd video note. Test ID match: {test_id == config.KEY_TEST_ID}. Day 3 match (day_test_was_for == 3): {day_test_was_for == 3}.")
 
 
 async def _handle_consultation_request(query: CallbackQuery, context: ContextTypes.DEFAULT_TYPE, chat_id: int, user_data: dict, test_id: str):
@@ -591,19 +497,16 @@ async def _handle_consultation_request(query: CallbackQuery, context: ContextTyp
         await query.edit_message_text("Ошибка: Данные о пройденном тесте не найдены.", reply_markup=get_main_menu_keyboard(user_data)); return
 
     consultation_focus_text = "глубокое понимание себя и своих уникальных особенностей"
-    
-    if "answers" in test_taken_info and test_taken_info["answers"] is not None:
+    test_definition = test_engine.get_test_by_id(test_id)
+    if test_definition and "answers" in test_taken_info and test_taken_info["answers"] is not None: # Check answers not None
         try:
-            # Используем новый формат для получения результатов
-            user_answer_indices = test_taken_info["answers"]  # Уже сохранены как индексы
-            test_result = test_engine.get_test_result(test_id, sum(user_answer_indices), user_answer_indices)
-            result_text = test_result["summary"]
-            
-            if not is_next_test:  # Обычный тест, не селектор пола
-                result_details = test_engine.get_test_result(test_id, score, user_answer_indices)
-                consultation_focus_text = result_details.get("consultation_focus", consultation_focus_text)
-        except Exception as e:  
-            logger.error(f"Error getting consultation_focus for test {test_id}, user {chat_id}: {e}")
+            # Ensure answers are in the correct format for calculate_score if needed
+            # This depends on how calculate_score and get_test_result expect the answers
+            calculated_score = test_definition["calculate_score"](test_taken_info["answers"])
+            user_answer_indices = [next(j for j, opt in enumerate(test_definition["questions"][i]["options"]) if opt["value"] == saved_val) for i, saved_val in enumerate(test_taken_info["answers"])]
+            result_details = test_engine.get_test_result(test_id, calculated_score, user_answer_indices)
+            consultation_focus_text = result_details.get("consultation_focus", consultation_focus_text)
+        except Exception as e:  logger.error(f"Error getting consultation_focus for test {test_id}, user {chat_id}: {e}")
 
     current_tests_taken = user_data.get("tests_taken", {})
     if test_id in current_tests_taken:
@@ -612,8 +515,8 @@ async def _handle_consultation_request(query: CallbackQuery, context: ContextTyp
 
     udm.set_user_stage(chat_id, f"consult_5000_requested_{test_id}")
 
-    price_str = f"*{escape_markdown_v2(str(config.CONSULTATION_PRICE_RUB))} рублей*"
-    admin_contact_str = f"@{config.ADMIN_CONTACT_USERNAME}"
+    price_str = f"*{escape_markdown_v2(str(config.CONSULTATION_PRICE_RUB))} рублей*" # Escape price
+    admin_contact_str = f"@{config.ADMIN_CONTACT_USERNAME}" # Username should not need escaping if it's a valid TG username
     code_word_str = f"`КОНСУЛЬТАЦИЯ5000`"
 
     text_parts = [
@@ -635,7 +538,7 @@ async def _handle_consultation_request(query: CallbackQuery, context: ContextTyp
         await query.edit_message_text(text=final_text, reply_markup=reply_markup, parse_mode=ParseMode.MARKDOWN_V2)
     except Exception as e_send:
         logger.error(f"Error sending consultation details (MarkdownV2): {e_send}")
-        # Fallback to plain text if MarkdownV2 fails
+        # Fallback to plain text if MarkdownV2 fails, removing Markdown characters
         plain_text_fallback = "\n".join([
             "Ваш Путь к Себе: Персональная Консультация", "",
             "Вы проявили интерес к глубокому погружению в результаты теста и я очень рада этому!",
@@ -669,11 +572,11 @@ async def handle_potential_email(update: Update, context: ContextTypes.DEFAULT_T
         await update.message.reply_text(escape_markdown_v2(config.EMAIL_INVALID_TEXT), parse_mode=ParseMode.MARKDOWN_V2); return
 
     udm.set_user_email(chat_id, email_text)
-    # Refresh user_data after setting email
+    # Refresh user_data after setting email, as it might be used below if it was None initially
     user_data = udm.get_user_data(chat_id)
 
     test_result_details = test_engine.get_test_result(test_id, score, user_answers_indices)
-    full_html_result = test_result_details.get("full_html_result", "<p>Результаты не найдены.</p>")
+    full_html_result = test_result_details.get("full_html_result", "<p>Результаты не найдены.</p>") # Default HTML
     test_def_subj = test_engine.get_test_by_id(test_id)
     subj_test_name = test_def_subj['name'] if test_def_subj else "Ваш тест"
     subject = f"Результаты вашего теста «{subj_test_name}»"
@@ -684,16 +587,18 @@ async def handle_potential_email(update: Update, context: ContextTypes.DEFAULT_T
     # Update tests_taken with email status
     tests_taken_data = user_data.get("tests_taken", {})
     if test_id not in tests_taken_data:
+        # Этот случай должен быть редким, если record_test_taken отработал корректно.
         logger.warning(f"Test {test_id} not found in tests_taken for user {chat_id} when trying to log email status. Creating a minimal entry for email logging.")
         tests_taken_data[test_id] = { 
-            "summary": f"Entry for {test_id} created during email status update.",
-            "answers": [],
+            "summary": f"Entry for {test_id} created during email status update.", # Минимальная сводка
+            "answers": [], # Не можем надежно получить ответы здесь
             "date_taken": datetime.datetime.now(pytz.UTC).strftime('%Y-%m-%d %H:%M:%S'),
-            "consult_interest_shown": False
+            "consult_interest_shown": False # По умолчанию
         }
     
+    # Убедимся, что конкретная запись теста существует перед обновлением
     if test_id not in tests_taken_data: 
-         tests_taken_data[test_id] = {}
+         tests_taken_data[test_id] = {} # На всякий случай, если tests_taken_data[test_id] все еще отсутствует
 
     tests_taken_data[test_id].update({
         "email_recipient": email_text, 
@@ -708,7 +613,7 @@ async def handle_potential_email(update: Update, context: ContextTypes.DEFAULT_T
     
     await update.message.reply_text(escape_markdown_v2(message_to_user), parse_mode=ParseMode.MARKDOWN_V2)
 
-    # Admin notification
+    # Admin Notification Logic
     escaped_email_md = escape_markdown_v2(email_text) 
     if email_sent_successfully:
         admin_message = f"✅ Успешно отправлены результаты теста «{subj_test_name}» пользователю {chat_id} ({user_obj.username or 'NoUsername'}) на email: {escaped_email_md}."
@@ -721,14 +626,14 @@ async def handle_potential_email(update: Update, context: ContextTypes.DEFAULT_T
         except Exception as e_admin_notify:
             logger.error(f"Failed to send admin notification about email status: {e_admin_notify}")
 
-    # Очищаем временное состояние
+    # Очищаем временное состояние и сбрасываем стадию
     udm.update_user_data(chat_id, {
-        "tests_taken": tests_taken_data,
+        "tests_taken": tests_taken_data, # Сохраняем обновленные tests_taken
         "pending_email_test_id": None,
         "pending_email_test_score": None,
         "pending_email_test_answers_indices": None,
         "pending_email_test_is_forced_day14": False,
-        "stage": None
+        "stage": None  # Сбрасываем стадию
     })
 
     escaped_email_md = escape_markdown_v2(email_text)
@@ -748,11 +653,13 @@ async def handle_potential_email(update: Update, context: ContextTypes.DEFAULT_T
 🗺️ Наметим путь к еще большей гармонии и удовольствию в жизни\\!
 """
 
-    is_day14_context_final = False
+    is_day14_context_final = False # Renamed to avoid conflict
+    # Use the refreshed user_data
     test_taken_entry = user_data.get("tests_taken", {}).get(test_id, {})
     consult_interest_shown = test_taken_entry.get("consult_interest_shown", False)
     
     if is_forced_day14_test_context: is_day14_context_final = True
+    # Check current_daily_day from the latest user_data
     elif user_data.get("current_daily_day") == 14 and not consult_interest_shown: is_day14_context_final = True
 
     buttons = [[InlineKeyboardButton(config.CONSULTATION_OFFER_BUTTON_YES_TEXT, callback_data=f"post_email_consult_yes_{test_id}")]]
@@ -779,7 +686,7 @@ async def setday_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     target_user_data = udm.get_user_data(target_user_id)
     if not target_user_data: await update.message.reply_text(f"Юзер {target_user_id} не найден."); return
     if udm.update_user_data(target_user_id, {"current_daily_day": day_number, "last_morning_sent_date": None, "last_evening_sent_date": None, "stage": f"admin_set_day_{day_number}"}):
-        target_user_data_updated = udm.get_user_data(target_user_id)
+        target_user_data_updated = udm.get_user_data(target_user_id) # Get fresh data
         if target_user_data_updated and target_user_data_updated.get("subscribed_to_daily"):
             _schedule_daily_jobs_for_user(target_user_id, context.job_queue, target_user_data_updated)
         await update.message.reply_text(f"Для {target_user_id} день {day_number} установлен.")
@@ -796,7 +703,7 @@ async def forcesend_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if type_to_send not in ["morning", "evening"]: await update.message.reply_text("Тип: 'morning' или 'evening'."); return
     target_user_data = udm.get_user_data(target_user_id)
     if not target_user_data: await update.message.reply_text(f"Юзер {target_user_id} не найден."); return
-    day_content_data = daily_content.DAILY_CONTENT.get(day_to_send)
+    day_content_data = daily_content.DAILY_CONTENT.get(day_to_send) # Renamed variable
     if not day_content_data: await update.message.reply_text(f"Нет контента дня {day_to_send}."); return
     practice_data = day_content_data.get(type_to_send)
     if not practice_data: await update.message.reply_text(f"Нет {type_to_send} практики дня {day_to_send}."); return
@@ -810,10 +717,9 @@ async def forcesend_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await offer_test_if_not_taken(
                     context,
                     target_user_id,
-                    target_user_data,
+                    target_user_data, # Pass the fetched user data
                     config.KEY_TEST_ID,
-                    is_day14=(day_to_send == 14),
-                    test_for_day=day_to_send
+                    is_day14=(day_to_send == 14)
                 )
     except Exception as e:
         logger.error(f"Error in /forcesend sending: {e}")
@@ -825,14 +731,15 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
     if isinstance(update, Update) and update.effective_message:
         try:
             user_id_for_menu = update.effective_user.id if update.effective_user else None
-            user_data_for_menu = udm.get_user_data(user_id_for_menu) if user_id_for_menu else None
+            user_data_for_menu = udm.get_user_data(user_id_for_menu) if user_id_for_menu else None # Fetch fresh data
             await update.effective_message.reply_text(
                 escape_markdown_v2("Ой, что-то пошло не так... 😥 Попробуйте, пожалуйста, немного позже или вернитесь в /menu."),
-                reply_markup=get_main_menu_keyboard(user_data_for_menu),
+                reply_markup=get_main_menu_keyboard(user_data_for_menu), # Use fresh data for menu
                 parse_mode=ParseMode.MARKDOWN_V2
             )
-        except Exception as e_reply:
+        except Exception as e_reply: # Catch exception during error reply
             logger.error(f"Exception while sending error message to user: {e_reply}")
+
 
 async def send_consultation_offer(context: ContextTypes.DEFAULT_TYPE, chat_id: int):
     """Отправляет предложение о консультации с кнопкой."""
@@ -844,6 +751,7 @@ async def send_consultation_offer(context: ContextTypes.DEFAULT_TYPE, chat_id: i
     await context.bot.send_message(chat_id, text, reply_markup=reply_markup)
     logger.info(f"Отправлено предложение о консультации пользователю {chat_id}")
 
+
 async def send_payment_info(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Отправляет пользователю информацию для оплаты консультации."""
     query = update.callback_query
@@ -851,6 +759,7 @@ async def send_payment_info(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     if query:
         await query.answer()
+        # Если сообщение с кнопкой, его нужно отредактировать, чтобы убрать кнопку
         try:
             await query.edit_message_text(text=query.message.text + "\n\n*Готовим для вас информацию...*", parse_mode=ParseMode.MARKDOWN)
         except Exception as e:
@@ -881,6 +790,7 @@ async def send_payment_info(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     try:
+        # Пытаемся отправить фото с QR-кодом
         with open(qr_code_path, 'rb') as photo:
             await context.bot.send_photo(
                 chat_id=chat_id,
@@ -891,6 +801,7 @@ async def send_payment_info(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
         logger.info(f"Отправлена информация для оплаты с QR-кодом пользователю {chat_id}")
     except FileNotFoundError:
+        # Если файл не найден, отправляем текстовое сообщение
         logger.warning(f"Файл QR-кода не найден по пути: {qr_code_path}. Отправляется текстовая версия.")
         await context.bot.send_message(
             chat_id=chat_id,
@@ -901,6 +812,7 @@ async def send_payment_info(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         logger.error(f"Непредвиденная ошибка при отправке информации для оплаты пользователю {chat_id}: {e}")
 
+
 async def payment_confirmed_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Обрабатывает нажатие кнопки 'Я оплатил(а)'."""
     query = update.callback_query
@@ -909,9 +821,11 @@ async def payment_confirmed_handler(update: Update, context: ContextTypes.DEFAUL
 
     await query.answer()
 
+    # Текст для пользователя
     user_message = "🙏 Спасибо! Мы получили ваше уведомление об оплате. В ближайшее время администратор проверит информацию и свяжется с вами для согласования времени консультации."
     await context.bot.send_message(chat_id, user_message)
 
+    # Уведомление для администраторов
     admin_message = f"🔔 Новое уведомление об оплате!\n\nПользователь: @{user.username} (ID: {user.id})\nНажал(а) кнопку '✅ Я оплатил(а)'.\n\nПожалуйста, проверьте поступление средств и свяжитесь с клиентом."
     
     for admin_id in config.ADMIN_IDS:
@@ -967,7 +881,6 @@ async def main() -> None:
     application.add_handler(CommandHandler("myid", myid_command))
     application.add_handler(CommandHandler("setday", setday_command))
     application.add_handler(CommandHandler("forcesend", forcesend_command))
-    application.add_handler(CommandHandler("forcepractice", force_send_practice_command))
 
     # Обработчик кнопок
     logger.info("=== Добавление обработчика кнопок ===")
@@ -982,16 +895,76 @@ async def main() -> None:
     logger.info("=== Добавление обработчика ошибок ===")
     application.add_error_handler(error_handler)
 
+    # ===== ГЕНДЕРНЫЕ ТЕСТЫ =====
+    async def gender_selection_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        query = update.callback_query
+        user_id = query.from_user.id
+        gender = query.data.split('_')[1]  # 'male' или 'female'
+        
+        # Сохраняем пол
+        user_data = udm.get_user_data(user_id)
+        user_data['gender'] = gender
+        udm.save_user_data(user_id, user_data)
+        
+        # Определяем день теста
+        test_day = user_data.get('current_daily_day', 3)  # По умолчанию 3
+        
+        # Запускаем тест
+        await _start_test_logic(user_id, context, test_day)
+        
+        await query.answer()
+
+    def load_test_for_day(test_day, gender):
+        """Загружаем тест с учетом пола"""
+        if gender == 'male':
+            return config.MALE_TESTS.get(test_day)
+        else:
+            return config.FEMALE_TESTS.get(test_day)
+
+    async def offer_test_if_not_taken(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        # ... существующий код ...
+        
+        # После проверки что тест не пройден:
+        if not test_taken:
+            # Предлагаем выбрать пол
+            keyboard = [
+                [InlineKeyboardButton("Мужчина", callback_data='gender_male')],
+                [InlineKeyboardButton("Женщина", callback_data='gender_female')]
+            ]
+            await context.bot.send_message(
+                chat_id=user_id,
+                text="Пожалуйста, укажите ваш пол:",
+                reply_markup=InlineKeyboardMarkup(keyboard)
+            )
+        
+        # ... остальной код ...
+
+    # В функции _start_test_logic замените:
+    # test = config.TESTS.get(test_day)
+    # на:
+    test = load_test_for_day(test_day, user_data.get('gender', 'male'))
+
+    # Регистрируем обработчик выбора пола
+    application.add_handler(CallbackQueryHandler(
+        gender_selection_handler, 
+        pattern="^gender_"
+    ))
+
+    # В функции main, где вызывается load_test_for_day:
+    test_day = user_data.get('current_daily_day', 3)
+    test = load_test_for_day(test_day, user_data.get('gender', 'male'))
+
     # Запуск бота
     logger.info("=== Инициализация и запуск компонентов бота ===")
-    application_for_shutdown = application
+    application_for_shutdown = application # Ensure it's in scope for finally
     try:
         await application_for_shutdown.initialize()
         await application_for_shutdown.start()
         await application_for_shutdown.updater.start_polling(drop_pending_updates=True)
         logger.info(f"=== Бот запущен и слушает обновления. Токен: {config.BOT_TOKEN[:6]}...{config.BOT_TOKEN[-4:]} ===")
+        # Держать главный поток живым, пока бот работает
         stop_event = asyncio.Event()
-        await stop_event.wait()
+        await stop_event.wait() # Бесконечное ожидание, пока не будет вызван stop_event.set()
     except (KeyboardInterrupt, SystemExit):
         logger.info("=== Получен сигнал KeyboardInterrupt/SystemExit, начинаю остановку бота... ===")
     except Exception as e:
@@ -1010,7 +983,6 @@ async def main() -> None:
         logger.info("Вызов application.shutdown()...")
         await application_for_shutdown.shutdown()
         logger.info("=== Бот полностью остановлен. ===")
-
 
 if __name__ == "__main__":
     import asyncio

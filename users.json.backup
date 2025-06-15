@@ -1,0 +1,47 @@
+{
+    "5975258830": {
+        "chat_id": 5975258830,
+        "username": "masimbbb",
+        "first_name": "Груд",
+        "subscribed_to_daily": true,
+        "daily_practice_mode": "dual",
+        "current_daily_day": 2,
+        "last_morning_sent_date": "2025-06-06",
+        "last_evening_sent_date": "2025-06-06",
+        "stage": "daily_practice_day1_morning_ack",
+        "email": null,
+        "active_test": null,
+        "tests_taken": {},
+        "created_at": "2025-06-05T23:55:16.714761+00:00",
+        "last_interaction_date": "2025-06-05T23:58:20.077781+00:00"
+    },
+    "5965363034": {
+        "chat_id": 5965363034,
+        "username": "GoidaSegun",
+        "first_name": "Мак",
+        "subscribed_to_daily": true,
+        "daily_practice_mode": "dual",
+        "current_daily_day": 2,
+        "last_morning_sent_date": "2025-06-06",
+        "last_evening_sent_date": "2025-06-06",
+        "stage": "daily_practice_day1_evening_ack",
+        "email": null,
+        "active_test": null,
+        "tests_taken": {},
+        "created_at": "2025-06-05T23:55:26.043294+00:00",
+        "last_interaction_date": "2025-06-06T03:04:06.887114+00:00",
+        "pending_email_test_answers_values": null,
+        "pending_email_test_id": "heroine_type",
+        "pending_email_test_score": 21,
+        "pending_email_test_answers_indices": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "pending_email_test_is_forced_day14": false
+    }
+}
