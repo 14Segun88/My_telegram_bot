@@ -23,13 +23,13 @@ ADMIN_CONTACT_USERNAME = "GoidaSegun"
 
 # === Daily Content Timing (UTC) ===
 # Время отправки утренней практики (UTC)
-MORNING_PRACTICE_TIME_UTC = datetime.time(hour=16, minute=48, tzinfo=pytz.UTC) # 19:48 МСК
+MORNING_PRACTICE_TIME_UTC = datetime.time(hour=12, minute=41, tzinfo=pytz.UTC) 
 # Время отправки вечерней практики (UTC)
-EVENING_PRACTICE_TIME_UTC = datetime.time(hour=16, minute=49, tzinfo=pytz.UTC) # 19:49 МСК
+EVENING_PRACTICE_TIME_UTC = datetime.time(hour=12, minute=42, tzinfo=pytz.UTC) 
 
 # === Day 3 test offer times (in UTC as string) ===
-DAY3_KEY_TEST_OFFER_MORNING_UTC = datetime.time(hour=16, minute=48, tzinfo=pytz.UTC) # 19:48 МСК
-DAY3_KEY_TEST_OFFER_EVENING_UTC = datetime.time(hour=16, minute=49, tzinfo=pytz.UTC) # 19:49 МСК
+DAY3_KEY_TEST_OFFER_MORNING_UTC = datetime.time(hour=12, minute=41, tzinfo=pytz.UTC) 
+DAY3_KEY_TEST_OFFER_EVENING_UTC = datetime.time(hour=12, minute=42, tzinfo=pytz.UTC) 
 
 # === Test Offering Days ===
 TEST_OFFER_DAYS = [3, 5, 7, 9, 11, 13]

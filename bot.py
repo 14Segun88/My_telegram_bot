@@ -398,7 +398,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         return
 
     elif data.startswith("daily_ack_"):
-        parts = data.split("_"); day_acked = int(parts[2]); type_acked = parts[3]
+        parts = query.data.rsplit('_', 2); day_acked = int(parts[1]); type_acked = parts[2]
         udm.set_user_stage(chat_id, f"daily_practice_day{day_acked}_{type_acked}_ack")
         try:
             current_markup = query.message.reply_markup; new_keyboard_rows = []
@@ -428,14 +428,15 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         udm.set_user_stage(chat_id, f"daily_test_declined_{data.replace('offer_test_no_', '')}")
         await query.edit_message_text(text=escape_markdown_v2(config.TEST_BUTTON_NO_TEXT) + "\n\nПрактики продолжатся\\. 😊", reply_markup=get_main_menu_keyboard(user_data), parse_mode=ParseMode.MARKDOWN_V2)
     elif data.startswith("testans_"):
-        data_payload = data[len("testans_"):]; parts = data_payload.split("_")
+        data_payload = data[len("testans_"):]; parts = data_payload.rsplit("_", 2)
+        logger.info(f"testans_ callback_data: {data}")
+        logger.info(f"data_payload: {data_payload}")
+        logger.info(f"parts after rsplit: {parts}")
         if len(parts) >= 3:
-            try:
-                ans_idx_str = parts[-1]; q_idx_str = parts[-2]; test_id_from_cb = "_".join(parts[:-2])
-                q_idx = int(q_idx_str); ans_idx = int(ans_idx_str)
-                await _handle_test_answer(query, context, chat_id, user_data, test_id_from_cb, q_idx, ans_idx)
-            except ValueError: logger.error(f"ValueError parsing testans: {data}. Parts: {parts}"); await query.edit_message_text("Ошибка ответа(V).")
-            except IndexError: logger.error(f"IndexError parsing testans: {data}. Parts: {len(parts)}"); await query.edit_message_text("Ошибка ответа(I).")
+            ans_idx_str = parts[2]; q_idx_str = parts[1]; test_id_from_cb = "_".join(parts[:-2])
+            logger.info(f"ans_idx_str: {ans_idx_str}, q_idx_str: {q_idx_str}, test_id_from_cb: {test_id_from_cb}")
+            q_idx = int(q_idx_str); ans_idx = int(ans_idx_str)
+            await _handle_test_answer(query, context, chat_id, user_data, test_id_from_cb, q_idx, ans_idx)
         else: logger.error(f"Invalid format for testans: {data_payload}. Parts: {len(parts)}"); await query.edit_message_text("Ошибка ответа(F).")
     elif data.startswith("post_email_consult_yes_"):
         await send_payment_info(update, context)
@@ -462,9 +463,17 @@ async def _send_test_question(context: ContextTypes.DEFAULT_TYPE, chat_id: int, 
         keyboard_rows.append([InlineKeyboardButton(option_text, callback_data=f"testans_{test_id_for_callback}_{question_idx}_{i}")])
     keyboard_rows.append([InlineKeyboardButton("📖 В меню", callback_data=MENU_CALLBACK_MAIN)]) # Add menu button
     reply_markup = InlineKeyboardMarkup(keyboard_rows)
+    if "image_path" in question:
+        try:
+            with open(question["image_path"], 'rb') as photo_file:
+                await context.bot.send_photo(chat_id, photo_file)
+            logger.info(f"Sent image {question['image_path']} for question {question_idx} to chat_id {chat_id}")
+        except Exception as e:
+            logger.error(f"Error sending image {question['image_path']}: {e}")
     await context.bot.send_message(chat_id, text, reply_markup=reply_markup, parse_mode=ParseMode.MARKDOWN_V2)
 
 async def _handle_test_answer(query: CallbackQuery, context: ContextTypes.DEFAULT_TYPE, chat_id: int, user_data: dict, test_id: str, q_idx: int, ans_idx: int):
+    logger.info(f"Handling answer for test {test_id}, question {q_idx}, answer index {ans_idx}")
     active_test_data = user_data.get("active_test")
     if not active_test_data or active_test_data.get("id") != test_id or active_test_data.get("current_question_idx") != q_idx:
         await query.edit_message_text("Ошибка состояния теста. Попробуйте из /menu.", reply_markup=get_main_menu_keyboard(user_data)); return
@@ -477,7 +486,8 @@ async def _handle_test_answer(query: CallbackQuery, context: ContextTypes.DEFAUL
         return
     
     # Сохраняем индекс выбранного ответа
-    active_test_data["answers"].append(ans_idx)
+    logger.info(f"Saving answer: ans_idx={ans_idx} for question {q_idx} of test {test_id}")
+    active_test_data["answers"].append(ans_idx)  # Сохраняем индекс выбранного ответа
     active_test_data["current_question_idx"] += 1
     udm.update_user_data(chat_id, {"active_test": active_test_data})
 
@@ -487,13 +497,15 @@ async def _handle_test_answer(query: CallbackQuery, context: ContextTypes.DEFAUL
         await query.edit_message_text(text=f"{original_question_text_escaped}\n\nВы выбрали: *{selected_answer_text_escaped}*", parse_mode=ParseMode.MARKDOWN_V2)
     except Exception as e: logger.warning(f"Could not edit message for test answer: {e}")
 
-    if active_test_data["current_question_idx"] < len(test_definition["questions"]):
+    total_questions = len(test_definition["questions"])
+    if active_test_data["current_question_idx"] < total_questions:
         await _send_test_question(context, chat_id, test_definition, active_test_data["current_question_idx"], test_id)
     else:
         # Тест завершен, вычисляем результат
         if test_id == "gender_selector":
-            # Это тест выбора пола, получаем ID следующего теста из ответа
-            next_test_id = test_definition["questions"][0]["options"][active_test_data["answers"][0]]["score"]
+            # Это тест выбора пола, получаем ID следующего теста из score выбранного ответа
+            selected_option = test_definition["questions"][0]["options"][ans_idx]
+            next_test_id = selected_option["score"]
             logger.info(f"Gender selector completed for user {chat_id}, starting test: {next_test_id}")
             
             # Сбрасываем активный тест и запускаем новый
@@ -505,9 +517,18 @@ async def _handle_test_answer(query: CallbackQuery, context: ContextTypes.DEFAUL
             return
         else:
             # Обычный тест, получаем результат
-            score = sum(active_test_data["answers"])
+            score = 0
+            for q_idx_in_answers, ans_idx_in_answers in enumerate(active_test_data["answers"]):
+                # Получаем определение теста заново, чтобы убедиться в актуальности данных
+                current_test_def = test_engine.get_test_by_id(test_id)
+                if current_test_def and q_idx_in_answers < len(current_test_def["questions"]) and \
+                   ans_idx_in_answers < len(current_test_def["questions"][q_idx_in_answers]["options"]):
+                    score += current_test_def["questions"][q_idx_in_answers]["options"][ans_idx_in_answers]["score"]
+                else:
+                    logger.error(f"Error calculating score: Invalid question or answer index. q_idx_in_answers={q_idx_in_answers}, ans_idx_in_answers={ans_idx_in_answers}")
+            logger.info(f"Final score for test {test_id}: {score}")
+            # Тест завершен, вычисляем результат
             test_result = test_engine.get_test_result(test_id, score, active_test_data["answers"])
-            
             if not test_result:
                 logger.error(f"Failed to get test result for test_id: {test_id}, score: {score}")
                 await context.bot.send_message(
@@ -537,7 +558,7 @@ async def _handle_test_answer(query: CallbackQuery, context: ContextTypes.DEFAUL
                 # Пробуем отправить без форматирования, если возникла ошибка
                 await context.bot.send_message(
                     chat_id,
-                    result_summary,  # Оригинальный текст без экранирования
+                    "Произошла ошибка при отображении результата теста. Вот ваш результат (без форматирования):\n" + result_summary,  # Оригинальный текст без экранирования
                     reply_markup=get_main_menu_keyboard(user_data)
                 )
             
