@@ -115,7 +115,7 @@ def update_user_data(chat_id: int, new_data_dict: dict):
     return False
 
 def set_user_subscribed(chat_id: int, subscribed_status: bool = True):
-    mode = "dual" if subscribed_status else "none"
+    mode = "both" if subscribed_status else "none"
     # При подписке начинаем с дня 1, при отписке current_daily_day можно не менять или сбросить в 0
     current_day_on_sub = 1 if subscribed_status else get_user_data(chat_id).get("current_daily_day", 0)
 
@@ -123,9 +123,9 @@ def set_user_subscribed(chat_id: int, subscribed_status: bool = True):
         "subscribed_to_daily": subscribed_status,
         "daily_practice_mode": mode,
         "current_daily_day": current_day_on_sub, 
-        "stage": "daily_subscribed" if subscribed_status else "unsubscribed_daily", # или более конкретный stage
-        "last_morning_sent_date": None, # Сброс при новой подписке
-        "last_evening_sent_date": None  # Сброс при новой подписке
+        "stage": "daily_subscribed" if subscribed_status else "unsubscribed_daily",
+        "last_morning_sent_date": None,  # Сброс при новой подписке
+        "last_evening_sent_date": None   # Сброс при новой подписке
     })
 
 def set_user_stage(chat_id: int, stage: str):
@@ -167,7 +167,7 @@ def get_subscribed_users():
     users = load_users()
     return [
         data for data in users.values() 
-        if data.get("subscribed_to_daily") and data.get("daily_practice_mode") in ["dual", "morning_only"]
+        if data.get("subscribed_to_daily") and data.get("daily_practice_mode") in ["both", "dual", "morning_only"]
     ]
 
 def update_last_sent_date(chat_id: int, practice_type: str):

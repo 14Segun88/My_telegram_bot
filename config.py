@@ -19,13 +19,15 @@ ADMIN_NOTIFICATION_CHAT_ID = None  # Отключаем уведомления �
 
 # === Links ===
 MAIN_CHANNEL_LINK = "https://t.me/sexandmind" 
+# Channel ID (use @username_to_id_bot to get it if needed)
+MAIN_CHANNEL_ID = "@sexandmind"  # This might need to be the numeric ID if @ prefix doesn't work
 ADMIN_CONTACT_USERNAME = "GoidaSegun" 
 
 # === Daily Content Timing (UTC) ===
 # Время отправки утренней практики (UTC)
-MORNING_PRACTICE_TIME_UTC = datetime.time(hour=7, minute=39, tzinfo=pytz.UTC) 
+MORNING_PRACTICE_TIME_UTC = datetime.time(hour=19, minute=45, tzinfo=pytz.UTC)  # 22:45 МСК
 # Время отправки вечерней практики (UTC)
-EVENING_PRACTICE_TIME_UTC = datetime.time(hour=7, minute=40, tzinfo=pytz.UTC) 
+EVENING_PRACTICE_TIME_UTC = datetime.time(hour=19, minute=46, tzinfo=pytz.UTC)  # 22:46 МСК
 
 # === Day 3 test offer times (in UTC as string) ===
 DAY3_KEY_TEST_OFFER_MORNING_UTC = datetime.time(hour=7, minute=39, tzinfo=pytz.UTC) 

@@ -1,3 +1,4 @@
+import asyncio
 import logging
 import sys
 
@@ -12,12 +13,15 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-try:
-    logger.info("=== Запуск бота ===")
-    import bot
-    logger.info("=== Импортирован модуль bot ===")
-    bot.main()
-    logger.info("=== Бот запущен успешно ===")
-except Exception as e:
-    logger.error(f"=== Критическая ошибка при запуске бота: {str(e)} ===")
-    raise
+async def main():
+    try:
+        logger.info("=== Запуск бота ===")
+        import bot
+        logger.info("=== Импортирован модуль bot ===")
+        await bot.main()
+        logger.info("=== Бот запущен успешно ===")
+    except Exception as e:
+        logger.error(f"Ошибка при запуске бота: {e}", exc_info=True)
+
+if __name__ == '__main__':
+    asyncio.run(main())

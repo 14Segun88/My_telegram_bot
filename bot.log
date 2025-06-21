@@ -3688,3 +3688,984 @@ telegram.error.Conflict: Conflict: terminated by other getUpdates request; make 
 2025-06-06 06:04:11,565 - bot - INFO - Application остановлен.
 2025-06-06 06:04:11,567 - bot - INFO - Вызов application.shutdown()...
 2025-06-06 06:04:11,569 - bot - INFO - === Бот полностью остановлен. ===
+2025-06-21 22:05:00,591 - __main__ - INFO - === Запуск бота ===
+2025-06-21 22:05:02,039 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-21 22:05:02,046 - __main__ - INFO - === Бот запущен успешно ===
+2025-06-21 22:06:26,733 - __main__ - INFO - === Запуск бота ===
+2025-06-21 22:06:27,308 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-21 22:06:27,316 - bot - INFO - === Начало запуска бота ===
+2025-06-21 22:06:27,317 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-21 22:06:27,318 - bot - INFO - Утреннее время: 19:07:00+00:00
+2025-06-21 22:06:27,318 - bot - INFO - Вечернее время: 19:08:00+00:00
+2025-06-21 22:06:27,320 - bot - INFO - === Создание приложения ===
+2025-06-21 22:06:27,478 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-21 22:06:27,479 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-21 22:06:27,484 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-21 22:06:27,485 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-21 22:06:27,486 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-21 22:06:27,487 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-21 22:06:27,488 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-21 22:06:28,712 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-21 22:06:28,714 - telegram.ext.Application - INFO - Application started
+2025-06-21 22:06:29,128 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-21 22:06:36,367 - user_data_manager - INFO - New user created: 5965363034 (GoidaSegun)
+2025-06-21 22:06:38,505 - bot - INFO - Sent start video note to user 5965363034
+2025-06-21 22:06:42,706 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-21 22:06:42,708 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-21 22:06:42,708 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-21 22:06:42,709 - bot - INFO - Утром: 19:07:00+0000
+2025-06-21 22:06:42,710 - bot - INFO - Вечером: 19:08:00+0000
+2025-06-21 22:06:42,712 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: dual
+2025-06-21 22:06:42,734 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-21 22:06:42,736 - bot - INFO - ✅ Создана вечерняя задача на 19:08:00+0000
+2025-06-21 22:06:42,737 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 1
+2025-06-21 22:06:42,738 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 1
+2025-06-21 22:06:42,740 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-21 22:08:00,003 - apscheduler.executors.default - INFO - Running job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='19', minute='8', second='0'], next run at: 2025-06-22 19:08:00 UTC)" (scheduled at 2025-06-21 19:08:00+00:00)
+2025-06-21 22:08:00,004 - bot - INFO - ===== Запуск задачи: 5965363034_evening =====
+2025-06-21 22:08:00,005 - bot - INFO - Job data: {'pt': 'evening'}
+2025-06-21 22:08:00,015 - bot - INFO - Sending evening practice for day 1 to user 5965363034
+2025-06-21 22:08:01,362 - apscheduler.executors.default - INFO - Job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='19', minute='8', second='0'], next run at: 2025-06-22 19:08:00 UTC)" executed successfully
+2025-06-21 22:11:59,732 - __main__ - INFO - === Запуск бота ===
+2025-06-21 22:12:01,094 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-21 22:12:01,102 - bot - INFO - === Начало запуска бота ===
+2025-06-21 22:12:01,103 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-21 22:12:01,104 - bot - INFO - Утреннее время: 19:14:00+00:00
+2025-06-21 22:12:01,105 - bot - INFO - Вечернее время: 19:15:00+00:00
+2025-06-21 22:12:01,106 - bot - INFO - === Создание приложения ===
+2025-06-21 22:12:01,258 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-21 22:12:01,259 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-21 22:12:01,264 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-21 22:12:01,265 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-21 22:12:01,265 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-21 22:12:01,266 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-21 22:12:01,267 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-21 22:12:06,007 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-21 22:12:06,008 - telegram.ext.Application - INFO - Application started
+2025-06-21 22:12:06,310 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-21 22:12:07,722 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:07,759 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:12,542 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:12,543 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:13,741 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:13,742 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:18,825 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:18,826 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:20,746 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:20,747 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:23,816 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:23,817 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:26,305 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:26,306 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:29,982 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:29,983 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:33,126 - user_data_manager - INFO - New user created: 5965363034 (GoidaSegun)
+2025-06-21 22:12:34,505 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:34,506 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:35,617 - bot - INFO - Sent start video note to user 5965363034
+2025-06-21 22:12:39,210 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:39,212 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:44,097 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 1
+2025-06-21 22:12:44,099 - bot - INFO - [SCHEDULER DEBUG] Существующая задача: 5965363034_evening, следующий запуск: 2025-06-22 19:08:00+00:00
+2025-06-21 22:12:44,104 - apscheduler.scheduler - INFO - Removed job eb1b216557364299bfe54f9a6872d627
+2025-06-21 22:12:44,113 - bot - INFO - Удалена старая задача: 5965363034_evening
+2025-06-21 22:12:44,115 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 1
+2025-06-21 22:12:44,115 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-21 22:12:44,116 - bot - INFO - Утром: 19:07:00+0000
+2025-06-21 22:12:44,117 - bot - INFO - Вечером: 19:08:00+0000
+2025-06-21 22:12:44,118 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: dual
+2025-06-21 22:12:44,177 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-21 22:12:44,179 - bot - INFO - ✅ Создана вечерняя задача на 19:08:00+0000
+2025-06-21 22:12:44,179 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 1
+2025-06-21 22:12:44,180 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 1
+2025-06-21 22:12:44,182 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-21 22:12:45,970 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:45,971 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:50,556 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:50,557 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:57,558 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:12:57,559 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:13:03,452 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:13:03,453 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:13:17,005 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:13:17,006 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:13:18,849 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:13:18,850 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:13:38,272 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:13:38,273 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:13:43,319 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:13:43,320 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:14:07,334 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:14:07,335 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:14:11,896 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:14:11,897 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:14:41,208 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:14:41,209 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:14:45,770 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:14:45,771 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:15:14,200 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:15:14,201 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:15:18,713 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:15:18,714 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:15:47,446 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:15:47,447 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:15:49,523 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:15:49,524 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:16:18,098 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:16:18,099 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:16:22,599 - telegram.ext.Updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:16:22,600 - telegram.ext.Updater - ERROR - Exception happened while polling for updates.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 688, in _network_loop_retry
+    if not await action_cb():
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 384, in polling_action_cb
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 373, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-06-21 22:17:16,277 - __main__ - INFO - === Запуск бота ===
+2025-06-21 22:17:17,832 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-21 22:17:17,844 - bot - INFO - === Начало запуска бота ===
+2025-06-21 22:17:17,845 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-21 22:17:17,846 - bot - INFO - Утреннее время: 19:20:00+00:00
+2025-06-21 22:17:17,847 - bot - INFO - Вечернее время: 19:21:00+00:00
+2025-06-21 22:17:17,848 - bot - INFO - === Создание приложения ===
+2025-06-21 22:17:15,138 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-21 22:17:15,139 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-21 22:17:15,148 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 ===
+2025-06-21 22:17:15,149 - bot - INFO - Утром: 19:20:00+00:00
+2025-06-21 22:17:15,151 - bot - INFO - Вечером: 19:21:00+00:00
+2025-06-21 22:17:15,152 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-21 22:17:15,153 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-21 22:17:15,154 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-21 22:17:15,155 - bot - INFO - Утром: 19:20:00+0000
+2025-06-21 22:17:15,157 - bot - INFO - Вечером: 19:21:00+0000
+2025-06-21 22:17:15,158 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: dual
+2025-06-21 22:17:15,170 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-06-21 22:17:15,170 - bot - INFO - ✅ Создана вечерняя задача на 19:21:00+0000
+2025-06-21 22:17:15,171 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 1
+2025-06-21 22:17:15,172 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 1
+2025-06-21 22:17:15,172 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-21 22:17:15,173 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-21 22:17:15,174 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-21 22:17:15,175 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-21 22:17:15,176 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-21 22:17:15,178 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-21 22:17:16,925 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-21 22:17:16,926 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-21 22:17:16,928 - telegram.ext.Application - INFO - Application started
+2025-06-21 22:17:17,279 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-21 22:17:25,266 - bot - INFO - Sent start video note to user 5965363034
+2025-06-21 22:21:54,419 - __main__ - INFO - === Запуск бота ===
+2025-06-21 22:21:55,058 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-21 22:21:55,065 - bot - INFO - === Начало запуска бота ===
+2025-06-21 22:21:55,066 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-21 22:21:55,066 - bot - INFO - Утреннее время: 19:25:00+00:00
+2025-06-21 22:21:55,067 - bot - INFO - Вечернее время: 19:26:00+00:00
+2025-06-21 22:21:55,068 - bot - INFO - === Создание приложения ===
+2025-06-21 22:21:55,202 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-21 22:21:55,202 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-21 22:21:55,207 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-21 22:21:55,208 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-21 22:21:55,209 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-21 22:21:55,210 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-21 22:21:55,211 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-21 22:21:57,254 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-21 22:21:57,255 - telegram.ext.Application - INFO - Application started
+2025-06-21 22:21:57,759 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-21 22:22:02,979 - user_data_manager - INFO - New user created: 5965363034 (GoidaSegun)
+2025-06-21 22:22:05,103 - bot - INFO - Sent start video note to user 5965363034
+2025-06-21 22:22:09,872 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-21 22:22:09,872 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-21 22:22:09,873 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-21 22:22:09,873 - bot - INFO - Утром: 19:25:00+0000
+2025-06-21 22:22:09,874 - bot - INFO - Вечером: 19:26:00+0000
+2025-06-21 22:22:09,875 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-21 22:22:09,876 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': None, 'last_evening_sent_date': None, 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-21T19:22:02.979203+00:00', 'last_interaction_date': '2025-06-21T19:22:09.851618+00:00'}
+2025-06-21 22:22:09,877 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-21 22:22:09,888 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-21 22:22:09,889 - bot - INFO - ✅ Создана утренняя задача на 19:25:00+0000
+2025-06-21 22:22:09,894 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-21 22:22:09,895 - bot - INFO - ✅ Создана вечерняя задача на 19:26:00+0000
+2025-06-21 22:22:09,896 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-21 22:22:09,898 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-21 22:22:09,899 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-21 22:22:09,900 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-21 22:25:00,022 - apscheduler.executors.default - INFO - Running job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='19', minute='25', second='0'], next run at: 2025-06-22 19:25:00 UTC)" (scheduled at 2025-06-21 19:25:00+00:00)
+2025-06-21 22:25:00,023 - bot - INFO - ===== Запуск задачи: 5965363034_morning =====
+2025-06-21 22:25:00,024 - bot - INFO - Job data: {'pt': 'morning'}
+2025-06-21 22:25:00,031 - bot - INFO - Sending morning practice for day 1 to user 5965363034
+2025-06-21 22:25:01,861 - apscheduler.executors.default - INFO - Job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='19', minute='25', second='0'], next run at: 2025-06-22 19:25:00 UTC)" executed successfully
+2025-06-21 22:26:00,020 - apscheduler.executors.default - INFO - Running job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='19', minute='26', second='0'], next run at: 2025-06-22 19:26:00 UTC)" (scheduled at 2025-06-21 19:26:00+00:00)
+2025-06-21 22:26:00,021 - bot - INFO - ===== Запуск задачи: 5965363034_evening =====
+2025-06-21 22:26:00,022 - bot - INFO - Job data: {'pt': 'evening'}
+2025-06-21 22:26:00,028 - bot - INFO - Sending evening practice for day 1 to user 5965363034
+2025-06-21 22:26:01,862 - apscheduler.executors.default - INFO - Job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='19', minute='26', second='0'], next run at: 2025-06-22 19:26:00 UTC)" executed successfully
+2025-06-21 22:29:29,150 - __main__ - INFO - === Запуск бота ===
+2025-06-21 22:29:30,469 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-21 22:29:30,477 - bot - INFO - === Начало запуска бота ===
+2025-06-21 22:29:30,478 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-21 22:29:30,479 - bot - INFO - Утреннее время: 19:30:00+00:00
+2025-06-21 22:29:30,480 - bot - INFO - Вечернее время: 19:31:00+00:00
+2025-06-21 22:29:30,482 - bot - INFO - === Создание приложения ===
+2025-06-21 22:29:30,645 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-21 22:29:30,646 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-21 22:29:30,651 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-21 22:29:30,652 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-21 22:29:30,653 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-21 22:29:30,654 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-21 22:29:30,655 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-21 22:29:32,441 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-21 22:29:32,442 - telegram.ext.Application - INFO - Application started
+2025-06-21 22:29:32,774 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-21 22:29:42,428 - user_data_manager - INFO - New user created: 5965363034 (GoidaSegun)
+2025-06-21 22:29:46,020 - bot - INFO - Sent start video note to user 5965363034
+2025-06-21 22:29:51,507 - bot - ERROR - Error checking channel subscription: Chat not found
+2025-06-21 22:30:03,826 - bot - ERROR - Error checking subscription status: Chat not found
+2025-06-21 22:30:07,000 - bot - ERROR - Error checking channel subscription: Chat not found
+2025-06-21 22:32:35,154 - __main__ - INFO - === Запуск бота ===
+2025-06-21 22:32:33,680 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-21 22:32:33,687 - bot - INFO - === Начало запуска бота ===
+2025-06-21 22:32:33,687 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-21 22:32:33,688 - bot - INFO - Утреннее время: 19:30:00+00:00
+2025-06-21 22:32:33,689 - bot - INFO - Вечернее время: 19:31:00+00:00
+2025-06-21 22:32:33,690 - bot - INFO - === Создание приложения ===
+2025-06-21 22:32:33,838 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-21 22:32:33,839 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-21 22:32:33,856 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-21 22:32:33,857 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-21 22:32:33,858 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-21 22:32:33,858 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-21 22:32:33,859 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-21 22:32:35,685 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-21 22:32:35,686 - telegram.ext.Application - INFO - Application started
+2025-06-21 22:32:36,223 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-21 22:32:46,890 - bot - INFO - Sent start video note to user 5965363034
+2025-06-21 22:33:11,058 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-21 22:33:11,059 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-21 22:33:11,060 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-21 22:33:11,061 - bot - INFO - Утром: 19:30:00+0000
+2025-06-21 22:33:11,062 - bot - INFO - Вечером: 19:31:00+0000
+2025-06-21 22:33:11,063 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-21 22:33:11,063 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': None, 'last_evening_sent_date': None, 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-21T19:29:42.428575+00:00', 'last_interaction_date': '2025-06-21T19:33:11.038939+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-21T19:32:54.943509+00:00'}
+2025-06-21 22:33:11,064 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-21 22:33:11,076 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-21 22:33:11,078 - bot - INFO - ✅ Создана утренняя задача на 19:30:00+0000
+2025-06-21 22:33:11,082 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-21 22:33:11,083 - bot - INFO - ✅ Создана вечерняя задача на 19:31:00+0000
+2025-06-21 22:33:11,085 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-21 22:33:11,086 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-21 22:33:11,088 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-21 22:33:11,090 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-21 22:39:00,662 - __main__ - INFO - === Запуск бота ===
+2025-06-21 22:39:01,753 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-21 22:39:01,761 - bot - INFO - === Начало запуска бота ===
+2025-06-21 22:39:01,761 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-21 22:39:01,762 - bot - INFO - Утреннее время: 19:45:00+00:00
+2025-06-21 22:39:01,763 - bot - INFO - Вечернее время: 19:46:00+00:00
+2025-06-21 22:39:01,763 - bot - INFO - === Создание приложения ===
+2025-06-21 22:39:01,913 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-21 22:39:01,914 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-21 22:39:01,921 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-21 22:39:01,923 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-21 22:39:01,924 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-21 22:39:01,925 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-21 22:39:01,926 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-21 22:39:05,204 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-21 22:39:05,205 - telegram.ext.Application - INFO - Application started
+2025-06-21 22:39:05,571 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-21 22:39:09,150 - user_data_manager - INFO - New user created: 5965363034 (GoidaSegun)
+2025-06-21 22:39:09,614 - bot - INFO - Sent start video note to user 5965363034
+2025-06-21 22:39:11,139 - bot - INFO - Channel membership check result (by ID): False
+2025-06-21 22:39:11,416 - bot - INFO - Channel membership check result (by @username): False
+2025-06-21 22:39:32,677 - bot - INFO - Channel membership check result (by ID): True
+2025-06-21 22:39:32,725 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-21 22:39:32,726 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-21 22:39:32,727 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-21 22:39:32,727 - bot - INFO - Утром: 19:45:00+0000
+2025-06-21 22:39:32,728 - bot - INFO - Вечером: 19:46:00+0000
+2025-06-21 22:39:32,730 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-21 22:39:32,732 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': None, 'last_evening_sent_date': None, 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-21T19:39:09.150269+00:00', 'last_interaction_date': '2025-06-21T19:39:32.707785+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-21T19:39:32.678674+00:00'}
+2025-06-21 22:39:32,736 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-21 22:39:32,745 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-21 22:39:32,746 - bot - INFO - ✅ Создана утренняя задача на 19:45:00+0000
+2025-06-21 22:39:32,747 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-21 22:39:32,748 - bot - INFO - ✅ Создана вечерняя задача на 19:46:00+0000
+2025-06-21 22:39:32,749 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-21 22:39:32,750 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-21 22:39:32,751 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-21 22:39:32,751 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-21 22:45:00,022 - apscheduler.executors.default - INFO - Running job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='19', minute='45', second='0'], next run at: 2025-06-22 19:45:00 UTC)" (scheduled at 2025-06-21 19:45:00+00:00)
+2025-06-21 22:45:00,024 - bot - INFO - ===== Запуск задачи: 5965363034_morning =====
+2025-06-21 22:45:00,025 - bot - INFO - Job data: {'pt': 'morning'}
+2025-06-21 22:45:00,037 - bot - INFO - Sending morning practice for day 1 to user 5965363034
+2025-06-21 22:45:03,005 - apscheduler.executors.default - INFO - Job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='19', minute='45', second='0'], next run at: 2025-06-22 19:45:00 UTC)" executed successfully
+2025-06-21 22:46:00,012 - apscheduler.executors.default - INFO - Running job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='19', minute='46', second='0'], next run at: 2025-06-22 19:46:00 UTC)" (scheduled at 2025-06-21 19:46:00+00:00)
+2025-06-21 22:46:00,014 - bot - INFO - ===== Запуск задачи: 5965363034_evening =====
+2025-06-21 22:46:00,014 - bot - INFO - Job data: {'pt': 'evening'}
+2025-06-21 22:46:00,021 - bot - INFO - Sending evening practice for day 1 to user 5965363034
+2025-06-21 22:46:01,599 - apscheduler.executors.default - INFO - Job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='19', minute='46', second='0'], next run at: 2025-06-22 19:46:00 UTC)" executed successfully

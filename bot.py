@@ -110,10 +110,84 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         keyboard.append([InlineKeyboardButton(config.SUBSCRIBE_BUTTON_TEXT, callback_data="subscribe_daily")])
     else:
         keyboard.append([InlineKeyboardButton("⏸️ Остановить практики", callback_data="menu_stop_daily")])
+    keyboard.append([InlineKeyboardButton("✅ Проверка подписки", callback_data="check_subscription")])
     keyboard.append([InlineKeyboardButton(config.MAIN_CHANNEL_BUTTON_TEXT, url=config.MAIN_CHANNEL_LINK)])
 
     await update.message.reply_text(escape_markdown_v2(config.WELCOME_TEXT), reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN_V2)
     udm.set_user_stage(user.id, "greeted")
+
+async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Check if user is subscribed to the main channel"""
+    query = update.callback_query
+    await query.answer()
+    
+    user = await update_user_and_log(update, context)
+    chat_id = user.id
+    user_data = udm.get_user_data(chat_id)
+    
+    if not user_data:
+        await query.edit_message_text("Ошибка: данные пользователя не найдены.")
+        return
+    
+    try:
+        # Check if user is a member of the channel
+        channel_username = config.MAIN_CHANNEL_LINK.split('/')[-1]
+        is_subscribed = False
+        
+        # Try with @ prefix first (for public channels)
+        try:
+            chat_member = await context.bot.get_chat_member(
+                chat_id=f"@{channel_username}",
+                user_id=chat_id
+            )
+            is_subscribed = chat_member.status in ['member', 'administrator', 'creator']
+        except Exception as e1:
+            logger.warning(f"Failed to check membership with @ prefix: {e1}")
+            # Try with channel ID if available in config
+            if hasattr(config, 'MAIN_CHANNEL_ID'):
+                try:
+                    chat_member = await context.bot.get_chat_member(
+                        chat_id=config.MAIN_CHANNEL_ID,
+                        user_id=chat_id
+                    )
+                    is_subscribed = chat_member.status in ['member', 'administrator', 'creator']
+                except Exception as e2:
+                    logger.error(f"Failed to check membership with channel ID: {e2}")
+                    is_subscribed = False
+            else:
+                is_subscribed = False
+        
+        # Update user's subscription status
+        if 'channel_subscription' not in user_data or user_data['channel_subscription'] != is_subscribed:
+            user_data['channel_subscription'] = is_subscribed
+            user_data['channel_subscription_checked'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+            udm.update_user_data(chat_id, {'channel_subscription': is_subscribed, 'channel_subscription_checked': user_data['channel_subscription_checked']})
+        
+        if is_subscribed:
+            # User is subscribed to the channel
+            await query.edit_message_text(
+                "✅ Вы подписаны на канал! Теперь вы можете подписаться на ежедневные практики.",
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton("📅 Подписаться на практики", callback_data="menu_subscribe_daily")],
+                    [InlineKeyboardButton("🔙 В меню", callback_data=MENU_CALLBACK_MAIN)]
+                ])
+            )
+        else:
+            # User is not subscribed to the channel
+            await query.edit_message_text(
+                f"❌ Вы не подписаны на канал. Пожалуйста, подпишитесь на {config.MAIN_CHANNEL_LINK} и нажмите кнопку проверки подписки.",
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton("✅ Я подписался(ась)", callback_data="check_subscription")],
+                    [InlineKeyboardButton("🔙 В меню", callback_data=MENU_CALLBACK_MAIN)]
+                ])
+            )
+    except Exception as e:
+        logger.error(f"Error checking subscription status: {e}")
+        await query.edit_message_text(
+            "Произошла ошибка при проверке подписки. Пожалуйста, попробуйте позже.",
+            reply_markup=get_main_menu_keyboard(user_data)
+        )
+
 
 async def stopdaily_command(update: Update, context: ContextTypes.DEFAULT_TYPE, from_menu: bool = False) -> None:
     user = await update_user_and_log(update, context)
@@ -288,6 +362,10 @@ def _schedule_daily_jobs_for_user(chat_id: int, job_queue_instance, user_data: d
     # 5. Создаем новые задачи с актуальным временем
     mode = user_data.get("daily_practice_mode", "both")
     logger.info(f"[DEBUG] Режим практики пользователя {chat_id}: {mode}")
+    logger.info(f"[DEBUG] user_data: {user_data}")
+    
+    # Упрощаем логику проверки режимов
+    logger.info(f"[DEBUG] Checking morning job condition: mode={mode}, condition={mode in ['both', 'morning_only']}")
     if mode in ["both", "morning_only"]:
         job_queue_instance.run_daily(
             send_daily_practice_job, 
@@ -298,8 +376,8 @@ def _schedule_daily_jobs_for_user(chat_id: int, job_queue_instance, user_data: d
             job_kwargs={'misfire_grace_time': 60}
         )
         logger.info(f"✅ Создана утренняя задача на {morning_time_to_use.strftime('%H:%M:%S%z')}")
-        
-    if mode in ["dual", "both"]:
+    
+    if mode in ["both", "dual"]:
         job_queue_instance.run_daily(
             send_daily_practice_job, 
             evening_time_to_use,
@@ -389,12 +467,96 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
     if data == MENU_CALLBACK_MAIN: await menu_command(update, context); return
     if data == "menu_stop_daily": await stopdaily_command(update, context, from_menu=True); return
+    if data == "check_subscription": await check_subscription(update, context); return
     if data == "menu_subscribe_daily" or data == "subscribe_daily":
-        if not user_data.get("subscribed_to_daily"):
-            udm.set_user_subscribed(chat_id, True); user_data = udm.get_user_data(chat_id) # Refresh user_data
+        try:
+            # Check if user is already subscribed to practices
+            if user_data.get("subscribed_to_daily"):
+                await query.edit_message_text(
+                    text=escape_markdown_v2(config.SUBSCRIPTION_ALREADY_ACTIVE_TEXT),
+                    reply_markup=get_main_menu_keyboard(user_data),
+                    parse_mode=ParseMode.MARKDOWN_V2
+                )
+                return
+                
+            # Check if user is subscribed to the main channel
+            is_subscribed = False
+            channel_username = config.MAIN_CHANNEL_LINK.split('/')[-1]
+            
+            # Try with direct channel ID first (most reliable)
+            if hasattr(config, 'MAIN_CHANNEL_ID'):
+                try:
+                    chat_member = await context.bot.get_chat_member(
+                        chat_id=config.MAIN_CHANNEL_ID,
+                        user_id=chat_id
+                    )
+                    is_subscribed = chat_member.status in ['member', 'administrator', 'creator']
+                    logger.info(f"Channel membership check result (by ID): {is_subscribed}")
+                except Exception as e:
+                    logger.error(f"Failed to check membership with channel ID: {e}")
+                    is_subscribed = False
+            
+            # If that fails, try with @username
+            if not is_subscribed and channel_username:
+                try:
+                    chat_member = await context.bot.get_chat_member(
+                        chat_id=f"@{channel_username}",
+                        user_id=chat_id
+                    )
+                    is_subscribed = chat_member.status in ['member', 'administrator', 'creator']
+                    logger.info(f"Channel membership check result (by @username): {is_subscribed}")
+                except Exception as e:
+                    logger.error(f"Failed to check membership with @username: {e}")
+                    is_subscribed = False
+            
+            # Update stored status
+            user_data['channel_subscription'] = is_subscribed
+            user_data['channel_subscription_checked'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+            udm.update_user_data(chat_id, {
+                'channel_subscription': is_subscribed,
+                'channel_subscription_checked': user_data['channel_subscription_checked']
+            })
+            
+            if not is_subscribed:
+                # User is not subscribed to the channel
+                await query.edit_message_text(
+                    text="❌ Для подписки на практики необходимо быть подписанным на наш канал.\n\n"
+                         f"1. Подпишитесь на канал {config.MAIN_CHANNEL_LINK}\n"
+                         "2. Нажмите кнопку проверки подписки ниже",
+                    reply_markup=InlineKeyboardMarkup([
+                        [InlineKeyboardButton("✅ Проверить подписку", callback_data="check_subscription")],
+                        [InlineKeyboardButton("🔙 В меню", callback_data=MENU_CALLBACK_MAIN)]
+                    ])
+                )
+                return
+                
+            # If we get here, user is subscribed to the channel
+            udm.set_user_subscribed(chat_id, True)
+            user_data = udm.get_user_data(chat_id)  # Refresh user_data
             _schedule_daily_jobs_for_user(chat_id, context.job_queue, user_data)
-            await query.edit_message_text(text=escape_markdown_v2(config.SUBSCRIPTION_SUCCESS_TEXT.format(button_ack_text=daily_content.COMMON_BUTTON_TEXT)), reply_markup=get_main_menu_keyboard(user_data), parse_mode=ParseMode.MARKDOWN_V2)
-        else: await query.edit_message_text(text=escape_markdown_v2(config.SUBSCRIPTION_ALREADY_ACTIVE_TEXT), reply_markup=get_main_menu_keyboard(user_data), parse_mode=ParseMode.MARKDOWN_V2)
+            await query.edit_message_text(
+                text=escape_markdown_v2(config.SUBSCRIPTION_SUCCESS_TEXT.format(button_ack_text=daily_content.COMMON_BUTTON_TEXT)),
+                reply_markup=get_main_menu_keyboard(user_data),
+                parse_mode=ParseMode.MARKDOWN_V2
+            )
+            
+        except Exception as e:
+            logger.error(f"Error in subscription process: {e}", exc_info=True)
+            await query.edit_message_text(
+                "❌ Произошла ошибка при проверке подписки. Пожалуйста, попробуйте позже.",
+                reply_markup=get_main_menu_keyboard(user_data)
+            )
+        return
+            
+        # User is subscribed to the channel, proceed with subscription
+        udm.set_user_subscribed(chat_id, True)
+        user_data = udm.get_user_data(chat_id)  # Refresh user_data
+        _schedule_daily_jobs_for_user(chat_id, context.job_queue, user_data)
+        await query.edit_message_text(
+            text=escape_markdown_v2(config.SUBSCRIPTION_SUCCESS_TEXT.format(button_ack_text=daily_content.COMMON_BUTTON_TEXT)),
+            reply_markup=get_main_menu_keyboard(user_data),
+            parse_mode=ParseMode.MARKDOWN_V2
+        )
         return
 
     elif data.startswith("daily_ack_"):
