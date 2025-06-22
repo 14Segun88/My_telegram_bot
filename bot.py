@@ -15,10 +15,13 @@ from telegram import (
     InlineKeyboardMarkup,
     BotCommand,
     BotCommandScopeChat,
+    BotCommandScopeAllPrivateChats,
     CallbackQuery,
     Message,
     Chat
 )
+from telegram.constants import ChatAction
+from telegram.request import HTTPXRequest
 from telegram.constants import ParseMode
 from telegram.error import TelegramError
 from telegram.ext import (
@@ -51,8 +54,30 @@ logger = logging.getLogger(__name__)
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logging.getLogger("httpcore").setLevel(logging.WARNING)
 
+# Callback data constants
 MENU_CALLBACK_MAIN = "menu_main"
+MENU_CALLBACK_BACK = "menu_back"
 
+# Notification and pin constants
+NOTIFICATION_HELP_MSG = (
+    "🔔 *Как включить уведомления:*\n\n"
+    "1. Откройте настройки уведомлений Telegram\n"
+    "2. Найдите наш чат в списке\n"
+    "3. Включите уведомления и звук\n\n"
+    "После включения нажмите кнопку \"✅ Готово\" внизу."
+)
+
+PIN_HELP_MSG = (
+    "📌 *Как закрепить чат:*\n\n"
+    "📱 *На телефоне:*\n"
+    "1. Откройте список чатов\n"
+    "2. Нажмите и удерживайте наш чат\n"
+    "3. Выберите \"Закрепить\" (иконка булавки)\n\n"
+    "💻 *На компьютере:*\n"
+    "1. Кликните правой кнопкой мыши на нашем чате\n"
+    "2. Выберите \"Закрепить чат\"\n\n"
+    "После закрепления нажмите кнопку \"Готово\""
+)
 def escape_markdown_v2(text: str) -> str:
     if not isinstance(text, str): text = str(text)
     escape_chars = r'_*[]()~`>#+-=|{}.!'
@@ -467,7 +492,99 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
     if data == MENU_CALLBACK_MAIN: await menu_command(update, context); return
     if data == "menu_stop_daily": await stopdaily_command(update, context, from_menu=True); return
-    if data == "check_subscription": await check_subscription(update, context); return
+    elif data == "check_subscription":
+        await check_subscription(update, context)
+        return
+        
+    elif data == "enable_notifications":
+        logger.info(f"User {chat_id} clicked enable_notifications button")
+        try:
+            # Create the keyboard with just the Done button
+            keyboard = [[InlineKeyboardButton("✅ Готово", callback_data="notifications_done")]]
+            
+            # Send the help message with the keyboard
+            sent_message = await query.message.reply_text(
+                NOTIFICATION_HELP_MSG,
+                reply_markup=InlineKeyboardMarkup(keyboard),
+                parse_mode=ParseMode.MARKDOWN
+            )
+            logger.info(f"Sent simplified notification help message to user {chat_id}, message ID: {sent_message.message_id}")
+            
+            # Acknowledge the button click
+            await query.answer()
+            logger.info(f"Acknowledged enable_notifications button click for user {chat_id}")
+            
+        except Exception as e:
+            error_msg = f"Error in enable_notifications for user {chat_id}: {str(e)}"
+            logger.error(error_msg, exc_info=True)
+            await query.answer("❌ Не удалось открыть настройки. Пожалуйста, включите уведомления вручную.", show_alert=True)
+        return
+        
+    elif data == "notifications_done":
+        # Обновляем интерфейс после включения уведомлений
+        await query.answer("🎉 Отлично! Теперь вы будете получать уведомления о новых сообщениях.", show_alert=True)
+        
+        # Удаляем кнопки и оставляем только текст
+        try:
+            await query.message.edit_reply_markup(reply_markup=None)
+            
+            # Отправляем сообщение с подтверждением
+            await query.message.reply_text(
+                "🔔 *Уведомления включены!*\n\n"
+                "Теперь вы будете получать уведомления о новых сообщениях. Если что-то пойдет не так, "
+                "вы всегда можете изменить настройки уведомлений в настройках Telegram.",
+                parse_mode=ParseMode.MARKDOWN
+            )
+        except Exception as e:
+            logger.error(f"Error updating notification message: {e}")
+        return
+        
+    elif data == "pin_bot":
+        try:
+            # Получаем username бота для создания ссылки
+            bot_username = (await context.bot.get_me()).username
+            bot_profile_url = BOT_PROFILE_URL.format(bot_username)
+            
+            # Создаем клавиатуру с кнопками
+            keyboard = [
+                [InlineKeyboardButton("📌 Открыть профиль бота", url=bot_profile_url)],
+                [InlineKeyboardButton("✅ Готово", callback_data="pinning_done")],
+                [InlineKeyboardButton("❓ Инструкция", callback_data="show_pin_help")]
+            ]
+            
+            # Отправляем сообщение с инструкциями
+            await query.message.reply_text(
+                PIN_HELP_MSG,
+                reply_markup=InlineKeyboardMarkup(keyboard),
+                parse_mode=ParseMode.MARKDOWN
+            )
+            await query.answer()
+        except Exception as e:
+            logger.error(f"Error in pin_bot: {e}")
+            await query.answer("❌ Не удалось отправить инструкцию. Пожалуйста, попробуйте снова.", show_alert=True)
+        return
+        
+    elif data == "pinning_done":
+        await query.answer("🎉 Отлично! Чат закреплён. Теперь вы всегда будете видеть его вверху списка.", show_alert=True)
+        try:
+            # Удаляем кнопки и оставляем только текст
+            await query.message.edit_reply_markup(reply_markup=None)
+            
+            # Отправляем подтверждающее сообщение
+            await query.message.reply_text(
+                "📌 *Чат закреплен!*\n\n"
+                "Теперь наш чат всегда будет у вас под рукой. Если у вас возникнут вопросы, "
+                "не стесняйтесь обращаться к нам в любое время!",
+                parse_mode=ParseMode.MARKDOWN
+            )
+        except Exception as e:
+            logger.error(f"Error updating pin message: {e}")
+        return
+        
+    elif data == "show_pin_help":
+        # Прокручиваем к сообщению с инструкцией
+        await query.answer("🔍 Прокрутите вверх, чтобы увидеть инструкции по закреплению чата.", show_alert=True)
+        return
     if data == "menu_subscribe_daily" or data == "subscribe_daily":
         try:
             # Check if user is already subscribed to practices
@@ -534,9 +651,17 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             udm.set_user_subscribed(chat_id, True)
             user_data = udm.get_user_data(chat_id)  # Refresh user_data
             _schedule_daily_jobs_for_user(chat_id, context.job_queue, user_data)
+            
+            # Создаем клавиатуру с кнопками для нового пользователя
+            keyboard = [
+                [InlineKeyboardButton("🔔 Включить уведомления", callback_data="enable_notifications")],
+                [InlineKeyboardButton("📌 Закрепить бота", callback_data="pin_bot")],
+                [InlineKeyboardButton("➡️ Продолжить", callback_data=MENU_CALLBACK_MAIN)]
+            ]
+            
             await query.edit_message_text(
                 text=escape_markdown_v2(config.SUBSCRIPTION_SUCCESS_TEXT.format(button_ack_text=daily_content.COMMON_BUTTON_TEXT)),
-                reply_markup=get_main_menu_keyboard(user_data),
+                reply_markup=InlineKeyboardMarkup(keyboard),
                 parse_mode=ParseMode.MARKDOWN_V2
             )
             
@@ -1115,23 +1240,20 @@ async def main() -> None:
     logger.info("=== ВРЕМЯ ИЗ CONFIG.PY ===")
     logger.info(f"Утреннее время: {config.MORNING_PRACTICE_TIME_UTC}")
     logger.info(f"Вечернее время: {config.EVENING_PRACTICE_TIME_UTC}")
-
+    
     # Создание приложения с увеличенными таймаутами
     logger.info("=== Создание приложения ===")
-    application = ApplicationBuilder().token(config.BOT_TOKEN)\
-        .connect_timeout(30)\
-        .read_timeout(30)\
-        .write_timeout(30)\
-        .pool_timeout(60)\
-        .connection_pool_size(50)\
-        .build()
+    request = HTTPXRequest(connection_pool_size=20, read_timeout=60.0, write_timeout=60.0, connect_timeout=60.0)
+    application = Application.builder().token(config.BOT_TOKEN).request(request).build()
+    
+    # Инициализируем job_queue
     job_queue = application.job_queue
     
     # ПРИНУДИТЕЛЬНО очищаем ВСЕ задачи планировщика
     logger.info("=== ОЧИСТКА ВСЕХ ЗАДАЧ ===")
     for job in job_queue.jobs():
         job.schedule_removal()
-        logger.info(f"Удалена старая задача: {job.name}")
+    logger.info("=== ВСЕ ЗАДАЧИ ОЧИЩЕНЫ ===")
 
     # Загружаем существующих пользователей и планируем задачи
     logger.info("Loading existing users and scheduling jobs...")

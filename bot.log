@@ -4669,3 +4669,998 @@ telegram.error.Conflict: Conflict: terminated by other getUpdates request; make 
 2025-06-21 22:46:00,014 - bot - INFO - Job data: {'pt': 'evening'}
 2025-06-21 22:46:00,021 - bot - INFO - Sending evening practice for day 1 to user 5965363034
 2025-06-21 22:46:01,599 - apscheduler.executors.default - INFO - Job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='19', minute='46', second='0'], next run at: 2025-06-22 19:46:00 UTC)" executed successfully
+2025-06-21 22:55:57,221 - __main__ - INFO - === Запуск бота ===
+2025-06-21 22:55:58,136 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-21 22:55:58,144 - bot - INFO - === Начало запуска бота ===
+2025-06-21 22:55:58,145 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-21 22:55:58,145 - bot - INFO - Утреннее время: 20:00:00+00:00
+2025-06-21 22:55:58,146 - bot - INFO - Вечернее время: 20:01:00+00:00
+2025-06-21 22:55:58,147 - bot - INFO - === Создание приложения ===
+2025-06-21 22:55:58,295 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-21 22:55:58,295 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-21 22:55:58,301 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-21 22:55:58,302 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-21 22:55:58,303 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-21 22:55:58,304 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-21 22:55:58,305 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-21 22:55:57,849 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-21 22:55:57,850 - telegram.ext.Application - INFO - Application started
+2025-06-21 22:55:58,041 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-21 22:56:02,052 - user_data_manager - INFO - New user created: 5965363034 (GoidaSegun)
+2025-06-21 22:56:02,950 - bot - INFO - Sent start video note to user 5965363034
+2025-06-21 22:56:08,328 - bot - INFO - Channel membership check result (by ID): True
+2025-06-21 22:56:08,396 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-21 22:56:08,398 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-21 22:56:08,401 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-21 22:56:08,402 - bot - INFO - Утром: 20:00:00+0000
+2025-06-21 22:56:08,403 - bot - INFO - Вечером: 20:01:00+0000
+2025-06-21 22:56:08,404 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-21 22:56:08,405 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': None, 'last_evening_sent_date': None, 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-21T19:56:02.052248+00:00', 'last_interaction_date': '2025-06-21T19:56:08.370944+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-21T19:56:08.329554+00:00'}
+2025-06-21 22:56:08,406 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-21 22:56:08,424 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-21 22:56:08,425 - bot - INFO - ✅ Создана утренняя задача на 20:00:00+0000
+2025-06-21 22:56:08,427 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-21 22:56:08,428 - bot - INFO - ✅ Создана вечерняя задача на 20:01:00+0000
+2025-06-21 22:56:08,428 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-21 22:56:08,429 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-21 22:56:08,429 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-21 22:56:08,429 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-21 23:00:00,007 - apscheduler.executors.default - INFO - Running job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='20', minute='0', second='0'], next run at: 2025-06-22 20:00:00 UTC)" (scheduled at 2025-06-21 20:00:00+00:00)
+2025-06-21 23:00:00,008 - bot - INFO - ===== Запуск задачи: 5965363034_morning =====
+2025-06-21 23:00:00,009 - bot - INFO - Job data: {'pt': 'morning'}
+2025-06-21 23:00:00,016 - bot - INFO - Sending morning practice for day 1 to user 5965363034
+2025-06-21 23:00:02,076 - apscheduler.executors.default - INFO - Job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='20', minute='0', second='0'], next run at: 2025-06-22 20:00:00 UTC)" executed successfully
+2025-06-21 23:01:00,017 - apscheduler.executors.default - INFO - Running job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='20', minute='1', second='0'], next run at: 2025-06-22 20:01:00 UTC)" (scheduled at 2025-06-21 20:01:00+00:00)
+2025-06-21 23:01:00,018 - bot - INFO - ===== Запуск задачи: 5965363034_evening =====
+2025-06-21 23:01:00,019 - bot - INFO - Job data: {'pt': 'evening'}
+2025-06-21 23:01:00,026 - bot - INFO - Sending evening practice for day 1 to user 5965363034
+2025-06-21 23:01:01,701 - apscheduler.executors.default - INFO - Job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='20', minute='1', second='0'], next run at: 2025-06-22 20:01:00 UTC)" executed successfully
+2025-06-21 23:06:20,283 - __main__ - INFO - === Запуск бота ===
+2025-06-21 23:06:21,209 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-21 23:06:21,216 - bot - INFO - === Начало запуска бота ===
+2025-06-21 23:06:21,217 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-21 23:06:21,217 - bot - INFO - Утреннее время: 20:08:00+00:00
+2025-06-21 23:06:21,218 - bot - INFO - Вечернее время: 20:09:00+00:00
+2025-06-21 23:06:21,219 - bot - INFO - === Создание приложения ===
+2025-06-21 23:06:21,374 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-21 23:06:21,375 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-21 23:06:21,380 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-21 23:06:21,381 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-21 23:06:21,382 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-21 23:06:21,383 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-21 23:06:21,384 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-21 23:06:21,288 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-21 23:06:21,289 - telegram.ext.Application - INFO - Application started
+2025-06-21 23:06:21,728 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-21 23:06:34,647 - user_data_manager - INFO - New user created: 5965363034 (GoidaSegun)
+2025-06-21 23:06:35,863 - bot - INFO - Sent start video note to user 5965363034
+2025-06-21 23:06:39,895 - bot - INFO - Channel membership check result (by ID): False
+2025-06-21 23:06:40,104 - bot - INFO - Channel membership check result (by @username): False
+2025-06-21 23:06:52,143 - bot - INFO - Channel membership check result (by ID): True
+2025-06-21 23:06:52,200 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-21 23:06:52,201 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-21 23:06:52,201 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-21 23:06:52,202 - bot - INFO - Утром: 20:08:00+0000
+2025-06-21 23:06:52,202 - bot - INFO - Вечером: 20:09:00+0000
+2025-06-21 23:06:52,202 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-21 23:06:52,203 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': None, 'last_evening_sent_date': None, 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-21T20:06:34.647670+00:00', 'last_interaction_date': '2025-06-21T20:06:52.174764+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-21T20:06:52.144853+00:00'}
+2025-06-21 23:06:52,203 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-21 23:06:52,208 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-21 23:06:52,209 - bot - INFO - ✅ Создана утренняя задача на 20:08:00+0000
+2025-06-21 23:06:52,210 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-21 23:06:52,211 - bot - INFO - ✅ Создана вечерняя задача на 20:09:00+0000
+2025-06-21 23:06:52,211 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-21 23:06:52,213 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-21 23:06:52,214 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-21 23:06:52,216 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-21 23:08:00,047 - apscheduler.executors.default - INFO - Running job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='20', minute='8', second='0'], next run at: 2025-06-22 20:08:00 UTC)" (scheduled at 2025-06-21 20:08:00+00:00)
+2025-06-21 23:08:00,050 - bot - INFO - ===== Запуск задачи: 5965363034_morning =====
+2025-06-21 23:08:00,051 - bot - INFO - Job data: {'pt': 'morning'}
+2025-06-21 23:08:00,057 - bot - INFO - Sending morning practice for day 1 to user 5965363034
+2025-06-21 23:08:02,009 - apscheduler.executors.default - INFO - Job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='20', minute='8', second='0'], next run at: 2025-06-22 20:08:00 UTC)" executed successfully
+2025-06-21 23:09:00,007 - apscheduler.executors.default - INFO - Running job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='20', minute='9', second='0'], next run at: 2025-06-22 20:09:00 UTC)" (scheduled at 2025-06-21 20:09:00+00:00)
+2025-06-21 23:09:00,008 - bot - INFO - ===== Запуск задачи: 5965363034_evening =====
+2025-06-21 23:09:00,008 - bot - INFO - Job data: {'pt': 'evening'}
+2025-06-21 23:09:00,016 - bot - INFO - Sending evening practice for day 1 to user 5965363034
+2025-06-21 23:09:01,114 - apscheduler.executors.default - INFO - Job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='20', minute='9', second='0'], next run at: 2025-06-22 20:09:00 UTC)" executed successfully
+2025-06-21 23:10:19,405 - __main__ - INFO - === Запуск бота ===
+2025-06-21 23:10:20,370 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-21 23:10:20,380 - bot - INFO - === Начало запуска бота ===
+2025-06-21 23:10:20,381 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-21 23:10:20,381 - bot - INFO - Утреннее время: 20:08:00+00:00
+2025-06-21 23:10:20,382 - bot - INFO - Вечернее время: 20:09:00+00:00
+2025-06-21 23:10:20,382 - bot - INFO - === Создание приложения ===
+2025-06-21 23:10:20,555 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-21 23:10:20,555 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-21 23:10:20,564 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 ===
+2025-06-21 23:10:20,565 - bot - INFO - Утром: 20:08:00+00:00
+2025-06-21 23:10:20,567 - bot - INFO - Вечером: 20:09:00+00:00
+2025-06-21 23:10:20,567 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-21 23:10:20,569 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-21 23:10:20,570 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-21 23:10:20,571 - bot - INFO - Утром: 20:08:00+0000
+2025-06-21 23:10:20,573 - bot - INFO - Вечером: 20:09:00+0000
+2025-06-21 23:10:20,574 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-21 23:10:20,575 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': '2025-06-21', 'last_evening_sent_date': '2025-06-21', 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-21T20:06:34.647670+00:00', 'last_interaction_date': '2025-06-21T20:09:01.109077+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-21T20:06:52.144853+00:00'}
+2025-06-21 23:10:20,577 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-21 23:10:20,588 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-06-21 23:10:20,589 - bot - INFO - ✅ Создана утренняя задача на 20:08:00+0000
+2025-06-21 23:10:20,592 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-06-21 23:10:20,592 - bot - INFO - ✅ Создана вечерняя задача на 20:09:00+0000
+2025-06-21 23:10:20,593 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-21 23:10:20,594 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-21 23:10:20,595 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-21 23:10:20,595 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-21 23:10:20,597 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-21 23:10:20,599 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-21 23:10:20,600 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-21 23:10:20,601 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-21 23:10:20,604 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-21 23:10:22,172 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-21 23:10:22,174 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-21 23:10:22,175 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-21 23:10:22,176 - telegram.ext.Application - INFO - Application started
+2025-06-21 23:10:22,518 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-21 23:10:25,422 - bot - INFO - Sent start video note to user 5965363034
+2025-06-21 23:11:49,232 - __main__ - INFO - === Запуск бота ===
+2025-06-21 23:11:49,825 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-21 23:11:49,830 - bot - INFO - === Начало запуска бота ===
+2025-06-21 23:11:49,831 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-21 23:11:49,831 - bot - INFO - Утреннее время: 20:12:00+00:00
+2025-06-21 23:11:49,832 - bot - INFO - Вечернее время: 20:13:00+00:00
+2025-06-21 23:11:49,833 - bot - INFO - === Создание приложения ===
+2025-06-21 23:11:50,014 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-21 23:11:50,015 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-21 23:11:50,020 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-21 23:11:50,021 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-21 23:11:50,022 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-21 23:11:50,023 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-21 23:11:50,024 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-21 23:11:51,599 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-21 23:11:51,600 - telegram.ext.Application - INFO - Application started
+2025-06-21 23:11:51,875 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-21 23:11:54,879 - user_data_manager - INFO - New user created: 5965363034 (GoidaSegun)
+2025-06-21 23:11:55,382 - bot - INFO - Sent start video note to user 5965363034
+2025-06-21 23:11:58,453 - bot - INFO - Channel membership check result (by ID): True
+2025-06-21 23:11:58,528 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-21 23:11:58,529 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-21 23:11:58,530 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-21 23:11:58,531 - bot - INFO - Утром: 20:12:00+0000
+2025-06-21 23:11:58,531 - bot - INFO - Вечером: 20:13:00+0000
+2025-06-21 23:11:58,532 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-21 23:11:58,533 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': None, 'last_evening_sent_date': None, 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-21T20:11:54.879214+00:00', 'last_interaction_date': '2025-06-21T20:11:58.493674+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-21T20:11:58.454637+00:00'}
+2025-06-21 23:11:58,534 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-21 23:11:58,548 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-21 23:11:58,550 - bot - INFO - ✅ Создана утренняя задача на 20:12:00+0000
+2025-06-21 23:11:58,553 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-21 23:11:58,555 - bot - INFO - ✅ Создана вечерняя задача на 20:13:00+0000
+2025-06-21 23:11:58,558 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-21 23:11:58,561 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-21 23:11:58,562 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-21 23:11:58,564 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-21 23:12:00,004 - apscheduler.executors.default - INFO - Running job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='20', minute='12', second='0'], next run at: 2025-06-22 20:12:00 UTC)" (scheduled at 2025-06-21 20:12:00+00:00)
+2025-06-21 23:12:00,005 - bot - INFO - ===== Запуск задачи: 5965363034_morning =====
+2025-06-21 23:12:00,006 - bot - INFO - Job data: {'pt': 'morning'}
+2025-06-21 23:12:00,011 - bot - INFO - Sending morning practice for day 1 to user 5965363034
+2025-06-21 23:12:00,391 - apscheduler.executors.default - INFO - Job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='20', minute='12', second='0'], next run at: 2025-06-22 20:12:00 UTC)" executed successfully
+2025-06-21 23:13:00,011 - apscheduler.executors.default - INFO - Running job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='20', minute='13', second='0'], next run at: 2025-06-22 20:13:00 UTC)" (scheduled at 2025-06-21 20:13:00+00:00)
+2025-06-21 23:13:00,012 - bot - INFO - ===== Запуск задачи: 5965363034_evening =====
+2025-06-21 23:13:00,013 - bot - INFO - Job data: {'pt': 'evening'}
+2025-06-21 23:13:00,018 - bot - INFO - Sending evening practice for day 1 to user 5965363034
+2025-06-21 23:13:01,724 - apscheduler.executors.default - INFO - Job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='20', minute='13', second='0'], next run at: 2025-06-22 20:13:00 UTC)" executed successfully
+2025-06-22 10:38:14,199 - __main__ - INFO - === Запуск бота ===
+2025-06-22 10:38:15,066 - __main__ - ERROR - Ошибка при запуске бота: cannot import name 'ChatAction' from 'telegram' (/home/segun/.local/lib/python3.10/site-packages/telegram/__init__.py)
+Traceback (most recent call last):
+  File "/mnt/c/Users/123/Desktop/my_telegram_bot/run_bot.py", line 19, in main
+    import bot
+  File "/mnt/c/Users/123/Desktop/my_telegram_bot/bot.py", line 12, in <module>
+    from telegram import (
+ImportError: cannot import name 'ChatAction' from 'telegram' (/home/segun/.local/lib/python3.10/site-packages/telegram/__init__.py)
+2025-06-22 10:39:42,023 - __main__ - INFO - === Запуск бота ===
+2025-06-22 10:39:42,888 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-22 10:39:42,897 - bot - INFO - === Начало запуска бота ===
+2025-06-22 10:39:42,897 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-22 10:39:42,898 - bot - INFO - Утреннее время: 20:12:00+00:00
+2025-06-22 10:39:42,899 - bot - INFO - Вечернее время: 20:13:00+00:00
+2025-06-22 10:39:42,900 - bot - INFO - === Создание приложения ===
+2025-06-22 10:39:42,900 - __main__ - ERROR - Ошибка при запуске бота: name 'HTTPXRequest' is not defined
+Traceback (most recent call last):
+  File "/mnt/c/Users/123/Desktop/my_telegram_bot/run_bot.py", line 21, in main
+    await bot.main()
+  File "/mnt/c/Users/123/Desktop/my_telegram_bot/bot.py", line 1243, in main
+    request = HTTPXRequest(connection_pool_size=20, read_timeout=60.0, write_timeout=60.0, connect_timeout=60.0)
+NameError: name 'HTTPXRequest' is not defined
+2025-06-22 10:40:38,682 - __main__ - INFO - === Запуск бота ===
+2025-06-22 10:40:39,446 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-22 10:40:39,455 - bot - INFO - === Начало запуска бота ===
+2025-06-22 10:40:39,456 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-22 10:40:39,457 - bot - INFO - Утреннее время: 20:12:00+00:00
+2025-06-22 10:40:39,458 - bot - INFO - Вечернее время: 20:13:00+00:00
+2025-06-22 10:40:39,459 - bot - INFO - === Создание приложения ===
+2025-06-22 10:40:41,981 - bot - INFO - Инициализирован URL профиля бота: https://t.me/sexandmindbot?start=pin
+2025-06-22 10:40:41,982 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-22 10:40:41,983 - __main__ - ERROR - Ошибка при запуске бота: name 'job_queue' is not defined
+Traceback (most recent call last):
+  File "/mnt/c/Users/123/Desktop/my_telegram_bot/run_bot.py", line 21, in main
+    await bot.main()
+  File "/mnt/c/Users/123/Desktop/my_telegram_bot/bot.py", line 1256, in main
+    for job in job_queue.jobs():
+NameError: name 'job_queue' is not defined. Did you mean: 'JobQueue'?
+2025-06-22 10:41:31,513 - __main__ - INFO - === Запуск бота ===
+2025-06-22 10:41:32,086 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-22 10:41:32,094 - bot - INFO - === Начало запуска бота ===
+2025-06-22 10:41:32,094 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-22 10:41:32,095 - bot - INFO - Утреннее время: 20:12:00+00:00
+2025-06-22 10:41:32,096 - bot - INFO - Вечернее время: 20:13:00+00:00
+2025-06-22 10:41:32,097 - bot - INFO - === Создание приложения ===
+2025-06-22 10:41:33,305 - bot - INFO - Инициализирован URL профиля бота: https://t.me/sexandmindbot?start=pin
+2025-06-22 10:41:33,307 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-22 10:41:33,308 - bot - INFO - === ВСЕ ЗАДАЧИ ОЧИЩЕНЫ ===
+2025-06-22 10:41:33,310 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-22 10:41:33,323 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 ===
+2025-06-22 10:41:33,324 - bot - INFO - Утром: 20:12:00+00:00
+2025-06-22 10:41:33,324 - bot - INFO - Вечером: 20:13:00+00:00
+2025-06-22 10:41:33,324 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-22 10:41:33,325 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-22 10:41:33,326 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-22 10:41:33,327 - bot - INFO - Утром: 20:12:00+0000
+2025-06-22 10:41:33,328 - bot - INFO - Вечером: 20:13:00+0000
+2025-06-22 10:41:33,329 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-22 10:41:33,330 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': '2025-06-21', 'last_evening_sent_date': '2025-06-21', 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-21T20:11:54.879214+00:00', 'last_interaction_date': '2025-06-21T20:13:01.718887+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-21T20:11:58.454637+00:00'}
+2025-06-22 10:41:33,330 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-22 10:41:33,339 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-06-22 10:41:33,340 - bot - INFO - ✅ Создана утренняя задача на 20:12:00+0000
+2025-06-22 10:41:33,342 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-06-22 10:41:33,343 - bot - INFO - ✅ Создана вечерняя задача на 20:13:00+0000
+2025-06-22 10:41:33,344 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-22 10:41:33,345 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-22 10:41:33,345 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-22 10:41:33,346 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-22 10:41:33,347 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-22 10:41:33,348 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-22 10:41:33,349 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-22 10:41:33,349 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-22 10:41:33,350 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-22 10:41:33,615 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-22 10:41:33,616 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-22 10:41:33,617 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-22 10:41:33,619 - telegram.ext.Application - INFO - Application started
+2025-06-22 10:41:33,894 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-22 10:41:42,350 - telegram.ext.Application - WARNING - Fetching updates got a asyncio.CancelledError. Ignoring as this task may onlybe closed via `Application.stop`.
+2025-06-22 10:41:42,352 - bot - INFO - === Начало процедуры остановки бота... ===
+2025-06-22 10:41:42,353 - bot - INFO - Остановка Updater...
+2025-06-22 10:41:43,358 - telegram.ext.Updater - ERROR - Error while calling `get_updates` one more time to mark all fetched updates as read: %s. Suppressing error to ensure graceful shutdown. When polling for updates is restarted, updates may be fetched again. Please adjust timeouts via `ApplicationBuilder` or the parameter `get_updates_request` of `Bot`.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_transports/default.py", line 66, in map_httpcore_exceptions
+    yield
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_transports/default.py", line 366, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpcore/_async/connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "/home/segun/.local/lib/python3.10/site-packages/httpcore/_async/connection_pool.py", line 232, in handle_async_request
+    connection = await pool_request.wait_for_connection(timeout=timeout)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpcore/_async/connection_pool.py", line 35, in wait_for_connection
+    await self._connection_acquired.wait(timeout=timeout)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpcore/_synchronization.py", line 149, in wait
+    with map_exceptions(anyio_exc_map):
+  File "/usr/lib/python3.10/contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.PoolTimeout
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_httpxrequest.py", line 268, in do_request
+    res = await self._client.request(
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_client.py", line 1530, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_client.py", line 1617, in send
+    response = await self._send_handling_auth(
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_client.py", line 1645, in _send_handling_auth
+    response = await self._send_handling_redirects(
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_client.py", line 1682, in _send_handling_redirects
+    response = await self._send_single_request(request)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_client.py", line 1719, in _send_single_request
+    response = await transport.handle_async_request(request)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_transports/default.py", line 365, in handle_async_request
+    with map_httpcore_exceptions():
+  File "/usr/lib/python3.10/contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_transports/default.py", line 83, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.PoolTimeout
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 433, in _get_updates_cleanup
+    await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 340, in _request_wrapper
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 330, in _request_wrapper
+    code, payload = await self.do_request(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_httpxrequest.py", line 278, in do_request
+    raise TimedOut(
+telegram.error.TimedOut: Pool timeout: All connections in the connection pool are occupied. Request was *not* sent to Telegram. Consider adjusting the connection pool size or the pool timeout.
+2025-06-22 10:41:43,379 - bot - INFO - Updater остановлен.
+2025-06-22 10:41:43,380 - bot - INFO - Остановка Application...
+2025-06-22 10:41:43,380 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-06-22 10:41:43,381 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-06-22 10:41:43,392 - telegram.ext.Application - INFO - Application.stop() complete
+2025-06-22 10:41:43,393 - bot - INFO - Application остановлен.
+2025-06-22 10:41:43,394 - bot - INFO - Вызов application.shutdown()...
+2025-06-22 10:41:43,396 - bot - INFO - === Бот полностью остановлен. ===
+2025-06-22 10:43:12,499 - __main__ - INFO - === Запуск бота ===
+2025-06-22 10:43:13,161 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-22 10:43:13,168 - bot - INFO - === Начало запуска бота ===
+2025-06-22 10:43:13,169 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-22 10:43:13,169 - bot - INFO - Утреннее время: 07:46:00+00:00
+2025-06-22 10:43:13,170 - bot - INFO - Вечернее время: 07:47:00+00:00
+2025-06-22 10:43:13,171 - bot - INFO - === Создание приложения ===
+2025-06-22 10:43:14,890 - bot - INFO - Инициализирован URL профиля бота: https://t.me/sexandmindbot?start=pin
+2025-06-22 10:43:14,891 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-22 10:43:14,892 - bot - INFO - === ВСЕ ЗАДАЧИ ОЧИЩЕНЫ ===
+2025-06-22 10:43:14,894 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-22 10:43:14,898 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-22 10:43:14,899 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-22 10:43:14,900 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-22 10:43:14,902 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-22 10:43:14,902 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-22 10:43:15,191 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-22 10:43:15,191 - telegram.ext.Application - INFO - Application started
+2025-06-22 10:43:15,926 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-22 10:43:23,167 - user_data_manager - INFO - New user created: 5965363034 (GoidaSegun)
+2025-06-22 10:43:24,693 - bot - INFO - Sent start video note to user 5965363034
+2025-06-22 10:43:58,044 - bot - INFO - Channel membership check result (by ID): False
+2025-06-22 10:43:58,306 - bot - INFO - Channel membership check result (by @username): False
+2025-06-22 10:44:11,201 - bot - INFO - Channel membership check result (by ID): True
+2025-06-22 10:44:11,257 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-22 10:44:11,258 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-22 10:44:11,258 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-22 10:44:11,259 - bot - INFO - Утром: 07:46:00+0000
+2025-06-22 10:44:11,259 - bot - INFO - Вечером: 07:47:00+0000
+2025-06-22 10:44:11,260 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-22 10:44:11,260 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': None, 'last_evening_sent_date': None, 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-22T07:43:23.166948+00:00', 'last_interaction_date': '2025-06-22T07:44:11.233745+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-22T07:44:11.202487+00:00'}
+2025-06-22 10:44:11,260 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-22 10:44:11,264 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-22 10:44:11,265 - bot - INFO - ✅ Создана утренняя задача на 07:46:00+0000
+2025-06-22 10:44:11,266 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-22 10:44:11,267 - bot - INFO - ✅ Создана вечерняя задача на 07:47:00+0000
+2025-06-22 10:44:11,274 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-22 10:44:11,275 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-22 10:44:11,276 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-22 10:44:11,277 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-22 10:46:00,010 - apscheduler.executors.default - INFO - Running job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='7', minute='46', second='0'], next run at: 2025-06-23 07:46:00 UTC)" (scheduled at 2025-06-22 07:46:00+00:00)
+2025-06-22 10:46:00,011 - bot - INFO - ===== Запуск задачи: 5965363034_morning =====
+2025-06-22 10:46:00,012 - bot - INFO - Job data: {'pt': 'morning'}
+2025-06-22 10:46:00,019 - bot - INFO - Sending morning practice for day 1 to user 5965363034
+2025-06-22 10:46:02,530 - apscheduler.executors.default - INFO - Job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='7', minute='46', second='0'], next run at: 2025-06-23 07:46:00 UTC)" executed successfully
+2025-06-22 10:47:00,018 - apscheduler.executors.default - INFO - Running job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='7', minute='47', second='0'], next run at: 2025-06-23 07:47:00 UTC)" (scheduled at 2025-06-22 07:47:00+00:00)
+2025-06-22 10:47:00,020 - bot - INFO - ===== Запуск задачи: 5965363034_evening =====
+2025-06-22 10:47:00,021 - bot - INFO - Job data: {'pt': 'evening'}
+2025-06-22 10:47:00,032 - bot - INFO - Sending evening practice for day 1 to user 5965363034
+2025-06-22 10:47:01,006 - apscheduler.executors.default - INFO - Job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='7', minute='47', second='0'], next run at: 2025-06-23 07:47:00 UTC)" executed successfully
+2025-06-22 10:49:25,529 - __main__ - INFO - === Запуск бота ===
+2025-06-22 10:49:26,274 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-22 10:49:26,281 - bot - INFO - === Начало запуска бота ===
+2025-06-22 10:49:26,282 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-22 10:49:26,283 - bot - INFO - Утреннее время: 07:46:00+00:00
+2025-06-22 10:49:26,284 - bot - INFO - Вечернее время: 07:47:00+00:00
+2025-06-22 10:49:26,284 - bot - INFO - === Создание приложения ===
+2025-06-22 10:49:28,738 - bot - INFO - Инициализирован URL профиля бота: https://t.me/sexandmindbot?start=pin
+2025-06-22 10:49:28,738 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-22 10:49:28,739 - bot - INFO - === ВСЕ ЗАДАЧИ ОЧИЩЕНЫ ===
+2025-06-22 10:49:28,740 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-22 10:49:28,744 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 ===
+2025-06-22 10:49:28,744 - bot - INFO - Утром: 07:46:00+00:00
+2025-06-22 10:49:28,745 - bot - INFO - Вечером: 07:47:00+00:00
+2025-06-22 10:49:28,745 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-22 10:49:28,746 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-22 10:49:28,747 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-22 10:49:28,748 - bot - INFO - Утром: 07:46:00+0000
+2025-06-22 10:49:28,749 - bot - INFO - Вечером: 07:47:00+0000
+2025-06-22 10:49:28,750 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-22 10:49:28,751 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': '2025-06-22', 'last_evening_sent_date': '2025-06-22', 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-22T07:43:23.166948+00:00', 'last_interaction_date': '2025-06-22T07:47:01.001861+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-22T07:44:11.202487+00:00'}
+2025-06-22 10:49:28,752 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-22 10:49:28,756 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-06-22 10:49:28,757 - bot - INFO - ✅ Создана утренняя задача на 07:46:00+0000
+2025-06-22 10:49:28,759 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-06-22 10:49:28,760 - bot - INFO - ✅ Создана вечерняя задача на 07:47:00+0000
+2025-06-22 10:49:28,761 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-22 10:49:28,761 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-22 10:49:28,762 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-22 10:49:28,763 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-22 10:49:28,764 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-22 10:49:28,766 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-22 10:49:28,767 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-22 10:49:28,769 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-22 10:49:28,771 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-22 10:49:28,969 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-22 10:49:28,990 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-22 10:49:28,991 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-22 10:49:28,993 - telegram.ext.Application - INFO - Application started
+2025-06-22 10:49:29,345 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-22 10:49:45,343 - bot - INFO - Sent start video note to user 5965363034
+2025-06-22 10:51:01,075 - __main__ - INFO - === Запуск бота ===
+2025-06-22 10:51:01,718 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-22 10:51:01,729 - bot - INFO - === Начало запуска бота ===
+2025-06-22 10:51:01,730 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-22 10:51:01,731 - bot - INFO - Утреннее время: 07:51:00+00:00
+2025-06-22 10:51:01,732 - bot - INFO - Вечернее время: 07:52:00+00:00
+2025-06-22 10:51:01,732 - bot - INFO - === Создание приложения ===
+2025-06-22 10:51:04,057 - bot - INFO - Инициализирован URL профиля бота: https://t.me/sexandmindbot?start=pin
+2025-06-22 10:51:04,058 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-22 10:51:04,059 - bot - INFO - === ВСЕ ЗАДАЧИ ОЧИЩЕНЫ ===
+2025-06-22 10:51:04,059 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-22 10:51:04,064 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-22 10:51:04,066 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-22 10:51:04,067 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-22 10:51:04,068 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-22 10:51:04,069 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-22 10:51:04,216 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-22 10:51:04,217 - telegram.ext.Application - INFO - Application started
+2025-06-22 10:51:04,479 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-22 10:51:07,464 - user_data_manager - INFO - New user created: 5965363034 (GoidaSegun)
+2025-06-22 10:51:08,676 - bot - INFO - Sent start video note to user 5965363034
+2025-06-22 10:51:12,286 - bot - INFO - Channel membership check result (by ID): True
+2025-06-22 10:51:12,352 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-22 10:51:12,352 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-22 10:51:12,353 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-22 10:51:12,353 - bot - INFO - Утром: 07:51:00+0000
+2025-06-22 10:51:12,354 - bot - INFO - Вечером: 07:52:00+0000
+2025-06-22 10:51:12,354 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-22 10:51:12,355 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': None, 'last_evening_sent_date': None, 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-22T07:51:07.464763+00:00', 'last_interaction_date': '2025-06-22T07:51:12.324399+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-22T07:51:12.286959+00:00'}
+2025-06-22 10:51:12,356 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-22 10:51:12,363 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-22 10:51:12,366 - bot - INFO - ✅ Создана утренняя задача на 07:51:00+0000
+2025-06-22 10:51:12,369 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-22 10:51:12,370 - bot - INFO - ✅ Создана вечерняя задача на 07:52:00+0000
+2025-06-22 10:51:12,371 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-22 10:51:12,372 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-22 10:51:12,373 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-22 10:51:12,375 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-22 10:52:00,014 - apscheduler.executors.default - INFO - Running job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='7', minute='52', second='0'], next run at: 2025-06-23 07:52:00 UTC)" (scheduled at 2025-06-22 07:52:00+00:00)
+2025-06-22 10:52:00,016 - bot - INFO - ===== Запуск задачи: 5965363034_evening =====
+2025-06-22 10:52:00,017 - bot - INFO - Job data: {'pt': 'evening'}
+2025-06-22 10:52:00,023 - bot - INFO - Sending evening practice for day 1 to user 5965363034
+2025-06-22 10:52:01,262 - apscheduler.executors.default - INFO - Job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='7', minute='52', second='0'], next run at: 2025-06-23 07:52:00 UTC)" executed successfully
+2025-06-22 10:56:28,844 - __main__ - INFO - === Запуск бота ===
+2025-06-22 10:56:29,435 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-22 10:56:29,442 - bot - INFO - === Начало запуска бота ===
+2025-06-22 10:56:29,443 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-22 10:56:29,444 - bot - INFO - Утреннее время: 07:59:00+00:00
+2025-06-22 10:56:29,445 - bot - INFO - Вечернее время: 08:00:00+00:00
+2025-06-22 10:56:29,446 - bot - INFO - === Создание приложения ===
+2025-06-22 10:56:30,815 - bot - INFO - Инициализирован URL профиля бота: https://t.me/sexandmindbot?start=pin
+2025-06-22 10:56:30,816 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-22 10:56:30,816 - bot - INFO - === ВСЕ ЗАДАЧИ ОЧИЩЕНЫ ===
+2025-06-22 10:56:30,817 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-22 10:56:30,821 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-22 10:56:30,822 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-22 10:56:30,823 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-22 10:56:30,824 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-22 10:56:30,825 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-22 10:56:31,022 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-22 10:56:31,024 - telegram.ext.Application - INFO - Application started
+2025-06-22 10:56:31,250 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-22 10:56:53,850 - user_data_manager - INFO - New user created: 5965363034 (GoidaSegun)
+2025-06-22 10:56:55,547 - bot - INFO - Sent start video note to user 5965363034
+2025-06-22 10:57:00,294 - bot - INFO - Channel membership check result (by ID): True
+2025-06-22 10:57:00,361 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-22 10:57:00,362 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-22 10:57:00,363 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-22 10:57:00,363 - bot - INFO - Утром: 07:59:00+0000
+2025-06-22 10:57:00,364 - bot - INFO - Вечером: 08:00:00+0000
+2025-06-22 10:57:00,364 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-22 10:57:00,365 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': None, 'last_evening_sent_date': None, 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-22T07:56:53.850533+00:00', 'last_interaction_date': '2025-06-22T07:57:00.339859+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-22T07:57:00.295798+00:00'}
+2025-06-22 10:57:00,365 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-22 10:57:00,369 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-22 10:57:00,370 - bot - INFO - ✅ Создана утренняя задача на 07:59:00+0000
+2025-06-22 10:57:00,372 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-22 10:57:00,375 - bot - INFO - ✅ Создана вечерняя задача на 08:00:00+0000
+2025-06-22 10:57:00,379 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-22 10:57:00,381 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-22 10:57:00,383 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-22 10:57:00,384 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-22 10:59:00,014 - apscheduler.executors.default - INFO - Running job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='7', minute='59', second='0'], next run at: 2025-06-23 07:59:00 UTC)" (scheduled at 2025-06-22 07:59:00+00:00)
+2025-06-22 10:59:00,016 - bot - INFO - ===== Запуск задачи: 5965363034_morning =====
+2025-06-22 10:59:00,017 - bot - INFO - Job data: {'pt': 'morning'}
+2025-06-22 10:59:00,021 - bot - INFO - Sending morning practice for day 1 to user 5965363034
+2025-06-22 10:59:01,213 - apscheduler.executors.default - INFO - Job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='7', minute='59', second='0'], next run at: 2025-06-23 07:59:00 UTC)" executed successfully
+2025-06-22 11:00:00,017 - apscheduler.executors.default - INFO - Running job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='8', minute='0', second='0'], next run at: 2025-06-23 08:00:00 UTC)" (scheduled at 2025-06-22 08:00:00+00:00)
+2025-06-22 11:00:00,018 - bot - INFO - ===== Запуск задачи: 5965363034_evening =====
+2025-06-22 11:00:00,020 - bot - INFO - Job data: {'pt': 'evening'}
+2025-06-22 11:00:00,030 - bot - INFO - Sending evening practice for day 1 to user 5965363034
+2025-06-22 11:00:02,062 - apscheduler.executors.default - INFO - Job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='8', minute='0', second='0'], next run at: 2025-06-23 08:00:00 UTC)" executed successfully
+2025-06-22 11:02:07,074 - __main__ - INFO - === Запуск бота ===
+2025-06-22 11:02:07,788 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-22 11:02:07,802 - bot - INFO - === Начало запуска бота ===
+2025-06-22 11:02:07,802 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-22 11:02:07,803 - bot - INFO - Утреннее время: 07:59:00+00:00
+2025-06-22 11:02:07,804 - bot - INFO - Вечернее время: 08:00:00+00:00
+2025-06-22 11:02:07,805 - bot - INFO - === Создание приложения ===
+2025-06-22 11:02:10,846 - bot - INFO - Инициализирован URL профиля бота: https://t.me/sexandmindbot?start=pin
+2025-06-22 11:02:10,847 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-22 11:02:10,848 - bot - INFO - === ВСЕ ЗАДАЧИ ОЧИЩЕНЫ ===
+2025-06-22 11:02:10,849 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-22 11:02:10,858 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 ===
+2025-06-22 11:02:10,858 - bot - INFO - Утром: 07:59:00+00:00
+2025-06-22 11:02:10,859 - bot - INFO - Вечером: 08:00:00+00:00
+2025-06-22 11:02:10,860 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-22 11:02:10,861 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-22 11:02:10,862 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-22 11:02:10,862 - bot - INFO - Утром: 07:59:00+0000
+2025-06-22 11:02:10,863 - bot - INFO - Вечером: 08:00:00+0000
+2025-06-22 11:02:10,863 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-22 11:02:10,864 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': '2025-06-22', 'last_evening_sent_date': '2025-06-22', 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-22T07:56:53.850533+00:00', 'last_interaction_date': '2025-06-22T08:00:02.058804+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-22T07:57:00.295798+00:00'}
+2025-06-22 11:02:10,865 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-22 11:02:10,874 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-06-22 11:02:10,875 - bot - INFO - ✅ Создана утренняя задача на 07:59:00+0000
+2025-06-22 11:02:10,876 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-06-22 11:02:10,877 - bot - INFO - ✅ Создана вечерняя задача на 08:00:00+0000
+2025-06-22 11:02:10,878 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-22 11:02:10,879 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-22 11:02:10,882 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-22 11:02:10,883 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-22 11:02:10,884 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-22 11:02:10,885 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-22 11:02:10,886 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-22 11:02:10,887 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-22 11:02:10,888 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-22 11:02:11,188 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-22 11:02:11,189 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-22 11:02:11,190 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-22 11:02:11,191 - telegram.ext.Application - INFO - Application started
+2025-06-22 11:02:11,581 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-22 11:02:25,353 - telegram.ext.Application - WARNING - Fetching updates got a asyncio.CancelledError. Ignoring as this task may onlybe closed via `Application.stop`.
+2025-06-22 11:02:25,354 - bot - INFO - === Начало процедуры остановки бота... ===
+2025-06-22 11:02:25,355 - bot - INFO - Остановка Updater...
+2025-06-22 11:02:26,373 - telegram.ext.Updater - ERROR - Error while calling `get_updates` one more time to mark all fetched updates as read: %s. Suppressing error to ensure graceful shutdown. When polling for updates is restarted, updates may be fetched again. Please adjust timeouts via `ApplicationBuilder` or the parameter `get_updates_request` of `Bot`.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_transports/default.py", line 66, in map_httpcore_exceptions
+    yield
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_transports/default.py", line 366, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpcore/_async/connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "/home/segun/.local/lib/python3.10/site-packages/httpcore/_async/connection_pool.py", line 232, in handle_async_request
+    connection = await pool_request.wait_for_connection(timeout=timeout)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpcore/_async/connection_pool.py", line 35, in wait_for_connection
+    await self._connection_acquired.wait(timeout=timeout)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpcore/_synchronization.py", line 149, in wait
+    with map_exceptions(anyio_exc_map):
+  File "/usr/lib/python3.10/contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.PoolTimeout
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_httpxrequest.py", line 268, in do_request
+    res = await self._client.request(
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_client.py", line 1530, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_client.py", line 1617, in send
+    response = await self._send_handling_auth(
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_client.py", line 1645, in _send_handling_auth
+    response = await self._send_handling_redirects(
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_client.py", line 1682, in _send_handling_redirects
+    response = await self._send_single_request(request)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_client.py", line 1719, in _send_single_request
+    response = await transport.handle_async_request(request)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_transports/default.py", line 365, in handle_async_request
+    with map_httpcore_exceptions():
+  File "/usr/lib/python3.10/contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_transports/default.py", line 83, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.PoolTimeout
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 433, in _get_updates_cleanup
+    await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 340, in _request_wrapper
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 330, in _request_wrapper
+    code, payload = await self.do_request(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_httpxrequest.py", line 278, in do_request
+    raise TimedOut(
+telegram.error.TimedOut: Pool timeout: All connections in the connection pool are occupied. Request was *not* sent to Telegram. Consider adjusting the connection pool size or the pool timeout.
+2025-06-22 11:02:26,395 - bot - INFO - Updater остановлен.
+2025-06-22 11:02:26,396 - bot - INFO - Остановка Application...
+2025-06-22 11:02:26,397 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-06-22 11:02:26,398 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-06-22 11:02:26,409 - telegram.ext.Application - INFO - Application.stop() complete
+2025-06-22 11:02:26,410 - bot - INFO - Application остановлен.
+2025-06-22 11:02:26,411 - bot - INFO - Вызов application.shutdown()...
+2025-06-22 11:02:26,413 - bot - INFO - === Бот полностью остановлен. ===
+2025-06-22 11:03:32,940 - __main__ - INFO - === Запуск бота ===
+2025-06-22 11:03:33,649 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-22 11:03:33,656 - bot - INFO - === Начало запуска бота ===
+2025-06-22 11:03:33,656 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-22 11:03:33,657 - bot - INFO - Утреннее время: 08:05:00+00:00
+2025-06-22 11:03:33,658 - bot - INFO - Вечернее время: 08:06:00+00:00
+2025-06-22 11:03:33,659 - bot - INFO - === Создание приложения ===
+2025-06-22 11:03:36,046 - bot - INFO - Инициализирован URL профиля бота: https://t.me/sexandmindbot?start=pin
+2025-06-22 11:03:36,052 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-22 11:03:36,053 - bot - INFO - === ВСЕ ЗАДАЧИ ОЧИЩЕНЫ ===
+2025-06-22 11:03:36,054 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-22 11:03:36,060 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-22 11:03:36,062 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-22 11:03:36,063 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-22 11:03:36,064 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-22 11:03:36,064 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-22 11:03:36,377 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-22 11:03:36,378 - telegram.ext.Application - INFO - Application started
+2025-06-22 11:03:37,726 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-22 11:04:05,744 - user_data_manager - INFO - New user created: 5965363034 (GoidaSegun)
+2025-06-22 11:04:05,295 - bot - INFO - Sent start video note to user 5965363034
+2025-06-22 11:04:08,473 - bot - INFO - Channel membership check result (by ID): True
+2025-06-22 11:04:08,537 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-22 11:04:08,537 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-22 11:04:08,538 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-22 11:04:08,538 - bot - INFO - Утром: 08:05:00+0000
+2025-06-22 11:04:08,539 - bot - INFO - Вечером: 08:06:00+0000
+2025-06-22 11:04:08,539 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-22 11:04:08,540 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': None, 'last_evening_sent_date': None, 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-22T08:04:05.744565+00:00', 'last_interaction_date': '2025-06-22T08:04:08.513686+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-22T08:04:08.473912+00:00'}
+2025-06-22 11:04:08,540 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-22 11:04:08,544 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-22 11:04:08,545 - bot - INFO - ✅ Создана утренняя задача на 08:05:00+0000
+2025-06-22 11:04:08,547 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-22 11:04:08,548 - bot - INFO - ✅ Создана вечерняя задача на 08:06:00+0000
+2025-06-22 11:04:08,549 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-22 11:04:08,552 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-22 11:04:08,554 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-22 11:04:08,555 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-22 11:04:11,275 - bot - INFO - User 5965363034 clicked enable_notifications button
+2025-06-22 11:04:11,275 - bot - INFO - Using notification settings URL: tg://settings/notifications
+2025-06-22 11:04:11,763 - bot - INFO - Sent notification help message to user 5965363034, message ID: 1794
+2025-06-22 11:04:12,086 - bot - INFO - Acknowledged enable_notifications button click for user 5965363034
+2025-06-22 11:05:00,013 - apscheduler.executors.default - INFO - Running job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='8', minute='5', second='0'], next run at: 2025-06-23 08:05:00 UTC)" (scheduled at 2025-06-22 08:05:00+00:00)
+2025-06-22 11:05:00,015 - bot - INFO - ===== Запуск задачи: 5965363034_morning =====
+2025-06-22 11:05:00,015 - bot - INFO - Job data: {'pt': 'morning'}
+2025-06-22 11:05:00,022 - bot - INFO - Sending morning practice for day 1 to user 5965363034
+2025-06-22 11:05:01,556 - apscheduler.executors.default - INFO - Job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='8', minute='5', second='0'], next run at: 2025-06-23 08:05:00 UTC)" executed successfully
+2025-06-22 11:05:32,347 - __main__ - INFO - === Запуск бота ===
+2025-06-22 11:05:33,136 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-22 11:05:33,143 - bot - INFO - === Начало запуска бота ===
+2025-06-22 11:05:33,144 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-22 11:05:33,145 - bot - INFO - Утреннее время: 08:05:00+00:00
+2025-06-22 11:05:33,145 - bot - INFO - Вечернее время: 08:06:00+00:00
+2025-06-22 11:05:33,146 - bot - INFO - === Создание приложения ===
+2025-06-22 11:05:34,779 - bot - INFO - Инициализирован URL профиля бота: https://t.me/sexandmindbot?start=pin
+2025-06-22 11:05:34,780 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-22 11:05:34,781 - bot - INFO - === ВСЕ ЗАДАЧИ ОЧИЩЕНЫ ===
+2025-06-22 11:05:34,782 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-22 11:05:34,787 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 ===
+2025-06-22 11:05:34,788 - bot - INFO - Утром: 08:05:00+00:00
+2025-06-22 11:05:34,788 - bot - INFO - Вечером: 08:06:00+00:00
+2025-06-22 11:05:34,789 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-22 11:05:34,790 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-22 11:05:34,791 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-22 11:05:34,791 - bot - INFO - Утром: 08:05:00+0000
+2025-06-22 11:05:34,792 - bot - INFO - Вечером: 08:06:00+0000
+2025-06-22 11:05:34,793 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-22 11:05:34,797 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': '2025-06-22', 'last_evening_sent_date': None, 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-22T08:04:05.744565+00:00', 'last_interaction_date': '2025-06-22T08:05:01.547007+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-22T08:04:08.473912+00:00'}
+2025-06-22 11:05:34,798 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-22 11:05:34,803 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-06-22 11:05:34,805 - bot - INFO - ✅ Создана утренняя задача на 08:05:00+0000
+2025-06-22 11:05:34,807 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-06-22 11:05:34,808 - bot - INFO - ✅ Создана вечерняя задача на 08:06:00+0000
+2025-06-22 11:05:34,809 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-22 11:05:34,809 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-22 11:05:34,810 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-22 11:05:34,811 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-22 11:05:34,811 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-22 11:05:34,813 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-22 11:05:34,815 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-22 11:05:34,818 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-22 11:05:34,820 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-22 11:05:35,151 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-22 11:05:35,152 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-22 11:05:35,153 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-22 11:05:35,154 - telegram.ext.Application - INFO - Application started
+2025-06-22 11:05:35,544 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-22 11:06:00,056 - apscheduler.executors.default - INFO - Running job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='8', minute='6', second='0'], next run at: 2025-06-23 08:06:00 UTC)" (scheduled at 2025-06-22 08:06:00+00:00)
+2025-06-22 11:06:00,057 - bot - INFO - ===== Запуск задачи: 5965363034_evening =====
+2025-06-22 11:06:00,058 - bot - INFO - Job data: {'pt': 'evening'}
+2025-06-22 11:06:00,064 - bot - INFO - Sending evening practice for day 1 to user 5965363034
+2025-06-22 11:06:01,722 - apscheduler.executors.default - INFO - Job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='8', minute='6', second='0'], next run at: 2025-06-23 08:06:00 UTC)" executed successfully
+2025-06-22 11:06:45,754 - telegram.ext.Application - WARNING - Fetching updates got a asyncio.CancelledError. Ignoring as this task may onlybe closed via `Application.stop`.
+2025-06-22 11:06:45,755 - bot - INFO - === Начало процедуры остановки бота... ===
+2025-06-22 11:06:45,756 - bot - INFO - Остановка Updater...
+2025-06-22 11:06:46,761 - telegram.ext.Updater - ERROR - Error while calling `get_updates` one more time to mark all fetched updates as read: %s. Suppressing error to ensure graceful shutdown. When polling for updates is restarted, updates may be fetched again. Please adjust timeouts via `ApplicationBuilder` or the parameter `get_updates_request` of `Bot`.
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_transports/default.py", line 66, in map_httpcore_exceptions
+    yield
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_transports/default.py", line 366, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpcore/_async/connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "/home/segun/.local/lib/python3.10/site-packages/httpcore/_async/connection_pool.py", line 232, in handle_async_request
+    connection = await pool_request.wait_for_connection(timeout=timeout)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpcore/_async/connection_pool.py", line 35, in wait_for_connection
+    await self._connection_acquired.wait(timeout=timeout)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpcore/_synchronization.py", line 149, in wait
+    with map_exceptions(anyio_exc_map):
+  File "/usr/lib/python3.10/contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.PoolTimeout
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_httpxrequest.py", line 268, in do_request
+    res = await self._client.request(
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_client.py", line 1530, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_client.py", line 1617, in send
+    response = await self._send_handling_auth(
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_client.py", line 1645, in _send_handling_auth
+    response = await self._send_handling_redirects(
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_client.py", line 1682, in _send_handling_redirects
+    response = await self._send_single_request(request)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_client.py", line 1719, in _send_single_request
+    response = await transport.handle_async_request(request)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_transports/default.py", line 365, in handle_async_request
+    with map_httpcore_exceptions():
+  File "/usr/lib/python3.10/contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/home/segun/.local/lib/python3.10/site-packages/httpx/_transports/default.py", line 83, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.PoolTimeout
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_updater.py", line 433, in _get_updates_cleanup
+    await self.bot.get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 558, in get_updates
+    updates = await super().get_updates(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 525, in decorator
+    result = await func(self, *args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 3584, in get_updates
+    await self._post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 613, in _post
+    return await self._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 340, in _do_post
+    return await super()._do_post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/_bot.py", line 641, in _do_post
+    return await request.post(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 340, in _request_wrapper
+    raise exc
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 330, in _request_wrapper
+    code, payload = await self.do_request(
+  File "/home/segun/.local/lib/python3.10/site-packages/telegram/request/_httpxrequest.py", line 278, in do_request
+    raise TimedOut(
+telegram.error.TimedOut: Pool timeout: All connections in the connection pool are occupied. Request was *not* sent to Telegram. Consider adjusting the connection pool size or the pool timeout.
+2025-06-22 11:06:46,769 - bot - INFO - Updater остановлен.
+2025-06-22 11:06:46,770 - bot - INFO - Остановка Application...
+2025-06-22 11:06:46,771 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-06-22 11:06:46,777 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-06-22 11:06:46,788 - telegram.ext.Application - INFO - Application.stop() complete
+2025-06-22 11:06:46,789 - bot - INFO - Application остановлен.
+2025-06-22 11:06:46,791 - bot - INFO - Вызов application.shutdown()...
+2025-06-22 11:06:46,792 - bot - INFO - === Бот полностью остановлен. ===
+2025-06-22 11:07:12,556 - __main__ - INFO - === Запуск бота ===
+2025-06-22 11:07:13,192 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-22 11:07:13,197 - bot - INFO - === Начало запуска бота ===
+2025-06-22 11:07:13,199 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-22 11:07:13,199 - bot - INFO - Утреннее время: 08:09:00+00:00
+2025-06-22 11:07:13,201 - bot - INFO - Вечернее время: 08:10:00+00:00
+2025-06-22 11:07:13,202 - bot - INFO - === Создание приложения ===
+2025-06-22 11:07:17,372 - bot - INFO - Инициализирован URL профиля бота: https://t.me/sexandmindbot?start=pin
+2025-06-22 11:07:17,372 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-22 11:07:17,373 - bot - INFO - === ВСЕ ЗАДАЧИ ОЧИЩЕНЫ ===
+2025-06-22 11:07:17,374 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-22 11:07:17,384 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-22 11:07:17,385 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-22 11:07:17,386 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-22 11:07:17,386 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-22 11:07:17,387 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-22 11:07:17,712 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-22 11:07:17,712 - telegram.ext.Application - INFO - Application started
+2025-06-22 11:07:18,083 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-22 11:07:23,037 - user_data_manager - INFO - New user created: 5965363034 (GoidaSegun)
+2025-06-22 11:07:24,808 - bot - INFO - Sent start video note to user 5965363034
+2025-06-22 11:07:28,689 - bot - INFO - Channel membership check result (by ID): True
+2025-06-22 11:07:28,752 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-22 11:07:28,753 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-22 11:07:28,754 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-22 11:07:28,754 - bot - INFO - Утром: 08:09:00+0000
+2025-06-22 11:07:28,755 - bot - INFO - Вечером: 08:10:00+0000
+2025-06-22 11:07:28,756 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-22 11:07:28,757 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': None, 'last_evening_sent_date': None, 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-22T08:07:23.037294+00:00', 'last_interaction_date': '2025-06-22T08:07:28.726337+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-22T08:07:28.690039+00:00'}
+2025-06-22 11:07:28,757 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-22 11:07:28,766 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-22 11:07:28,768 - bot - INFO - ✅ Создана утренняя задача на 08:09:00+0000
+2025-06-22 11:07:28,770 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-22 11:07:28,770 - bot - INFO - ✅ Создана вечерняя задача на 08:10:00+0000
+2025-06-22 11:07:28,771 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-22 11:07:28,772 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-22 11:07:28,773 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-22 11:07:28,774 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-22 11:07:31,120 - bot - INFO - User 5965363034 clicked enable_notifications button
+2025-06-22 11:07:31,121 - bot - INFO - Using notification settings URL: https://t.me/settings/notifications
+2025-06-22 11:07:31,497 - bot - INFO - Sent notification help message to user 5965363034, message ID: 1800
+2025-06-22 11:07:33,217 - bot - INFO - Acknowledged enable_notifications button click for user 5965363034
+2025-06-22 11:09:00,010 - apscheduler.executors.default - INFO - Running job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='8', minute='9', second='0'], next run at: 2025-06-23 08:09:00 UTC)" (scheduled at 2025-06-22 08:09:00+00:00)
+2025-06-22 11:09:00,011 - bot - INFO - ===== Запуск задачи: 5965363034_morning =====
+2025-06-22 11:09:00,012 - bot - INFO - Job data: {'pt': 'morning'}
+2025-06-22 11:09:00,027 - bot - INFO - Sending morning practice for day 1 to user 5965363034
+2025-06-22 11:09:02,098 - apscheduler.executors.default - INFO - Job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='8', minute='9', second='0'], next run at: 2025-06-23 08:09:00 UTC)" executed successfully
+2025-06-22 11:09:40,293 - __main__ - INFO - === Запуск бота ===
+2025-06-22 11:09:40,921 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-22 11:09:40,929 - bot - INFO - === Начало запуска бота ===
+2025-06-22 11:09:40,930 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-22 11:09:40,931 - bot - INFO - Утреннее время: 08:09:00+00:00
+2025-06-22 11:09:40,932 - bot - INFO - Вечернее время: 08:10:00+00:00
+2025-06-22 11:09:40,933 - bot - INFO - === Создание приложения ===
+2025-06-22 11:09:42,149 - bot - INFO - Инициализирован URL профиля бота: https://t.me/sexandmindbot
+2025-06-22 11:09:42,150 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-22 11:09:42,150 - bot - INFO - === ВСЕ ЗАДАЧИ ОЧИЩЕНЫ ===
+2025-06-22 11:09:42,151 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-22 11:09:42,158 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 ===
+2025-06-22 11:09:42,159 - bot - INFO - Утром: 08:09:00+00:00
+2025-06-22 11:09:42,160 - bot - INFO - Вечером: 08:10:00+00:00
+2025-06-22 11:09:42,160 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-22 11:09:42,161 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-22 11:09:42,161 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-22 11:09:42,162 - bot - INFO - Утром: 08:09:00+0000
+2025-06-22 11:09:42,162 - bot - INFO - Вечером: 08:10:00+0000
+2025-06-22 11:09:42,163 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-22 11:09:42,163 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': '2025-06-22', 'last_evening_sent_date': None, 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-22T08:07:23.037294+00:00', 'last_interaction_date': '2025-06-22T08:09:02.088113+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-22T08:07:28.690039+00:00'}
+2025-06-22 11:09:42,164 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-22 11:09:42,167 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-06-22 11:09:42,168 - bot - INFO - ✅ Создана утренняя задача на 08:09:00+0000
+2025-06-22 11:09:42,170 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-06-22 11:09:42,170 - bot - INFO - ✅ Создана вечерняя задача на 08:10:00+0000
+2025-06-22 11:09:42,171 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-22 11:09:42,172 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-22 11:09:42,173 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-22 11:09:42,173 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-22 11:09:42,174 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-22 11:09:42,175 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-22 11:09:42,176 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-22 11:09:42,176 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-22 11:09:42,177 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-22 11:09:42,419 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-22 11:09:42,419 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-22 11:09:42,420 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-22 11:09:42,421 - telegram.ext.Application - INFO - Application started
+2025-06-22 11:09:42,676 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-22 11:10:00,007 - apscheduler.executors.default - INFO - Running job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='8', minute='10', second='0'], next run at: 2025-06-23 08:10:00 UTC)" (scheduled at 2025-06-22 08:10:00+00:00)
+2025-06-22 11:10:00,008 - bot - INFO - ===== Запуск задачи: 5965363034_evening =====
+2025-06-22 11:10:00,009 - bot - INFO - Job data: {'pt': 'evening'}
+2025-06-22 11:10:00,017 - bot - INFO - Sending evening practice for day 1 to user 5965363034
+2025-06-22 11:10:01,818 - apscheduler.executors.default - INFO - Job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='8', minute='10', second='0'], next run at: 2025-06-23 08:10:00 UTC)" executed successfully
+2025-06-22 11:10:44,691 - __main__ - INFO - === Запуск бота ===
+2025-06-22 11:10:45,321 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-22 11:10:45,329 - bot - INFO - === Начало запуска бота ===
+2025-06-22 11:10:45,330 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-22 11:10:45,331 - bot - INFO - Утреннее время: 08:15:00+00:00
+2025-06-22 11:10:45,332 - bot - INFO - Вечернее время: 08:16:00+00:00
+2025-06-22 11:10:45,332 - bot - INFO - === Создание приложения ===
+2025-06-22 11:10:47,721 - bot - INFO - Инициализирован URL профиля бота: https://t.me/sexandmindbot
+2025-06-22 11:10:47,722 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-22 11:10:47,723 - bot - INFO - === ВСЕ ЗАДАЧИ ОЧИЩЕНЫ ===
+2025-06-22 11:10:47,725 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-22 11:10:47,731 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-22 11:10:47,734 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-22 11:10:47,735 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-22 11:10:47,736 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-22 11:10:47,738 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-22 11:10:48,079 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-22 11:10:48,081 - telegram.ext.Application - INFO - Application started
+2025-06-22 11:10:48,409 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-22 11:10:50,913 - user_data_manager - INFO - New user created: 5965363034 (GoidaSegun)
+2025-06-22 11:10:51,281 - bot - INFO - Sent start video note to user 5965363034
+2025-06-22 11:10:54,007 - bot - INFO - Channel membership check result (by ID): True
+2025-06-22 11:10:54,067 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-22 11:10:54,068 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-22 11:10:54,068 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-22 11:10:54,069 - bot - INFO - Утром: 08:15:00+0000
+2025-06-22 11:10:54,069 - bot - INFO - Вечером: 08:16:00+0000
+2025-06-22 11:10:54,070 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-22 11:10:54,070 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': None, 'last_evening_sent_date': None, 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-22T08:10:50.913383+00:00', 'last_interaction_date': '2025-06-22T08:10:54.041988+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-22T08:10:54.008469+00:00'}
+2025-06-22 11:10:54,070 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-22 11:10:54,080 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-22 11:10:54,081 - bot - INFO - ✅ Создана утренняя задача на 08:15:00+0000
+2025-06-22 11:10:54,084 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-22 11:10:54,085 - bot - INFO - ✅ Создана вечерняя задача на 08:16:00+0000
+2025-06-22 11:10:54,086 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-22 11:10:54,087 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-22 11:10:54,089 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-22 11:10:54,090 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-22 11:10:57,587 - bot - INFO - User 5965363034 clicked enable_notifications button
+2025-06-22 11:10:57,587 - bot - INFO - Using bot profile URL: https://t.me/sexandmindbot
+2025-06-22 11:10:57,956 - bot - INFO - Sent notification help message to user 5965363034, message ID: 1806
+2025-06-22 11:10:58,149 - bot - INFO - Acknowledged enable_notifications button click for user 5965363034
+2025-06-22 11:15:04,067 - __main__ - INFO - === Запуск бота ===
+2025-06-22 11:15:05,019 - __main__ - INFO - === Импортирован модуль bot ===
+2025-06-22 11:15:05,033 - bot - INFO - === Начало запуска бота ===
+2025-06-22 11:15:05,034 - bot - INFO - === ВРЕМЯ ИЗ CONFIG.PY ===
+2025-06-22 11:15:05,036 - bot - INFO - Утреннее время: 08:18:00+00:00
+2025-06-22 11:15:05,037 - bot - INFO - Вечернее время: 08:19:00+00:00
+2025-06-22 11:15:05,037 - bot - INFO - === Создание приложения ===
+2025-06-22 11:15:05,223 - bot - INFO - === ОЧИСТКА ВСЕХ ЗАДАЧ ===
+2025-06-22 11:15:05,224 - bot - INFO - === ВСЕ ЗАДАЧИ ОЧИЩЕНЫ ===
+2025-06-22 11:15:05,225 - bot - INFO - Loading existing users and scheduling jobs...
+2025-06-22 11:15:05,231 - bot - INFO - === Добавление обработчиков команд ===
+2025-06-22 11:15:05,232 - bot - INFO - === Добавление обработчика кнопок ===
+2025-06-22 11:15:05,233 - bot - INFO - === Добавление обработчика текстовых сообщений ===
+2025-06-22 11:15:05,234 - bot - INFO - === Добавление обработчика ошибок ===
+2025-06-22 11:15:05,234 - bot - INFO - === Инициализация и запуск компонентов бота ===
+2025-06-22 11:15:05,822 - apscheduler.scheduler - INFO - Scheduler started
+2025-06-22 11:15:05,823 - telegram.ext.Application - INFO - Application started
+2025-06-22 11:15:06,155 - bot - INFO - === Бот запущен и слушает обновления. Токен: 775987...D_Yw ===
+2025-06-22 11:15:07,957 - user_data_manager - INFO - New user created: 5965363034 (GoidaSegun)
+2025-06-22 11:15:08,238 - bot - INFO - Sent start video note to user 5965363034
+2025-06-22 11:15:11,949 - bot - INFO - Channel membership check result (by ID): True
+2025-06-22 11:15:12,003 - bot - INFO - [SCHEDULER DEBUG] Всего задач при входе: 0
+2025-06-22 11:15:12,004 - bot - INFO - [SCHEDULER DEBUG] Удалено задач для пользователя 5965363034: 0
+2025-06-22 11:15:12,004 - bot - INFO - === ВРЕМЯ ДЛЯ ПОЛЬЗОВАТЕЛЯ 5965363034 (День 1) ===
+2025-06-22 11:15:12,005 - bot - INFO - Утром: 08:18:00+0000
+2025-06-22 11:15:12,005 - bot - INFO - Вечером: 08:19:00+0000
+2025-06-22 11:15:12,006 - bot - INFO - [DEBUG] Режим практики пользователя 5965363034: both
+2025-06-22 11:15:12,007 - bot - INFO - [DEBUG] user_data: {'chat_id': 5965363034, 'username': 'GoidaSegun', 'first_name': 'Мак', 'subscribed_to_daily': True, 'daily_practice_mode': 'both', 'current_daily_day': 1, 'last_morning_sent_date': None, 'last_evening_sent_date': None, 'stage': 'daily_subscribed', 'email': None, 'active_test': None, 'tests_taken': {}, 'created_at': '2025-06-22T08:15:07.956964+00:00', 'last_interaction_date': '2025-06-22T08:15:11.978783+00:00', 'channel_subscription': True, 'channel_subscription_checked': '2025-06-22T08:15:11.949938+00:00'}
+2025-06-22 11:15:12,008 - bot - INFO - [DEBUG] Checking morning job condition: mode=both, condition=True
+2025-06-22 11:15:12,014 - apscheduler.scheduler - INFO - Added job "5965363034_morning" to job store "default"
+2025-06-22 11:15:12,016 - bot - INFO - ✅ Создана утренняя задача на 08:18:00+0000
+2025-06-22 11:15:12,019 - apscheduler.scheduler - INFO - Added job "5965363034_evening" to job store "default"
+2025-06-22 11:15:12,021 - bot - INFO - ✅ Создана вечерняя задача на 08:19:00+0000
+2025-06-22 11:15:12,026 - bot - INFO - [SCHEDULER DEBUG] Итоговое количество задач: 2
+2025-06-22 11:15:12,028 - bot - INFO - [SCHEDULER DEBUG] Создано задач для пользователя 5965363034: 2
+2025-06-22 11:15:12,030 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_morning
+2025-06-22 11:15:12,031 - bot - INFO - [SCHEDULER DEBUG] Итоговая задача: 5965363034_evening
+2025-06-22 11:15:15,497 - bot - INFO - User 5965363034 clicked enable_notifications button
+2025-06-22 11:15:16,016 - bot - INFO - Sent simplified notification help message to user 5965363034, message ID: 1811
+2025-06-22 11:15:16,413 - bot - INFO - Acknowledged enable_notifications button click for user 5965363034
+2025-06-22 11:18:00,022 - apscheduler.executors.default - INFO - Running job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='8', minute='18', second='0'], next run at: 2025-06-23 08:18:00 UTC)" (scheduled at 2025-06-22 08:18:00+00:00)
+2025-06-22 11:18:00,024 - bot - INFO - ===== Запуск задачи: 5965363034_morning =====
+2025-06-22 11:18:00,025 - bot - INFO - Job data: {'pt': 'morning'}
+2025-06-22 11:18:00,031 - bot - INFO - Sending morning practice for day 1 to user 5965363034
+2025-06-22 11:18:01,138 - apscheduler.executors.default - INFO - Job "5965363034_morning (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='8', minute='18', second='0'], next run at: 2025-06-23 08:18:00 UTC)" executed successfully
+2025-06-22 11:19:00,004 - apscheduler.executors.default - INFO - Running job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='8', minute='19', second='0'], next run at: 2025-06-23 08:19:00 UTC)" (scheduled at 2025-06-22 08:19:00+00:00)
+2025-06-22 11:19:00,006 - bot - INFO - ===== Запуск задачи: 5965363034_evening =====
+2025-06-22 11:19:00,006 - bot - INFO - Job data: {'pt': 'evening'}
+2025-06-22 11:19:00,012 - bot - INFO - Sending evening practice for day 1 to user 5965363034
+2025-06-22 11:19:02,603 - apscheduler.executors.default - INFO - Job "5965363034_evening (trigger: cron[day_of_week='sun,mon,tue,wed,thu,fri,sat', hour='8', minute='19', second='0'], next run at: 2025-06-23 08:19:00 UTC)" executed successfully
