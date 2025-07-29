@@ -24,14 +24,14 @@ MAIN_CHANNEL_ID = "@sexandmind"  # This might need to be the numeric ID if @ pre
 ADMIN_CONTACT_USERNAME = "GoidaSegun" 
 
 # === Daily Content Timing (UTC) ===
-# Время отправки утренней практики (UTC) - 11:18 MSK
-MORNING_PRACTICE_TIME_UTC = datetime.time(hour=8, minute=18, tzinfo=pytz.UTC)
-# Время отправки вечерней практики (UTC) - 11:19 MSK
-EVENING_PRACTICE_TIME_UTC = datetime.time(hour=8, minute=19, tzinfo=pytz.UTC)
+# Время отправки утренней практики (UTC) - 09:00 MSK (06:00 UTC)
+MORNING_PRACTICE_TIME_UTC = datetime.time(hour=6, minute=0, tzinfo=pytz.UTC)
+# Время отправки вечерней практики (UTC) - 18:00 MSK (15:00 UTC)
+EVENING_PRACTICE_TIME_UTC = datetime.time(hour=15, minute=0, tzinfo=pytz.UTC)
 
 # === Day 3 test offer times (in UTC as string) ===
-DAY3_KEY_TEST_OFFER_MORNING_UTC = datetime.time(hour=7, minute=39, tzinfo=pytz.UTC) 
-DAY3_KEY_TEST_OFFER_EVENING_UTC = datetime.time(hour=7, minute=40, tzinfo=pytz.UTC) 
+DAY3_KEY_TEST_OFFER_MORNING_UTC = datetime.time(hour=6, minute=0, tzinfo=pytz.UTC)  # 09:00 MSK
+DAY3_KEY_TEST_OFFER_EVENING_UTC = datetime.time(hour=15, minute=0, tzinfo=pytz.UTC)  # 18:00 MSK
 
 # === Test Offering Days ===
 TEST_OFFER_DAYS = [3, 5, 7, 9, 11, 13]

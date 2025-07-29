@@ -2,19 +2,19 @@
     "5965363034": {
         "chat_id": 5965363034,
         "username": "GoidaSegun",
-        "first_name": "Мак",
+        "first_name": "ohhh yeasss",
         "subscribed_to_daily": true,
         "daily_practice_mode": "both",
         "current_daily_day": 1,
-        "last_morning_sent_date": "2025-06-22",
-        "last_evening_sent_date": "2025-06-22",
+        "last_morning_sent_date": null,
+        "last_evening_sent_date": null,
         "stage": "daily_subscribed",
         "email": null,
         "active_test": null,
         "tests_taken": {},
-        "created_at": "2025-06-22T08:15:07.956964+00:00",
-        "last_interaction_date": "2025-06-22T08:19:02.597763+00:00",
+        "created_at": "2025-06-28T23:19:01.580054+00:00",
+        "last_interaction_date": "2025-06-28T23:23:01.503924+00:00",
         "channel_subscription": true,
-        "channel_subscription_checked": "2025-06-22T08:15:11.949938+00:00"
+        "channel_subscription_checked": "2025-06-28T23:23:01.480252+00:00"
     }
 }
