@@ -8,6 +8,8 @@ import html
 import traceback
 import json
 import importlib
+import signal
+import sys
 
 from telegram import (
     Update,
@@ -319,7 +321,7 @@ async def send_daily_practice_job(context: ContextTypes.DEFAULT_TYPE):
             if current_day in config.TEST_OFFER_DAYS or current_day == 14:
                 await offer_test_if_not_taken(context, chat_id, user_data, config.KEY_TEST_ID, is_day14=(current_day==14), test_for_day=current_day)
 
-        if (practice_type == "evening" and user_data.get("daily_practice_mode") == "dual") or \
+        if (practice_type == "evening" and user_data.get("daily_practice_mode") in ["dual", "both"]) or \
            (practice_type == "morning" and user_data.get("daily_practice_mode") == "morning_only"):
             udm.increment_user_daily_day(chat_id, daily_content.TOTAL_DAYS)
     except Exception as e:
@@ -1231,7 +1233,28 @@ async def payment_confirmed_handler(update: Update, context: ContextTypes.DEFAUL
     logger.info(f"Пользователь {user.id} сообщил об оплате консультации.")
 
 
+# Функция для грациозного завершения и сохранения данных
+def shutdown_handler(signum, frame):
+    logger.info("Получен сигнал остановки. Сохраняю данные перед выходом...")
+    try:
+        # Загружаем текущие данные из user_data_manager и сохраняем их
+        current_users_data = udm.load_users()
+        if current_users_data:
+            udm.save_users(current_users_data)
+            logger.info("Данные пользователей успешно сохранены.")
+        else:
+            logger.warning("Нет данных для сохранения.")
+    except Exception as e:
+        logger.error(f"Ошибка при сохранении данных: {e}")
+    finally:
+        logger.info("Завершение работы бота.")
+        sys.exit(0)
+
 async def main() -> None:
+    # Регистрируем обработчик для сигналов SIGINT (Ctrl+C) и SIGTERM
+    signal.signal(signal.SIGINT, shutdown_handler)
+    signal.signal(signal.SIGTERM, shutdown_handler)
+    
     # Принудительно перезагружаем модуль config, чтобы подхватить последние изменения
     importlib.reload(config)
     logger.info("=== Начало запуска бота ===")
